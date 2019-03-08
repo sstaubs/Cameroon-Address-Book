@@ -5,11 +5,16 @@ function start(){
   registerScreens();
   Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setRoot({
-        root: {
+      root: {
+        stack:{
+          children:[{
             component:{
-                name: "LoginScreen"
+              name: "LoginScreen"
             }
+            
+          }]
         }
+      }
     });
   });
 }

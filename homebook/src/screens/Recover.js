@@ -6,6 +6,9 @@ class Recover extends Component {
         return(
             <View>
                 <Text>Second Screen</Text>
+                <Text>Second Screen</Text>
+                <Text>Second Screen</Text>
+                <Text>Second Screen</Text>
             </View>
         );
     }

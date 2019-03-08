@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import Recover from './Recover';
+
 
 class Login extends Component {
   state = {
@@ -9,13 +9,11 @@ class Login extends Component {
     password: ''
   };
 
-  push = () => {
-    Navigation.push(this,{
-      component: {
-        name: 'RecoveryScreen'
-      }
-    });
-  };
+  push = () => Navigation.push(this.props.componentId,{
+    component: {
+      name: 'RecoveryScreen'
+    }
+  });
 
   phoneHandler = val => {
     this.setState({
