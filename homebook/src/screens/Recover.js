@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,TextInput,TouchableOpacity} from 'react-native';
+import { Navigation } from 'react-native-navigation';
 
 class Recover extends Component {
     state = {
@@ -12,6 +13,8 @@ class Recover extends Component {
             phone: val,
         });
     };
+
+    popToLogin  = () => Navigation.pop(this.props.componentId);
 
     render(){
         return(
@@ -27,7 +30,7 @@ class Recover extends Component {
                   />
                 <TouchableOpacity
                     style={styles.sendButton}
-                    onPress={this.phoneHandler}
+                    onPress={this.popToLogin}
                 >
                 <Text style={{ color: 'white', fontWeight: '500' }}>SEND</Text>
                 </TouchableOpacity>
