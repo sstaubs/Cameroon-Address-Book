@@ -14,94 +14,106 @@ class CreateAccount extends Component {
     };
 
     render(){
-        return(
-            <View style={styles.container}>
-                <Text style={styles.mainText}>CREATE ACCOUNT</Text>
-                <Text style={styles.subText}>First Name</Text>
-                <TextInput
-                    keyboardType="number-pad"
-                    style={styles.phoneInfo}
-                    placeholder="Phone Number"
-                    placeholderTextColor="gray"
-                    onChangeText={this.phoneHandler}
-                  />
-            </View>
-        );
-    }
+      return(
+          <View style={styles.container}>
+              <Text style={styles.mainText}>Create Account</Text>
+              <Text style={styles.subText}>First Name</Text>
+              <TextInput
+                  keyboardType="number-pad"
+                  style={styles.phoneInfo}
+                  placeholder="First Name"
+                  placeholderTextColor="gray"
+                  onChangeText={this.phoneHandler}
+                />
+              <Text style={styles.sub2Text}>Last Name</Text>
+              <TextInput
+                  keyboardType="number-pad"
+                  style={styles.phoneInfo}
+                  placeholder="Last Name"
+                  placeholderTextColor="gray"
+                  onChangeText={this.phoneHandler}
+                />
+              <Text style={styles.sub2Text}>Password</Text>
+              <TextInput
+                  keyboardType="number-pad"
+                  style={styles.phoneInfo}
+                  placeholder="Password"
+                  placeholderTextColor="gray"
+                  onChangeText={this.phoneHandler}
+                />
+              <Text style={styles.sub2Text}>Confirm Password</Text>
+              <TextInput
+                  keyboardType="number-pad"
+                  style={styles.phoneInfo}
+                  placeholder="Enter Password"
+                  placeholderTextColor="gray"
+                  onChangeText={this.phoneHandler}
+                />
+              <Text style={styles.sub2Text}>Phone Number</Text>
+              <TextInput
+                  keyboardType="number-pad"
+                  style={styles.phoneInfo}
+                  placeholder="Enter Phone Number"
+                  placeholderTextColor="gray"
+                  onChangeText={this.phoneHandler}
+                />
+              <TouchableOpacity
+                  style={styles.confirmButton}
+                  onPress={this.phoneHandler}
+              >
+              <Text style={{ color: 'white', fontWeight: '500' }}>CONFIRM</Text>
+              </TouchableOpacity>
+          </View>
+      );
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      padding: 200,
-      backgroundColor: '#222222',
-    },
-    mainText: {
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    padding: 94,
+    backgroundColor: '#222222',
+  },
+  mainText: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold',
+    width: 300,
+    textAlign: 'center'
+  },
+  subText: {
       color: 'white',
-      fontSize: 30,
-      fontWeight: 'bold',
-      width: 300,
-      textAlign: 'center'
-    },
-    supportingText: {
-      color: 'white',
-      fontSize: 20,
-      width: 300,
-      textAlign: 'center',
-      padding: 5
-    },
-    phoneInfo: {
-      width: 300,
+      fontSize: 17,
       marginTop: 50,
+      width: 300
+  },
+  sub2Text: {
+    color: 'white',
+    fontSize: 17,
+    marginTop: 20,
+    width: 300
+  },
+  phoneInfo: {
+      width: 300,
+      marginTop: 5,
       padding: 5,
       borderWidth: 1,
       borderColor: 'white',
       fontSize: 17,
       height: 32,
       color: 'white'
-    },
-    passwordInfo: {
+  },
+  confirmButton: {
       width: 300,
-      marginTop: 20,
-      padding: 5,
-      borderWidth: 1,
-      borderColor: 'white',
-      fontSize: 17,
-      height: 32,
-      color: 'white'
-    },
-    buttons: {
-      width: 300,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'flex-end'
-    },
-    loginButton: {
-      width: 145,
-      marginTop: 20,
+      marginTop: 30,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: '#70B456',
+      backgroundColor: '#4A90E2',
       height: 32
-    },
-    signupButton: {
-      width: 145,
-      marginTop: 10,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: '#70B456',
-      backgroundColor: '#222222',
-      height: 32
-    },
-    linkText: {
-      color: 'gray',
-      fontSize: 12,
-      marginTop: 20
-    }
-  });
+  }
+});
   
 export default CreateAccount;
