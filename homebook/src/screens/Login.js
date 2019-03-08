@@ -67,9 +67,7 @@ class Login extends Component {
               <Text style={{ color: '#70B456', fontWeight: '500' }}>CREATE ACCOUNT</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={this.pushRecovery}>
-            <Text style={styles.linkText}>FORGOT PASSWORD?</Text>
-          </TouchableOpacity>
+          <Text onPress={this.pushRecovery} style={styles.linkText}>FORGOT PASSWORD?</Text>
         </View>
       </View>
     );
