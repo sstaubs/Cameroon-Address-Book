@@ -20,6 +20,12 @@ class Login extends Component {
     }
   });
 
+  pushHomeScreen = () => Navigation.push(this.props.componentId,{
+    component: {
+      name: 'HomeScreen'
+    }
+  });
+
   phoneHandler = val => {
     this.setState({
       phone: val,
@@ -56,7 +62,7 @@ class Login extends Component {
           <View style={styles.buttons}>
             <TouchableOpacity
               style={styles.loginButton}
-              onPress={this.phoneHandler}
+              onPress={this.pushHomeScreen}
             >
               <Text style={{ color: '#222222', fontWeight: '500' }}>LOGIN</Text>
             </TouchableOpacity>
