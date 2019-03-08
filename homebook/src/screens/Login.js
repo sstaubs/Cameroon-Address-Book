@@ -8,11 +8,11 @@ class Login extends Component {
     password: ''
   };
 
-  push = () => {
-    this.push.navigator.push({
-      screen: 'homebook.RecoveryScreen'
-    });
-  }
+  push = () => Navigation.push(this.props.componentId,{
+    component: {
+      name: 'RecoveryScreen'
+    }
+  });
 
   phoneHandler = val => {
     this.setState({
