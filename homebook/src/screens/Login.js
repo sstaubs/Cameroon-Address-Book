@@ -1,10 +1,20 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
+import { Navigation } from 'react-native-navigation';
+import Recover from './Recover';
 
 class Login extends Component {
   state = {
     phone: '',
     password: ''
+  };
+
+  push = () => {
+    Navigation.push(this,{
+      component: {
+        name: 'RecoveryScreen'
+      }
+    });
   };
 
   phoneHandler = val => {
@@ -49,7 +59,7 @@ class Login extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.signupButton}
-              onPress={this.phoneHandler}
+              onPress={this.push}
             >
               <Text style={{ color: '#70B456', fontWeight: '500' }}>CREATE ACCOUNT</Text>
             </TouchableOpacity>
