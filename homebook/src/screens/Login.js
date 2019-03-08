@@ -8,9 +8,15 @@ class Login extends Component {
     password: ''
   };
 
-  push = () => Navigation.push(this.props.componentId,{
+  pushRecovery = () => Navigation.push(this.props.componentId,{
     component: {
       name: 'RecoveryScreen'
+    }
+  });
+
+  pushCreateAccount = () => Navigation.push(this.props.componentId,{
+    component: {
+      name: 'CreateAccountScreen'
     }
   });
 
@@ -56,12 +62,12 @@ class Login extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.signupButton}
-              onPress={this.push}
+              onPress={this.pushCreateAccount}
             >
               <Text style={{ color: '#70B456', fontWeight: '500' }}>CREATE ACCOUNT</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={this.push}>
+          <TouchableOpacity onPress={this.pushRecovery}>
             <Text style={styles.linkText}>FORGOT PASSWORD?</Text>
           </TouchableOpacity>
         </View>
