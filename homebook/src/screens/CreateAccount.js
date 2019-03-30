@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View,Text,StyleSheet,TextInput,TouchableOpacity} from 'react-native';
+import { Navigation } from 'react-native-navigation';
 
 class CreateAccount extends Component {
   state = {
@@ -7,6 +8,13 @@ class CreateAccount extends Component {
     lastName: '',
     phone: '',
     password: ''
+  };
+  pushHomeScreen() {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'HomeScreen'
+      }
+    });
   };
   firstNameHandler = val => {
     this.setState({
@@ -47,6 +55,11 @@ class CreateAccount extends Component {
     .then(parsedRes =>{
       console.log(parsedRes);
     });
+
+    this.pushHomeScreen()
+
+    
+    
 
   };
 
