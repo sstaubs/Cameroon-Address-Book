@@ -14,14 +14,25 @@ class HomeScreen extends Component {
         });
     };
 
-    popToLogin  = () => Navigation.pop(this.props.componentId);
+    popToLogin = () => Navigation.pop(this.props.componentId);
 
     render(){
         return(
-            <View >
+            <View style={styles.container}>
                 <Text>Home Screen</Text>
             </View>
         );
     }
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: '#222222'
+    }
+});
+
 export default HomeScreen;

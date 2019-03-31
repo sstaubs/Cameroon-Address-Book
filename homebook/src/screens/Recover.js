@@ -14,7 +14,7 @@ class Recover extends Component {
         });
     };
 
-    popToLogin  = () => Navigation.pop(this.props.componentId);
+    popToLogin = () => Navigation.pop(this.props.componentId);
 
     render(){
         return(
