@@ -68,7 +68,7 @@ class CreateAccount extends Component {
         firstN: this.state.firstName,
         lastN: this.state.lastName,
         email: this.state.email,
-        phoneNum: "12345",
+        phoneNum: this.state.phone,
         uid: user.uid
       };
       var db = firebase.firestore();
