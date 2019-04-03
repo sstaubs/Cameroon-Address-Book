@@ -9,6 +9,7 @@
     "android": "react-native run-android"
   },
   "dependencies": {
+    "firebase": "^5.9.2",
     "react": "16.6.3",
     "react-native": "0.58.6",
     "react-native-navigation": "^2.13.1",

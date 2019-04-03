@@ -1,12 +1,16 @@
-import React, {Component} from 'react';
-import {View,Text,StyleSheet,TextInput,TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
+import * as firebase from 'firebase';
+
+
+
 
 class CreateAccount extends Component {
   state = {
     firstName: '',
     lastName: '',
-    phone: '',
+    email: '',
     password: ''
   };
   pushHomeScreen() {
@@ -21,15 +25,15 @@ class CreateAccount extends Component {
       firstName: val,
     });
   };
-  lastNameHandler= val => {
+  lastNameHandler = val => {
     this.setState({
       lastName: val,
     });
   };
 
-  phoneHandler = val => {
+  emailHandler = val => {
     this.setState({
-      phone: val,
+      email: val,
     });
   };
 
@@ -40,26 +44,40 @@ class CreateAccount extends Component {
   };
 
   confirmHandler = val => {
+
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode == 'auth/weak-password') {
+          alert('The password is too weak.');
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
+      });
+
     const accountInfo = {
       fname: this.state.firstName,
       lname: this.state.lastName,
-      phoneNum: this.state.phone,
+      email: this.state.email,
       passW: this.state.password
     };
-    fetch("https://homebook-c9e3b.firebaseio.com/createAccount.json",{
+    fetch("https://homebook-c9e3b.firebaseio.com/createAccount.json", {
       method: "POST",
       body: JSON.stringify(accountInfo)
     })
-    .catch(err=> console.log(err))
-    .then(res =>res.json())
-    .then(parsedRes =>{
-      console.log(parsedRes);
-    });
+      .catch(err => console.log(err))
+      .then(res => res.json())
+      .then(parsedRes => {
+        console.log(parsedRes);
+      });
 
     this.pushHomeScreen()
 
-    
-    
+
+
 
   };
 
@@ -101,11 +119,10 @@ class CreateAccount extends Component {
         />
         <Text style={styles.sub2Text}>Phone Number</Text>
         <TextInput
-          keyboardType="number-pad"
           style={styles.phoneInfo}
           placeholder="Enter Phone Number"
           placeholderTextColor="gray"
-          onChangeText={this.phoneHandler}
+          onChangeText={this.emailHandler}
         />
         <TouchableOpacity
           style={styles.confirmButton}

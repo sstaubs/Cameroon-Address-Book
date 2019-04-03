@@ -1,34 +1,41 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
+import * as firebase from 'firebase';
+
+
+
+
+
 
 class Login extends Component {
   state = {
-    phone: '',
+    email: '',
     password: ''
   };
 
-  pushRecovery = () => Navigation.push(this.props.componentId,{
+  pushRecovery = () => Navigation.push(this.props.componentId, {
     component: {
       name: 'RecoveryScreen'
     }
   });
 
-  pushCreateAccount = () => Navigation.push(this.props.componentId,{
+  pushCreateAccount = () => Navigation.push(this.props.componentId, {
     component: {
       name: 'CreateAccountScreen'
     }
   });
 
-  pushHomeScreen = () => Navigation.push(this.props.componentId,{
+
+  pushHomeScreen = () => Navigation.push(this.props.componentId, {
     component: {
       name: 'HomeScreen'
     }
   });
 
-  phoneHandler = val => {
+  emailHandler = val => {
     this.setState({
-      phone: val,
+      email: val,
     });
   };
 
@@ -37,6 +44,40 @@ class Login extends Component {
       password: val,
     });
   };
+
+
+
+  //has a bug that makes you click that makes you click login twice
+  EnterLogin = val => {
+
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    .catch(function(error) {
+      // Handle Errors here.
+      
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/wrong-password') {
+        alert('Wrong password.');
+        
+        
+      } else {
+        alert(errorMessage);
+        
+        
+      }
+      console.log(error);
+    });
+    var user = firebase.auth().currentUser;
+    if(user){
+      
+      
+      this.pushHomeScreen();
+    
+    }
+  };
+
+  
+  
 
   render() {
     return (
@@ -49,8 +90,8 @@ class Login extends Component {
             style={styles.phoneInfo}
             placeholder="Phone Number"
             placeholderTextColor="gray"
-            value={this.state.phone}
-            onChangeText={this.phoneHandler}
+            value={this.state.email}
+            onChangeText={this.emailHandler}
           />
           <TextInput
             style={styles.passwordInfo}
@@ -62,7 +103,7 @@ class Login extends Component {
           <View style={styles.buttons}>
             <TouchableOpacity
               style={styles.loginButton}
-              onPress={this.pushHomeScreen}
+              onPress={this.EnterLogin}
             >
               <Text style={{ color: '#222222', fontWeight: '500' }}>LOGIN</Text>
             </TouchableOpacity>
