@@ -64,17 +64,21 @@ class CreateAccount extends Component {
       email: this.state.email,
       passW: this.state.password
     };
-    fetch("https://homebook-c9e3b.firebaseio.com/createAccount.json", {
-      method: "POST",
-      body: JSON.stringify(accountInfo)
-    })
-      .catch(err => console.log(err))
-      .then(res => res.json())
-      .then(parsedRes => {
-        console.log(parsedRes);
-      });
+    var user = firebase.auth().currentUser;
+    if (user) {
+      fetch("https://homebook-c9e3b.firebaseio.com/createAccount.json", {
+        method: "POST",
+        body: JSON.stringify(accountInfo)
+      })
+        .catch(err => console.log(err))
+        .then(res => res.json())
+        .then(parsedRes => {
+          console.log(parsedRes);
+        });
+        
+      this.pushHomeScreen()
+    }
 
-    this.pushHomeScreen()
 
 
 
