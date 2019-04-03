@@ -28,6 +28,12 @@ class CreateAccount extends Component {
     });
   };
 
+  phoneHandler = val => {
+    this.setState({
+      phone: val,
+    });
+  };
+
   emailHandler = val => {
     this.setState({
       email: val,
@@ -76,11 +82,6 @@ class CreateAccount extends Component {
 
       this.pushHomeScreen()
     }
-
-
-
-
-
   };
 
 
@@ -118,13 +119,13 @@ class CreateAccount extends Component {
           placeholderTextColor="gray"
           onChangeText={this.passwordHandler}
         />
-        <Text style={styles.sub2Text}>Email</Text>
+        <Text style={styles.sub2Text}>Phone Number</Text>
         <TextInput
           keyboardType='number-pad'
           style={styles.phoneInfo}
-          placeholder="Enter Email"
+          placeholder="Enter Phone Number"
           placeholderTextColor="gray"
-          onChangeText={this.emailHandler}
+          onChangeText={this.phoneHandler}
         />
         <Text style={styles.sub2Text}>Email</Text>
         <TextInput

@@ -41,7 +41,7 @@ function start(){
         stack:{
           children:[{
             component:{
-              name: "CreateAccountScreen"
+              name: "LoginScreen"
             }
 
           }]
