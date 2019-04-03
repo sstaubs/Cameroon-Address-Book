@@ -58,23 +58,24 @@ class CreateAccount extends Component {
         console.log(error);
       });
 
-    const accountInfo = {
-      fname: this.state.firstName,
-      lname: this.state.lastName,
-      email: this.state.email,
-      passW: this.state.password
-    };
+    
     var user = firebase.auth().currentUser;
     if (user) {
-      fetch("https://homebook-c9e3b.firebaseio.com/createAccount.json", {
-        method: "POST",
-        body: JSON.stringify(accountInfo)
+      const accountInfo = {
+        firstN: this.state.firstName,
+        lastN: this.state.lastName,
+        email: this.state.email,
+        phoneNum: "12345",
+        uid: user.uid
+      };
+      var db = firebase.firestore();
+      db.collection("users").add(accountInfo)
+      .then(function(docRef) {
+        console.log("Document written with ID: ", docRef.id);
       })
-        .catch(err => console.log(err))
-        .then(res => res.json())
-        .then(parsedRes => {
-          console.log(parsedRes);
-        });
+      .catch(function(error) {
+        console.error("Error adding document: ", error);
+      });
         
       this.pushHomeScreen()
     }
