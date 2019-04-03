@@ -3,11 +3,6 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-nativ
 import { Navigation } from 'react-native-navigation';
 import * as firebase from 'firebase';
 
-
-
-
-
-
 class Login extends Component {
   state = {
     email: '',
@@ -53,31 +48,31 @@ class Login extends Component {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
     .catch(function(error) {
       // Handle Errors here.
-      
+
       var errorCode = error.code;
       var errorMessage = error.message;
       if (errorCode === 'auth/wrong-password') {
         alert('Wrong password.');
-        
-        
+
+
       } else {
         alert(errorMessage);
-        
-        
+
+
       }
       console.log(error);
     });
     var user = firebase.auth().currentUser;
     if(user){
-      
-      
+
+
       this.pushHomeScreen();
-    
+
     }
   };
 
-  
-  
+
+
 
   render() {
     return (
@@ -86,14 +81,15 @@ class Login extends Component {
           <Text style={styles.mainText}>HomeBook</Text>
           <Text style={styles.supportingText}>Addressing Your Home</Text>
           <TextInput
-            keyboardType="number-pad"
+            keyboardType='email-address'
             style={styles.phoneInfo}
-            placeholder="Phone Number"
+            placeholder="Email"
             placeholderTextColor="gray"
             value={this.state.email}
             onChangeText={this.emailHandler}
           />
           <TextInput
+            secureTextEntry={true}
             style={styles.passwordInfo}
             placeholder="Password"
             placeholderTextColor="gray"

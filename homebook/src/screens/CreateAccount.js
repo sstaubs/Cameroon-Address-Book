@@ -3,9 +3,6 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import { Navigation } from 'react-native-navigation';
 import * as firebase from 'firebase';
 
-
-
-
 class CreateAccount extends Component {
   state = {
     firstName: '',
@@ -28,6 +25,12 @@ class CreateAccount extends Component {
   lastNameHandler = val => {
     this.setState({
       lastName: val,
+    });
+  };
+
+  phoneHandler = val => {
+    this.setState({
+      phone: val,
     });
   };
 
@@ -58,7 +61,7 @@ class CreateAccount extends Component {
         console.log(error);
       });
 
-    
+
     var user = firebase.auth().currentUser;
     if (user) {
       const accountInfo = {
@@ -76,15 +79,11 @@ class CreateAccount extends Component {
       .catch(function(error) {
         console.error("Error adding document: ", error);
       });
-        
+
       this.pushHomeScreen()
     }
-
-
-
-
-
   };
+
 
   render() {
     return (
@@ -92,7 +91,6 @@ class CreateAccount extends Component {
         <Text style={styles.mainText}>Create Account</Text>
         <Text style={styles.subText}>First Name</Text>
         <TextInput
-          keyboardType="number-pad"
           style={styles.phoneInfo}
           placeholder="First Name"
           placeholderTextColor="gray"
@@ -100,7 +98,6 @@ class CreateAccount extends Component {
         />
         <Text style={styles.sub2Text}>Last Name</Text>
         <TextInput
-          keyboardType="number-pad"
           style={styles.phoneInfo}
           placeholder="Last Name"
           placeholderTextColor="gray"
@@ -108,7 +105,7 @@ class CreateAccount extends Component {
         />
         <Text style={styles.sub2Text}>Password</Text>
         <TextInput
-          keyboardType="number-pad"
+          secureTextEntry={true}
           style={styles.phoneInfo}
           placeholder="Password"
           placeholderTextColor="gray"
@@ -116,7 +113,7 @@ class CreateAccount extends Component {
         />
         <Text style={styles.sub2Text}>Confirm Password</Text>
         <TextInput
-          keyboardType="number-pad"
+          secureTextEntry={true}
           style={styles.phoneInfo}
           placeholder="Enter Password"
           placeholderTextColor="gray"
@@ -124,8 +121,17 @@ class CreateAccount extends Component {
         />
         <Text style={styles.sub2Text}>Phone Number</Text>
         <TextInput
+          keyboardType='number-pad'
           style={styles.phoneInfo}
           placeholder="Enter Phone Number"
+          placeholderTextColor="gray"
+          onChangeText={this.phoneHandler}
+        />
+        <Text style={styles.sub2Text}>Email</Text>
+        <TextInput
+          keyboardType='email-address'
+          style={styles.phoneInfo}
+          placeholder="Enter Email"
           placeholderTextColor="gray"
           onChangeText={this.emailHandler}
         />
