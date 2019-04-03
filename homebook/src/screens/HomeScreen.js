@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { View,Text,StyleSheet,TextInput,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
+
+
+
 
 class HomeScreen extends Component {
     state = {
         phone: '',
         password: ''
-      };
+    };
 
     phoneHandler = val => {
         this.setState({
@@ -20,8 +23,20 @@ class HomeScreen extends Component {
 
     popToLogin = () => Navigation.pop(this.props.componentId);
 
-    render(){
-        return(
+    render() {
+        var db = firebase.firestore();
+        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                // doc.data() is never undefined for query doc snapshots
+                alert(doc.data().email);
+                //alert(doc.id, " => ", doc.data());
+            });
+        })
+            .catch(function (error) {
+                alert("Error getting documents: " + error);
+            });
+
+        return (
             <View style={styles.container}>
                 <TouchableOpacity>
                     <Icon size={25} name='ios-share-alt' color='white' />
