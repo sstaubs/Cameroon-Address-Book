@@ -88,7 +88,7 @@ class Login extends Component {
           <TextInput
             keyboardType="number-pad"
             style={styles.phoneInfo}
-            placeholder="Phone Number"
+            placeholder="Email"
             placeholderTextColor="gray"
             value={this.state.email}
             onChangeText={this.emailHandler}

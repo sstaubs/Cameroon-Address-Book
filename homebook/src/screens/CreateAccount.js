@@ -5,7 +5,6 @@ import * as firebase from 'firebase';
 
 
 
-
 class CreateAccount extends Component {
   state = {
     firstName: '',
@@ -81,10 +80,11 @@ class CreateAccount extends Component {
 
 
 
-
+    
 
   };
 
+  
   render() {
     return (
       <View style={styles.container}>
@@ -121,10 +121,10 @@ class CreateAccount extends Component {
           placeholderTextColor="gray"
           onChangeText={this.passwordHandler}
         />
-        <Text style={styles.sub2Text}>Phone Number</Text>
+        <Text style={styles.sub2Text}>Email</Text>
         <TextInput
           style={styles.phoneInfo}
-          placeholder="Enter Phone Number"
+          placeholder="Enter Email"
           placeholderTextColor="gray"
           onChangeText={this.emailHandler}
         />
