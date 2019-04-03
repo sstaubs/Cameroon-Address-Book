@@ -13,7 +13,7 @@ class HomeScreen extends Component {
         lastname: ''
     };
 
-    /*componentDidMount() {
+    componentDidMount() {
         var db = firebase.firestore();
        
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
@@ -38,7 +38,7 @@ class HomeScreen extends Component {
         
        
 
-    }*/
+    }
 
 
 
@@ -51,27 +51,7 @@ class HomeScreen extends Component {
     popToLogin = () => Navigation.pop(this.props.componentId);
 
     render() {
-        var db = firebase.firestore();
-       
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                //alert(doc.data().email);
-                //alert(doc.id, " => ", doc.data());
-
-                this.setState({
-                    
-                    firstname: doc.data().firstN,
-                    lastname: doc.data().lastN,
-                });
-                
-                
-            });
         
-            
-        }).catch(function (error) {
-            alert("Error getting documents: " + error);
-        });
 
         return (
 
