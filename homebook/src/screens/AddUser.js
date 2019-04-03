@@ -8,84 +8,112 @@ class AddUser extends Component {
   state = {
     firstName: '',
     lastName: '',
+    phone: '',
     email: '',
-    password: ''
+    docId:'',
   };
 
-pushCloseButton = () => Navigation.pop(this.props.componentId, {
+  pushCloseButton = () => Navigation.pop(this.props.componentId, {
     component: {
-        name: 'AddUser'
+      name: 'AddUser'
     }
-});
+  });
 
-firstNameHandler = val => {
-    this.setState({
-        firstName: val,
+  pushHomeScreen() {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'HomeScreen'
+      }
     });
-};
+  }
 
-lastNameHandler = val => {
+  firstNameHandler = val => {
     this.setState({
-        lastName: val,
+      firstName: val,
     });
-};
+  };
 
-phoneNumberHandler = val => {
+  lastNameHandler = val => {
     this.setState({
-        password: val,
+      lastName: val,
     });
-};
+  };
+
+  phoneNumberHandler = val => {
+    this.setState({
+      phone: val,
+    });
+  };
+
+  emailHandler = val => {
+    this.setState({
+      email: val,
+    });
+  };
+
+  componentDidMount() {
+    var db = firebase.firestore();
+   
+    db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            //alert(doc.data().email);
+            //alert(doc.id, " => ", doc.data());
+
+            this.setState({
+                
+              docId: doc.id,
+            });
+            
+            
+        });
+    
+        
+    }).catch(function (error) {
+        alert("Error getting documents: " + error);
+    });
+  }
+   
+
+
 
   confirmHandler = val => {
 
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        if (errorCode == 'auth/weak-password') {
-          alert('The password is too weak.');
-        } else {
-          alert(errorMessage);
-        }
-        console.log(error);
-      });
 
     const accountInfo = {
-      fname: this.state.firstName,
-      lname: this.state.lastName,
+      firstN: this.state.firstName,
+      lastN: this.state.lastName,
+      phoneNum: this.state.phone,
       email: this.state.email,
-      passW: this.state.password
     };
-    var user = firebase.auth().currentUser;
-    if (user) {
-      fetch("https://homebook-c9e3b.firebaseio.com/createAccount.json", {
-        method: "POST",
-        body: JSON.stringify(accountInfo)
+    var db = firebase.firestore();
+
+    
+    db.collection("users").doc(this.state.docId).collection("friends").add(accountInfo)
+      .then(function (docRef) {
+        //alert("Document written with ID: " + docRef.id);
       })
-        .catch(err => console.log(err))
-        .then(res => res.json())
-        .then(parsedRes => {
-          console.log(parsedRes);
-        });
+      .catch(function (error) {
+        console.error("Error adding document: ", error);
+      });
 
       this.pushHomeScreen()
-    }
+    
   };
 
   render() {
     return (
       <View style={styles.container}>
-            <View style={styles.icons}>
-                <TouchableOpacity
-                    style={styles.shareIcon}
-                    onPress={this.pushCloseButton}>
-                    <Icon size={35} name='ios-close' color='white' />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.addIcon}>
-                    <Icon size={35} name='ios-checkmark' color='white' />
-                </TouchableOpacity>
-            </View>
+        <View style={styles.icons}>
+          <TouchableOpacity
+            style={styles.shareIcon}
+            onPress={this.pushCloseButton}>
+            <Icon size={35} name='ios-close' color='white' />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.addIcon}>
+            <Icon size={35} name='ios-checkmark' color='white' />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.mainText}>Add Contact</Text>
         <TextInput
           style={styles.textInputStyle}
@@ -103,13 +131,19 @@ phoneNumberHandler = val => {
           style={styles.textInputStyle}
           placeholder="Phone Number"
           placeholderTextColor="gray"
+          onChangeText={this.phoneNumberHandler}
+        />
+        <TextInput
+          style={styles.textInputStyle}
+          placeholder="Email"
+          placeholderTextColor="gray"
           onChangeText={this.emailHandler}
         />
         <TouchableOpacity
           style={styles.confirmButton}
           onPress={this.confirmHandler}
         >
-            <Text style={{ color: 'white', fontWeight: '500' }}>ADD CONTACT</Text>
+          <Text style={{ color: 'white', fontWeight: '500' }}>ADD CONTACT</Text>
         </TouchableOpacity>
       </View>
     );
@@ -117,50 +151,50 @@ phoneNumberHandler = val => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#222222',
-    },
-    icons: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 55
-    },
-    shareIcon: {
-        position: 'relative',
-        right: 120
-    },
-    addIcon: {
-        position: 'relative',
-        left: 120
-    },
-    mainText: {
-        color: 'white',
-        fontSize: 30,
-        fontWeight: 'bold',
-        width: 300,
-        textAlign: 'center'
-    },
-    textInputStyle: {
-        width: 300,
-        marginTop: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: 'white',
-        fontSize: 17,
-        height: 32,
-        color: 'white'
-    },
-    confirmButton: {
-        width: 300,
-        marginTop: 30,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#4A90E2',
-        height: 32
-    }
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#222222',
+  },
+  icons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 55
+  },
+  shareIcon: {
+    position: 'relative',
+    right: 120
+  },
+  addIcon: {
+    position: 'relative',
+    left: 120
+  },
+  mainText: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold',
+    width: 300,
+    textAlign: 'center'
+  },
+  textInputStyle: {
+    width: 300,
+    marginTop: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: 'white',
+    fontSize: 17,
+    height: 32,
+    color: 'white'
+  },
+  confirmButton: {
+    width: 300,
+    marginTop: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#4A90E2',
+    height: 32
+  }
 });
 
 export default AddUser;
