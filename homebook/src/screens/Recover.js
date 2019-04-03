@@ -20,11 +20,11 @@ class Recover extends Component {
         return(
             <View style={styles.container}>
                 <Text style={styles.mainText}>Reset Password</Text>
-                <Text style={styles.subText}>Phone Number</Text>
+                <Text style={styles.subText}>Email</Text>
                 <TextInput
                     keyboardType="number-pad"
                     style={styles.phoneInfo}
-                    placeholder="Phone Number"
+                    placeholder="Email"
                     placeholderTextColor="gray"
                     onChangeText={this.phoneHandler}
                   />

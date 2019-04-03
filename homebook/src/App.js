@@ -1,6 +1,7 @@
 import { Navigation } from "react-native-navigation";
 const { registerScreens } = require('./screens').default;
 import * as firebase from 'firebase';
+require("firebase/firestore");
 
 var config = {
   apiKey: "AIzaSyDq2nsaA2bJ4mxXDIj7l0W_JOttKfEx2IM",
@@ -11,6 +12,20 @@ var config = {
   messagingSenderId: "912143095807"
 };
 firebase.initializeApp(config);
+
+var db = firebase.firestore();
+
+db.collection("users").add({
+  first: "Ada",
+  last: "Lovelace",
+  born: 1815
+})
+.then(function(docRef) {
+  console.log("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+  console.error("Error adding document: ", error);
+});
 
 firebase.auth().signOut().then(function() {
   // Sign-out successful.
