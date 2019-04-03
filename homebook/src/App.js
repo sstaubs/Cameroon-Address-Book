@@ -26,7 +26,7 @@ function start(){
         stack:{
           children:[{
             component:{
-              name: "HomeScreen"
+              name: "LoginScreen"
             }
 
           }]

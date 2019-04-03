@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View,Text,StyleSheet,TextInput,TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Octicons';
+import * as firebase from 'firebase';
 
 class HomeScreen extends Component {
     state = {
@@ -14,6 +15,8 @@ class HomeScreen extends Component {
             phone: val,
         });
     };
+
+
 
     popToLogin = () => Navigation.pop(this.props.componentId);
 
