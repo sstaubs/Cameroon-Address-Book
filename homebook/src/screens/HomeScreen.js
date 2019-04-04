@@ -10,33 +10,50 @@ import * as firebase from 'firebase';
 class HomeScreen extends Component {
     state = {
         firstname: '',
-        lastname: ''
+        lastname: '',
+        docId: '',
+        friendNameArray: [],
+        referenceArray:[],
     };
 
     componentDidMount() {
         var db = firebase.firestore();
-       
+
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
                 //alert(doc.data().email);
                 //alert(doc.id, " => ", doc.data());
+                //alert(doc)
+
+                db.collection("users").doc(doc.id).collection("friends").get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {          
+                        this.setState({
+                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " +doc.data().lastN ]),
+                            referenceArray: this.state.friendNameArray.concat([doc.data().refpoint.id]),
+                        });
+                    });
+                }).catch(function (error) {
+                    alert("Error getting documents: " + error);
+                });
 
                 this.setState({
-                    
+
                     firstname: doc.data().firstN,
                     lastname: doc.data().lastN,
+                    docId: doc.id,
                 });
-                
-                
+
+
             });
-        
-            
+
+
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
+
         
-       
+
 
     }
 
@@ -65,6 +82,8 @@ class HomeScreen extends Component {
         
         //currently the "share-icon" is being used as the logout button.
         //Simply need to shift which icon is used to logout.
+
+
         return (
 
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -85,7 +104,7 @@ class HomeScreen extends Component {
                         <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity>
-                        <Text style={styles.bodyText}>Person 1</Text>
+                        <Text style={styles.bodyText}>{this.state.friendNameArray[0]}</Text>
                     </TouchableOpacity>
                     <View
                         style={{
@@ -95,7 +114,7 @@ class HomeScreen extends Component {
                         }}
                     />
                     <TouchableOpacity>
-                        <Text style={styles.bodyText}>Person 2</Text>
+                        <Text style={styles.bodyText}>{this.state.friendNameArray[1]}</Text>
                     </TouchableOpacity>
                     <View
                         style={{
@@ -105,7 +124,7 @@ class HomeScreen extends Component {
                         }}
                     />
                     <TouchableOpacity>
-                        <Text style={styles.bodyText}>Person 3</Text>
+                        <Text style={styles.bodyText}></Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

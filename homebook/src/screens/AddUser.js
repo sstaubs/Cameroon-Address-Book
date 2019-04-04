@@ -10,7 +10,7 @@ class AddUser extends Component {
     lastName: '',
     phone: '',
     email: '',
-    docId:'',
+    docId: '',
   };
 
   pushCloseButton = () => Navigation.pop(this.props.componentId, {
@@ -53,27 +53,27 @@ class AddUser extends Component {
 
   componentDidMount() {
     var db = firebase.firestore();
-   
-    db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            //alert(doc.data().email);
-            //alert(doc.id, " => ", doc.data());
 
-            this.setState({
-                
-              docId: doc.id,
-            });
-            
-            
+    db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        //alert(doc.data().email);
+        //alert(doc.id, " => ", doc.data());
+
+        this.setState({
+
+          docId: doc.id,
         });
-    
-        
+
+
+      });
+
+
     }).catch(function (error) {
-        alert("Error getting documents: " + error);
+      alert("Error getting documents: " + error);
     });
   }
-   
+
 
 
 
@@ -88,17 +88,36 @@ class AddUser extends Component {
     };
     var db = firebase.firestore();
 
-    
-    db.collection("users").doc(this.state.docId).collection("friends").add(accountInfo)
-      .then(function (docRef) {
-        //alert("Document written with ID: " + docRef.id);
+    db.collection("users").add(accountInfo)
+      .then((docRef) => {
+        
+        
+        const friendsInfo = {
+          firstN: this.state.firstName,
+          lastN: this.state.lastName,
+          phoneNum: this.state.phone,
+          email: this.state.email,
+          refpoint: docRef.id,
+        };
+        db.collection("users").doc(this.state.docId).collection("friends").add(friendsInfo)
+          .then((docRef) => {
+            //alert("Document written with ID: " + docRef.id);
+            
+          }).catch((error) => {
+            //alert("error here")
+           //alert("Error adding document: " + error);
+          });
+
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.error("Error adding document: ", error);
       });
 
-      this.pushHomeScreen()
-    
+    this.pushHomeScreen()
+
+
+
+
   };
 
   render() {
