@@ -9,10 +9,10 @@ class Recover extends Component {
         newPassword: ''
     };
 
-    pushHomeScreen() {
+    pushLoginScreen() {
         Navigation.push(this.props.componentId, {
           component: {
-            name: 'HomeScreen'
+            name: 'LoginScreen'
           }
         });
     };
@@ -24,9 +24,9 @@ class Recover extends Component {
     };
 
     //problem with this.state.email
-    sendEmailRecover () {
+    sendEmailRecover = val => {
         var auth = firebase.auth();
-        alert(this.state.email);
+        
         var emailAddress = this.state.email;
 
         auth.sendPasswordResetEmail(emailAddress).then(function () {
@@ -35,7 +35,7 @@ class Recover extends Component {
             // An error happened.
         });
 
-        this.pushHomeScreen();
+        this.pushLoginScreen();
     };
 
 //Below will be used in the settings page when created to change an existing password
