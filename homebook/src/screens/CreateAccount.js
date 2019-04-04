@@ -10,18 +10,19 @@ class CreateAccount extends Component {
     email: '',
     password: ''
   };
-  pushHomeScreen() {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'HomeScreen'
-      }
-    });
-  };
+
+  pushSetLocation = () => Navigation.push(this.props.componentId, {
+    component: {
+      name: 'SetLocation'
+    }
+  });
+
   firstNameHandler = val => {
     this.setState({
       firstName: val,
     });
   };
+
   lastNameHandler = val => {
     this.setState({
       lastName: val,
@@ -61,7 +62,6 @@ class CreateAccount extends Component {
         console.log(error);
       });
 
-
     var user = firebase.auth().currentUser;
     if (user) {
       const accountInfo = {
@@ -83,7 +83,6 @@ class CreateAccount extends Component {
       this.pushHomeScreen()
     }
   };
-
 
   render() {
     return (
@@ -138,8 +137,9 @@ class CreateAccount extends Component {
         <TouchableOpacity
           style={styles.confirmButton}
           onPress={this.confirmHandler}
+          onPress={this.pushSetLocation}
         >
-          <Text style={{ color: 'white', fontWeight: '500' }}>CONFIRM</Text>
+          <Text style={{ color: '#222222', fontWeight: '500' }}>CONFIRM</Text>
         </TouchableOpacity>
       </View>
     );
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 94,
-    backgroundColor: '#222222',
+    backgroundColor: '#222222'
   },
   mainText: {
     color: 'white',
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#70B456',
     height: 32
   }
 });
