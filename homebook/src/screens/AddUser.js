@@ -112,6 +112,7 @@ class AddUser extends Component {
       .catch((error) => {
         console.error("Error adding document: ", error);
       });
+      
 
     this.pushHomeScreen()
 

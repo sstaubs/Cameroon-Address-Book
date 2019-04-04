@@ -29,16 +29,16 @@ class Recover extends Component {
         
         var emailAddress = this.state.email;
 
-        auth.sendPasswordResetEmail(emailAddress).then(function () {
+        auth.sendPasswordResetEmail(emailAddress).then(() => {
         // Email sent.
-            alert("Reset Email has been sent to ", this.state.email);
+        this.pushLoginScreen();
         }).catch(function (error) {
+            alert(error);
             // An error happened.
             alert("Not a valid email address");
         });
 
-        this.pushLoginScreen();
-
+        
     };
 
 //Below will be used in the settings page when created to change an existing password
