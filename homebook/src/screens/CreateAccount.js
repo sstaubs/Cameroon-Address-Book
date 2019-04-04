@@ -8,7 +8,8 @@ class CreateAccount extends Component {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    phone: ''
   };
 
   pushSetLocation = () => Navigation.push(this.props.componentId, {
@@ -50,6 +51,29 @@ class CreateAccount extends Component {
   confirmHandler = val => {
 
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => {
+        var user = firebase.auth().currentUser;
+        if (user) {
+          const accountInfo = {
+            firstN: this.state.firstName,
+            lastN: this.state.lastName,
+            email: this.state.email,
+            phoneNum: this.state.phone,
+            uid: user.uid
+          };
+          var db = firebase.firestore();
+          db.collection("users").add(accountInfo)
+            .then(function (docRef) {
+              //alert("Document written with ID: " + docRef.id);
+            })
+            .catch(function (error) {
+              console.error("Error adding document: ", error);
+            });
+
+          this.pushHomeScreen()
+        }
+
+      })
       .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -62,26 +86,7 @@ class CreateAccount extends Component {
         console.log(error);
       });
 
-    var user = firebase.auth().currentUser;
-    if (user) {
-      const accountInfo = {
-        firstN: this.state.firstName,
-        lastN: this.state.lastName,
-        email: this.state.email,
-        phoneNum: this.state.phone,
-        uid: user.uid
-      };
-      var db = firebase.firestore();
-      db.collection("users").add(accountInfo)
-      .then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id);
-      })
-      .catch(function(error) {
-        console.error("Error adding document: ", error);
-      });
 
-      this.pushHomeScreen()
-    }
   };
 
   render() {

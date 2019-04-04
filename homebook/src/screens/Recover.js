@@ -1,59 +1,97 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import { Navigation } from 'react-native-navigation';
+import * as firebase from 'firebase';
 
 class Recover extends Component {
     state = {
-        phone: '',
-        password: ''
-      };
+        email: '',
+        newPassword: ''
+    };
 
-    phoneHandler = val => {
-        this.setState({
-            phone: val,
+    pushLoginScreen() {
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'LoginScreen'
+          }
         });
     };
 
-    popToLogin = () => Navigation.pop(this.props.componentId);
+    emailHandler = val => {
+        this.setState({
+            email: val,
+        });
+    };
 
-    render(){
-        return(
-            <View style={styles.container}>
-                <Text style={styles.mainText}>Reset Password</Text>
-                <Text style={styles.subText}>Email</Text>
-                <TextInput
-                    keyboardType="number-pad"
-                    style={styles.phoneInfo}
-                    placeholder="Email"
-                    placeholderTextColor="gray"
-                    onChangeText={this.phoneHandler}
-                  />
-                <TouchableOpacity
-                    style={styles.sendButton}
-                    onPress={this.popToLogin}
-                >
-                <Text style={{ color: 'white', fontWeight: '500' }}>SEND</Text>
-                </TouchableOpacity>
-            </View>
-        );
+    //problem with this.state.email
+    sendEmailRecover = val => {
+        var auth = firebase.auth();
+
+        var emailAddress = this.state.email;
+
+        auth.sendPasswordResetEmail(emailAddress).then(() => {
+        // Email sent.
+        this.pushLoginScreen();
+        }).catch(function (error) {
+            alert(error);
+            // An error happened.
+            alert("Not a valid email address");
+        });
+
+
+    };
+
+//Below will be used in the settings page when created to change an existing password
+/*
+    changePassword = val => {
+        var user = firebase.auth().currentUser;
+        user.updatePassword(this.state.newPassword).then(() => {
+            alert("Password was changed");
+        }).catch((error) => {
+            alert(error.message);
+        });
     }
+*/
+popToLogin = () => Navigation.pop(this.props.componentId);
+
+render(){
+    return (
+        <View style={styles.container}>
+            <Text style={styles.mainText}>Reset Password</Text>
+            <Text style={styles.subText}>Email</Text>
+            <TextInput
+                keyboardType="number-pad"
+                style={styles.phoneInfo}
+                placeholder="Email"
+                placeholderTextColor="gray"
+                onChangeText={this.emailHandler}
+            />
+            <TouchableOpacity
+                style={styles.sendButton}
+                onPress={this.sendEmailRecover}
+            >
+                <Text style={{ color: 'white', fontWeight: '500' }}>SEND</Text>
+            </TouchableOpacity>
+        </View>
+    );
+}
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      padding: 94,
-      backgroundColor: '#222222',
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 94,
+        backgroundColor: '#222222',
     },
     mainText: {
-      color: 'white',
-      fontSize: 30,
-      fontWeight: 'bold',
-      width: 300,
-      textAlign: 'center'
+        color: 'white',
+        fontSize: 30,
+        fontWeight: 'bold',
+        width: 300,
+        textAlign: 'center'
     },
     subText: {
         color: 'white',

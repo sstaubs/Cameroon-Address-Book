@@ -6,15 +6,67 @@ import * as firebase from 'firebase';
 
 class HomeScreen extends Component {
     state = {
-        phone: '',
-        password: ''
+        firstname: '',
+        lastname: '',
+        docId: '',
+        friendNameArray: [],
+        referenceArray:[],
     };
 
-    phoneHandler = val => {
-        this.setState({
-            phone: val,
+    componentDidMount() {
+        var db = firebase.firestore();
+
+        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                //alert(doc.data().email);
+                //alert(doc.id, " => ", doc.data());
+                //alert(doc)
+
+                db.collection("users").doc(doc.id).collection("friends").get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {          
+                        this.setState({
+                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " +doc.data().lastN ]),
+                            referenceArray: this.state.friendNameArray.concat([doc.data().refpoint.id]),
+                        });
+                    });
+                }).catch(function (error) {
+                    alert("Error getting documents: " + error);
+                });
+
+                this.setState({
+
+                    firstname: doc.data().firstN,
+                    lastname: doc.data().lastN,
+                    docId: doc.id,
+                });
+
+
+            });
+
+
+        }).catch(function (error) {
+            alert("Error getting documents: " + error);
         });
-    };
+        
+
+        
+
+
+    }
+
+    pushLoginScreen() {
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'LoginScreen'
+          }
+        });
+      }
+
+    pushSignout = () => {
+        firebase.auth().signOut();
+        this.pushLoginScreen();
+    }
 
     pushAddUser = () => Navigation.push(this.props.componentId, {
         component: {
@@ -25,22 +77,19 @@ class HomeScreen extends Component {
     popToLogin = () => Navigation.pop(this.props.componentId);
 
     render() {
-        var db = firebase.firestore();
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
-                // doc.data() is never undefined for query doc snapshots
-                alert(doc.data().email);
-                //alert(doc.id, " => ", doc.data());
-            });
-        })
-            .catch(function (error) {
-                alert("Error getting documents: " + error);
-            });
+        
+        //currently the "share-icon" is being used as the logout button.
+        //Simply need to shift which icon is used to logout.
+
+
         return (
+
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={styles.container}>
                     <View style={styles.icons}>
-                        <TouchableOpacity style={styles.shareIcon}>
+                        <TouchableOpacity 
+                            style={styles.shareIcon}
+                            onPress={this.pushSignout}>
                             <Icon size={25} name='ios-share-alt' color='white' />
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -50,20 +99,10 @@ class HomeScreen extends Component {
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity>
-                        <Text style={styles.mainText}>Simon Stauber</Text>
+                        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity>
-                        <Text style={styles.bodyText}>Person 1</Text>
-                    </TouchableOpacity>
-                    <View
-                        style={{
-                            borderBottomColor: 'white',
-                            borderBottomWidth: 1,
-                            width: '75%'
-                        }}
-                    />
-                    <TouchableOpacity>
-                        <Text style={styles.bodyText}>Person 2</Text>
+                        <Text style={styles.bodyText}>{this.state.friendNameArray[0]}</Text>
                     </TouchableOpacity>
                     <View
                         style={{
@@ -73,7 +112,17 @@ class HomeScreen extends Component {
                         }}
                     />
                     <TouchableOpacity>
-                        <Text style={styles.bodyText}>Person 3</Text>
+                        <Text style={styles.bodyText}>{this.state.friendNameArray[1]}</Text>
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            borderBottomColor: 'white',
+                            borderBottomWidth: 1,
+                            width: '75%'
+                        }}
+                    />
+                    <TouchableOpacity>
+                        <Text style={styles.bodyText}></Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

@@ -45,30 +45,29 @@ class Login extends Component {
   //has a bug that makes you click that makes you click login twice
   EnterLogin = val => {
 
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-    .catch(function(error) {
-      // Handle Errors here.
-
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if (errorCode === 'auth/wrong-password') {
-        alert('Wrong password.');
-
-
-      } else {
-        alert(errorMessage);
-
-
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
+      var user = firebase.auth().currentUser;
+      if (user) {
+        this.pushHomeScreen();
       }
-      console.log(error);
-    });
-    var user = firebase.auth().currentUser;
-    if(user){
+    })
+      .catch(function (error) {
+        // Handle Errors here.
+
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/wrong-password') {
+          alert('Wrong password.');
 
 
-      this.pushHomeScreen();
+        } else {
+          alert(errorMessage);
 
-    }
+
+        }
+        console.log(error);
+      });
+
   };
 
 
