@@ -70,7 +70,7 @@ class CreateAccount extends Component {
               console.error("Error adding document: ", error);
             });
 
-          this.pushHomeScreen()
+          this.pushSetLocation()
         }
 
       })
@@ -142,7 +142,7 @@ class CreateAccount extends Component {
         <TouchableOpacity
           style={styles.confirmButton}
           onPress={this.confirmHandler}
-          onPress={this.pushSetLocation}
+          
         >
           <Text style={{ color: '#222222', fontWeight: '500' }}>CONFIRM</Text>
         </TouchableOpacity>
