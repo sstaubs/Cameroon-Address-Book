@@ -51,6 +51,7 @@ class HomeScreen extends Component {
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
+        
 
         
 
