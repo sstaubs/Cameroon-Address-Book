@@ -110,9 +110,6 @@ class AddUser extends Component {
             onPress={this.pushCloseButton}>
             <Icon size={35} name='ios-close' color='white' />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.addIcon}>
-            <Icon size={35} name='ios-checkmark' color='white' />
-          </TouchableOpacity>
         </View>
         <Text style={styles.mainText}>Add Contact</Text>
         <TextInput

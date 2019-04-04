@@ -40,7 +40,18 @@ class HomeScreen extends Component {
 
     }
 
+    pushLoginScreen() {
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'LoginScreen'
+          }
+        });
+      }
 
+    pushSignout = () => {
+        firebase.auth().signOut();
+        this.pushLoginScreen();
+    }
 
     pushAddUser = () => Navigation.push(this.props.componentId, {
         component: {
@@ -52,13 +63,16 @@ class HomeScreen extends Component {
 
     render() {
         
-
+        //currently the "share-icon" is being used as the logout button.
+        //Simply need to shift which icon is used to logout.
         return (
 
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={styles.container}>
                     <View style={styles.icons}>
-                        <TouchableOpacity style={styles.shareIcon}>
+                        <TouchableOpacity 
+                            style={styles.shareIcon}
+                            onPress={this.pushSignout}>
                             <Icon size={25} name='ios-share-alt' color='white' />
                         </TouchableOpacity>
                         <TouchableOpacity
