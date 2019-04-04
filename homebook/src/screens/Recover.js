@@ -31,11 +31,14 @@ class Recover extends Component {
 
         auth.sendPasswordResetEmail(emailAddress).then(function () {
         // Email sent.
+            alert("Reset Email has been sent to ", this.state.email);
         }).catch(function (error) {
             // An error happened.
+            alert("Not a valid email address");
         });
 
         this.pushLoginScreen();
+
     };
 
 //Below will be used in the settings page when created to change an existing password
