@@ -98,7 +98,7 @@ class HomeScreen extends Component {
                         }}
                     />
                     <TouchableOpacity>
-                        <Text style={styles.bodyText}></Text>
+                        <Text style={styles.bodyText}>{this.state.friendNameArray[1]}</Text>
                     </TouchableOpacity>
                     <View
                         style={{
