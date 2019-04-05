@@ -33,7 +33,12 @@ function start(){
               name: "LoginScreen"
             }
 
-          }]
+          }],
+          options: {
+            topBar: {
+              visible: false
+            }
+          }
         }
       }
     });
