@@ -24,7 +24,7 @@ class HomeScreen extends Component {
                 //alert(doc)
 
                 db.collection("users").doc(doc.id).collection("friends").get().then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {          
+                    querySnapshot.forEach((doc) => {
                         this.setState({
                             friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " +doc.data().lastN ]),
                             referenceArray: this.state.friendNameArray.concat([doc.data().refpoint.id]),
@@ -48,9 +48,9 @@ class HomeScreen extends Component {
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
-        
 
-        
+
+
 
 
     }
@@ -77,7 +77,7 @@ class HomeScreen extends Component {
     popToLogin = () => Navigation.pop(this.props.componentId);
 
     render() {
-        
+
         //currently the "share-icon" is being used as the logout button.
         //Simply need to shift which icon is used to logout.
 
@@ -87,10 +87,10 @@ class HomeScreen extends Component {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={styles.container}>
                     <View style={styles.icons}>
-                        <TouchableOpacity 
+                        <TouchableOpacity
                             style={styles.shareIcon}
                             onPress={this.pushSignout}>
-                            <Icon size={25} name='ios-share-alt' color='white' />
+                            <Icon size={25} name='ios-log-out' color='white' />
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.addIcon}

@@ -80,6 +80,7 @@ class Login extends Component {
           <Text style={styles.mainText}>HomeBook</Text>
           <Text style={styles.supportingText}>Addressing Your Home</Text>
           <TextInput
+            autoCapitalize="none"
             keyboardType='email-address'
             style={styles.phoneInfo}
             placeholder="Email"
