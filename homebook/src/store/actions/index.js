@@ -1,0 +1,1 @@
+export {getReference } from './person';

@@ -1,15 +1,37 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, StatusBar } from 'react-native';
+import { Navigation } from 'react-native-navigation';
+import * as firebase from 'firebase';
 
-export default class App extends Component {
+class Login extends Component {
   state = {
-    phone: '',
-    password: ''
+    email: '',
+    password: '',
+    firstLoading: true,
   };
 
-  phoneHandler = val => {
+  pushRecovery = () => Navigation.push(this.props.componentId, {
+    component: {
+      name: 'RecoveryScreen'
+    }
+  });
+
+  pushCreateAccount = () => Navigation.push(this.props.componentId, {
+    component: {
+      name: 'CreateAccountScreen'
+    }
+  });
+
+
+  pushHomeScreen = () => Navigation.push(this.props.componentId, {
+    component: {
+      name: 'HomeScreen'
+    }
+  });
+
+  emailHandler = val => {
     this.setState({
-      phone: val,
+      email: val,
     });
   };
 
@@ -19,21 +41,58 @@ export default class App extends Component {
     });
   };
 
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user && this.state.firstLoading) {
+          this.pushHomeScreen();
+      } else {
+        this.setState({ firstLoading: false });
+      }
+    });
+  }
+
+  EnterLogin = val => {
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
+      this.pushHomeScreen();
+    })
+      .catch(function (error) {
+        // Handle Errors here.
+
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/wrong-password') {
+          alert('Wrong password.');
+
+
+        } else {
+          alert(errorMessage);
+
+
+        }
+        console.log(error);
+      });
+
+  };
+
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar backgroundColor="#5E8D48" barStyle="light-content" />
         <View>
           <Text style={styles.mainText}>HomeBook</Text>
           <Text style={styles.supportingText}>Addressing Your Home</Text>
           <TextInput
-            keyboardType="number-pad"
+            autoCapitalize="none"
+            keyboardType='email-address'
             style={styles.phoneInfo}
-            placeholder="Phone Number"
+            placeholder="Email"
             placeholderTextColor="gray"
-            value={this.state.phone}
-            onChangeText={this.phoneHandler}
+            value={this.state.email}
+            onChangeText={this.emailHandler}
           />
           <TextInput
+            secureTextEntry={true}
             style={styles.passwordInfo}
             placeholder="Password"
             placeholderTextColor="gray"
@@ -43,18 +102,18 @@ export default class App extends Component {
           <View style={styles.buttons}>
             <TouchableOpacity
               style={styles.loginButton}
-              onPress={this.phoneHandler}
+              onPress={this.EnterLogin}
             >
               <Text style={{ color: '#222222', fontWeight: '500' }}>LOGIN</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.signupButton}
-              onPress={this.phoneHandler}
+              onPress={this.pushCreateAccount}
             >
               <Text style={{ color: '#70B456', fontWeight: '500' }}>CREATE ACCOUNT</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.linkText}>FORGOT PASSWORD?</Text>
+          <Text onPress={this.pushRecovery} style={styles.linkText}>FORGOT PASSWORD?</Text>
         </View>
       </View>
     );
@@ -67,14 +126,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    padding: 200,
     backgroundColor: '#222222',
   },
   mainText: {
     color: 'white',
     fontSize: 30,
     fontWeight: 'bold',
-    width: 300,
+    marginTop: 200,
     textAlign: 'center'
   },
   supportingText: {
@@ -87,8 +145,8 @@ const styles = StyleSheet.create({
   phoneInfo: {
     width: 300,
     marginTop: 50,
-    padding: 5,
-    borderWidth: 1,
+    paddingBottom: 2,
+    borderBottomWidth: 1,
     borderColor: 'white',
     fontSize: 17,
     height: 32,
@@ -97,14 +155,15 @@ const styles = StyleSheet.create({
   passwordInfo: {
     width: 300,
     marginTop: 20,
-    padding: 5,
-    borderWidth: 1,
+    paddingBottom: 2,
+    borderBottomWidth: 1,
     borderColor: 'white',
     fontSize: 17,
     height: 32,
     color: 'white'
   },
   buttons: {
+    marginTop: 20,
     width: 300,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -134,3 +193,5 @@ const styles = StyleSheet.create({
     marginTop: 20
   }
 });
+
+module.exports = Login;
