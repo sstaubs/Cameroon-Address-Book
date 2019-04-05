@@ -40,32 +40,30 @@ class HomeScreen extends Component {
                     lastname: doc.data().lastN,
                     docId: doc.id,
                 });
-
-
             });
-
 
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
-
-
-
-
-
     }
 
-    pushLoginScreen() {
-        Navigation.push(this.props.componentId, {
+    popLoginScreen() {
+        Navigation.pop(this.props.componentId, {
           component: {
             name: 'LoginScreen'
           }
         });
       }
+      pushUserProfile = () => Navigation.push(this.props.componentId, {
+        component: {
+          name: 'UserProfile'
+        }
+      });
 
-    pushSignout = () => {
+
+    popSignout = () => {
         firebase.auth().signOut();
-        this.pushLoginScreen();
+        this.popLoginScreen();
     }
 
     pushAddUser = () => Navigation.push(this.props.componentId, {
@@ -74,64 +72,57 @@ class HomeScreen extends Component {
         }
     });
 
-    popToLogin = () => Navigation.pop(this.props.componentId);
-
     render() {
-
-        //currently the "share-icon" is being used as the logout button.
-        //Simply need to shift which icon is used to logout.
-
-
         return (
-
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <View style={styles.container}>
-                    <View style={styles.icons}>
-                        <TouchableOpacity
-                            style={styles.shareIcon}
-                            onPress={this.pushSignout}>
-                            <Icon size={25} name='ios-log-out' color='white' />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.addIcon}
-                            onPress={this.pushAddUser}>
-                            <Icon size={35} name='ios-add' color='white' />
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity>
-                        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+            <View style={styles.container}>
+                <View style={styles.icons}>
+                    <TouchableOpacity
+                        style={styles.shareIcon}
+                        onPress={this.popSignout}>
+                        <Icon size={25} name='ios-log-out' color='white' />
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={styles.bodyText}>{this.state.friendNameArray[0]}</Text>
-                    </TouchableOpacity>
-                    <View
-                        style={{
-                            borderBottomColor: 'white',
-                            borderBottomWidth: 1,
-                            width: '75%'
-                        }}
-                    />
-                    <TouchableOpacity>
-                        <Text style={styles.bodyText}>{this.state.friendNameArray[1]}</Text>
-                    </TouchableOpacity>
-                    <View
-                        style={{
-                            borderBottomColor: 'white',
-                            borderBottomWidth: 1,
-                            width: '75%'
-                        }}
-                    />
-                    <TouchableOpacity>
-                        <Text style={styles.bodyText}></Text>
+                    <TouchableOpacity
+                        style={styles.addIcon}
+                        onPress={this.pushAddUser}>
+                        <Icon size={35} name='ios-add' color='white' />
                     </TouchableOpacity>
                 </View>
-            </ScrollView>
+                <TouchableOpacity
+                    onPress={this.pushUserProfile}>
+                    <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.bodyText}>{this.state.friendNameArray[0]}</Text>
+                </TouchableOpacity>
+                <View
+                    style={{
+                        borderBottomColor: 'white',
+                        borderBottomWidth: 1,
+                        width: '75%'
+                    }}
+                />
+                <TouchableOpacity>
+                    <Text style={styles.bodyText}>{this.state.friendNameArray[1]}</Text>
+                </TouchableOpacity>
+                <View
+                    style={{
+                        borderBottomColor: 'white',
+                        borderBottomWidth: 1,
+                        width: '75%'
+                    }}
+                />
+                <TouchableOpacity>
+                    <Text style={styles.bodyText}></Text>
+                </TouchableOpacity>
+            </View>
         );
     }
 };
 
 const styles = StyleSheet.create({
-
+    outerContainer: {
+        flex: 1
+    },
     container: {
         flex: 1,
         flexDirection: 'column',
