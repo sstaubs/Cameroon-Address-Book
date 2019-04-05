@@ -16,15 +16,17 @@ class UserProfile extends Component {
 
   pushCloseButton = () => Navigation.pop(this.props.componentId, {
     component: {
-      name: 'UserProfile'
+      name: 'AddUser'
     }
   });
 
-  pushEditButton = () => Navigation.push(this.props.componentId, {
-    component: {
-      name: 'EditUser'
-    }
-  });
+  pushHomeScreen() {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'HomeScreen'
+      }
+    });
+  }
 
   firstNameHandler = val => {
     this.setState({
@@ -58,14 +60,9 @@ class UserProfile extends Component {
         // doc.data() is never undefined for query doc snapshots
         //alert(doc.data().email);
         //alert(doc.id, " => ", doc.data());
-        //alert(doc)
 
         this.setState({
 
-          firstname: doc.data().firstN,
-          lastname: doc.data().lastN,
-          phone: doc.data().phoneNum,
-          email: doc.data().email,
           docId: doc.id,
         });
 
@@ -76,11 +73,54 @@ class UserProfile extends Component {
     }).catch(function (error) {
       alert("Error getting documents: " + error);
     });
-
-
   }
 
 
+
+
+  confirmHandler = val => {
+
+
+    const accountInfo = {
+      firstN: this.state.firstName,
+      lastN: this.state.lastName,
+      phoneNum: this.state.phone,
+      email: this.state.email,
+    };
+    var db = firebase.firestore();
+
+    db.collection("users").add(accountInfo)
+      .then((docRef) => {
+
+
+        const friendsInfo = {
+          firstN: this.state.firstName,
+          lastN: this.state.lastName,
+          phoneNum: this.state.phone,
+          email: this.state.email,
+          refpoint: docRef.id,
+        };
+        db.collection("users").doc(this.state.docId).collection("friends").add(friendsInfo)
+          .then((docRef) => {
+            //alert("Document written with ID: " + docRef.id);
+
+          }).catch((error) => {
+            //alert("error here")
+           //alert("Error adding document: " + error);
+          });
+
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
+      });
+
+
+    this.pushHomeScreen()
+
+
+
+
+  };
 
   render() {
     return (
@@ -91,25 +131,38 @@ class UserProfile extends Component {
             onPress={this.pushCloseButton}>
             <Icon size={35} name='ios-close' color='white' />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.addIcon}
-            onPress={this.pushEditButton}>
-            <Text style={{color: "white"}}>Edit</Text>
-          </TouchableOpacity>
         </View>
-        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+        <Text style={styles.mainText}>Add Contact</Text>
         <TextInput
           style={styles.textInputStyle}
-          placeholder={this.state.phone}
+          placeholder="First Name"
+          placeholderTextColor="gray"
+          onChangeText={this.firstNameHandler}
+        />
+        <TextInput
+          style={styles.textInputStyle}
+          placeholder="Last Name"
+          placeholderTextColor="gray"
+          onChangeText={this.lastNameHandler}
+        />
+        <TextInput
+          style={styles.textInputStyle}
+          placeholder="Phone Number"
           placeholderTextColor="gray"
           onChangeText={this.phoneNumberHandler}
         />
         <TextInput
           style={styles.textInputStyle}
-          placeholder={this.state.email}
+          placeholder="Email"
           placeholderTextColor="gray"
           onChangeText={this.emailHandler}
         />
+        <TouchableOpacity
+          style={styles.confirmButton}
+          onPress={this.confirmHandler}
+        >
+          <Text style={{ color: 'white', fontWeight: '500' }}>ADD CONTACT</Text>
+        </TouchableOpacity>
       </View>
     );
   }

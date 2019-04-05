@@ -19,9 +19,8 @@ class AddUser extends Component {
     }
   });
 
-  
-  popHomeScreen() {
-    Navigation.pop(this.props.componentId, {
+  pushHomeScreen() {
+    Navigation.push(this.props.componentId, {
       component: {
         name: 'HomeScreen'
       }
@@ -115,7 +114,7 @@ class AddUser extends Component {
       });
 
 
-    this.popHomeScreen()
+    this.pushHomeScreen()
 
 
 
