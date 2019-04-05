@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        padding: 94,
         backgroundColor: '#222222',
     },
     backIcon: {
@@ -107,7 +106,8 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         width: 300,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 24
     },
     subText: {
         color: 'white',
