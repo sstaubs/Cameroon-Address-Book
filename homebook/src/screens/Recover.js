@@ -9,6 +9,12 @@ class Recover extends Component {
         newPassword: ''
     };
 
+    backArrow = () => Navigation.pop(this.props.componentId, {
+        component: {
+          name: 'LoginScreen'
+        }
+      });
+
     pushLoginScreen() {
         Navigation.push(this.props.componentId, {
           component: {
@@ -57,6 +63,12 @@ popToLogin = () => Navigation.pop(this.props.componentId);
 render(){
     return (
         <View style={styles.container}>
+            <TouchableOpacity
+            style={styles.backIcon}
+            onPress={this.backArrow}
+            >
+            <Icon size={25} name='ios-arrow-back' color='white' />
+            </TouchableOpacity>
             <Text style={styles.mainText}>Reset Password</Text>
             <Text style={styles.subText}>Email</Text>
             <TextInput
@@ -86,6 +98,11 @@ const styles = StyleSheet.create({
         padding: 94,
         backgroundColor: '#222222',
     },
+    backIcon: {
+        position: 'relative',
+        right: 140,
+        marginTop: 70
+      },
     mainText: {
         color: 'white',
         fontSize: 30,
