@@ -6,7 +6,9 @@ import * as firebase from 'firebase';
 class Login extends Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    loading: true,
+    authenticated: false,
   };
 
   pushRecovery = () => Navigation.push(this.props.componentId, {
@@ -41,9 +43,22 @@ class Login extends Component {
   };
 
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ loading: false, authenticated: true });
+        this.pushHomeScreen();
+      } else {
+        this.setState({ loading: false, authenticated: false });
+      }
+    });
+  }
+
+
 
   //has a bug that makes you click that makes you click login twice
   EnterLogin = val => {
+
 
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
       var user = firebase.auth().currentUser;
@@ -67,6 +82,10 @@ class Login extends Component {
         }
         console.log(error);
       });
+
+
+
+
 
   };
 
