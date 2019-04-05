@@ -80,8 +80,6 @@ class HomeScreen extends Component {
         }
     });
 
-    popToLogin = () => Navigation.pop(this.props.componentId);
-
     render() {
 
         //currently the "share-icon" is being used as the logout button.

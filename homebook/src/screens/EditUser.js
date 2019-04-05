@@ -15,18 +15,10 @@ class AddUser extends Component {
 
   pushCloseButton = () => Navigation.pop(this.props.componentId, {
     component: {
-      name: 'AddUser'
+      name: 'EditUser'
     }
   });
 
-  
-  popHomeScreen() {
-    Navigation.pop(this.props.componentId, {
-      component: {
-        name: 'HomeScreen'
-      }
-    });
-  }
 
   firstNameHandler = val => {
     this.setState({
@@ -60,9 +52,14 @@ class AddUser extends Component {
         // doc.data() is never undefined for query doc snapshots
         //alert(doc.data().email);
         //alert(doc.id, " => ", doc.data());
+        //alert(doc)
 
         this.setState({
 
+          firstname: doc.data().firstN,
+          lastname: doc.data().lastN,
+          phone: doc.data().phoneNum,
+          email: doc.data().email,
           docId: doc.id,
         });
 
@@ -73,6 +70,8 @@ class AddUser extends Component {
     }).catch(function (error) {
       alert("Error getting documents: " + error);
     });
+
+
   }
 
 
@@ -89,8 +88,8 @@ class AddUser extends Component {
     };
     var db = firebase.firestore();
 
-    db.collection("users").add(accountInfo)
-      .then((docRef) => {
+    db.collection("users").update(accountInfo)
+   /*   .then((docRef) => {
 
 
         const friendsInfo = {
@@ -112,10 +111,10 @@ class AddUser extends Component {
       })
       .catch((error) => {
         console.error("Error adding document: ", error);
-      });
+      });*/
 
 
-    this.popHomeScreen()
+    this.UserProfile();
 
 
 
@@ -132,29 +131,29 @@ class AddUser extends Component {
             <Icon size={35} name='ios-close' color='white' />
           </TouchableOpacity>
         </View>
-        <Text style={styles.mainText}>Add Contact</Text>
+        <Text style={styles.mainText}>Edit Contact</Text>
         <TextInput
           style={styles.textInputStyle}
-          placeholder="First Name"
+          placeholder={this.state.firstname}
           placeholderTextColor="gray"
           onChangeText={this.firstNameHandler}
         />
         <TextInput
           style={styles.textInputStyle}
-          placeholder="Last Name"
+          placeholder={this.state.lastname}
           placeholderTextColor="gray"
           onChangeText={this.lastNameHandler}
         />
         <TextInput
           style={styles.textInputStyle}
-          placeholder="Phone Number"
+          placeholder={this.state.phone}
           placeholderTextColor="gray"
           onChangeText={this.phoneNumberHandler}
         />
         <TextInput
           style={styles.textInputStyle}
           autoCapitalize='none'
-          placeholder="Email"
+          placeholder={this.state.email}
           placeholderTextColor="gray"
           onChangeText={this.emailHandler}
         />
@@ -162,7 +161,7 @@ class AddUser extends Component {
           style={styles.confirmButton}
           onPress={this.confirmHandler}
         >
-          <Text style={{ color: 'white', fontWeight: '500' }}>ADD CONTACT</Text>
+          <Text style={{ color: 'white', fontWeight: '500' }}>SUBMIT</Text>
         </TouchableOpacity>
       </View>
     );
