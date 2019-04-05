@@ -23,7 +23,7 @@ class HomeScreen extends Component {
                 //alert(doc.id, " => ", doc.data());
                 //alert(doc)
 
-                db.collection("users").doc(doc.id).collection("friends").get().then((querySnapshot) => {
+                db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {          
                         this.setState({
                             friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " +doc.data().lastN ]),
