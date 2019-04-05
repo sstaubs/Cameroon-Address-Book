@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, StatusBar } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import * as firebase from 'firebase';
 
@@ -76,6 +76,7 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar backgroundColor="#5E8D48" barStyle="light-content" />
         <View>
           <Text style={styles.mainText}>HomeBook</Text>
           <Text style={styles.supportingText}>Addressing Your Home</Text>
