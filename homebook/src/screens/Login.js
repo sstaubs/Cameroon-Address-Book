@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, StatusBar } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 
 class Login extends Component {
