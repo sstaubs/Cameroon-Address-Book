@@ -56,23 +56,28 @@ class UserProfile extends Component {
     var db = firebase.firestore();
 
     db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        //alert(doc.data().email);
-        //alert(doc.id, " => ", doc.data());
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            //alert(doc.data().email);
+            //alert(doc.id, " => ", doc.data());
+            //alert(doc)
 
-        this.setState({
+            this.setState({
 
-          docId: doc.id,
+                firstname: doc.data().firstN,
+                lastname: doc.data().lastN,
+                docId: doc.id,
+            });
+
+
         });
 
 
-      });
-
-
     }).catch(function (error) {
-      alert("Error getting documents: " + error);
+        alert("Error getting documents: " + error);
     });
+
+
   }
 
 
@@ -132,19 +137,7 @@ class UserProfile extends Component {
             <Icon size={35} name='ios-close' color='white' />
           </TouchableOpacity>
         </View>
-        <Text style={styles.mainText}>Add Contact</Text>
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder="First Name"
-          placeholderTextColor="gray"
-          onChangeText={this.firstNameHandler}
-        />
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder="Last Name"
-          placeholderTextColor="gray"
-          onChangeText={this.lastNameHandler}
-        />
+        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
         <TextInput
           style={styles.textInputStyle}
           placeholder="Phone Number"

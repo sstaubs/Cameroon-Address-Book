@@ -19,6 +19,7 @@ class AddUser extends Component {
     }
   });
 
+  
   pushHomeScreen() {
     Navigation.push(this.props.componentId, {
       component: {

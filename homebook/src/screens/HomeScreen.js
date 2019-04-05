@@ -54,6 +54,12 @@ class HomeScreen extends Component {
           }
         });
       }
+      pushUserProfile = () => Navigation.push(this.props.componentId, {
+        component: {
+          name: 'UserProfile'
+        }
+      });
+
 
     popSignout = () => {
         firebase.auth().signOut();
