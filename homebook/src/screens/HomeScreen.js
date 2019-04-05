@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -10,7 +10,7 @@ class HomeScreen extends Component {
         lastname: '',
         docId: '',
         friendNameArray: [],
-        referenceArray: [],
+        referenceArray:[],
     };
 
     componentDidMount() {
@@ -25,99 +25,109 @@ class HomeScreen extends Component {
 
                 db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
-
                         this.setState({
-                            
-
-
-                        
-
-                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
-                            referenceArray: this.state.friendNameArray.concat([doc.data().refpoint]),
+                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " +doc.data().lastN ]),
+                            referenceArray: this.state.friendNameArray.concat([doc.data().refpoint.id]),
                         });
+                    });
+                }).catch(function (error) {
+                    alert("Error getting documents: " + error);
                 });
-            }).catch(function (error) {
-                alert("Error getting documents: " + error);
+
+                this.setState({
+
+                    firstname: doc.data().firstN,
+                    lastname: doc.data().lastN,
+                    docId: doc.id,
+                });
+
+
             });
 
-            this.setState({
 
-                firstname: doc.data().firstN,
-                lastname: doc.data().lastN,
-                docId: doc.id,
-            });
-
-
+        }).catch(function (error) {
+            alert("Error getting documents: " + error);
         });
 
 
-    }).catch(function(error) {
-        alert("Error getting documents: " + error);
-    });
 
 
 
+    }
 
-
-}
-
-pushLoginScreen() {
-    Navigation.push(this.props.componentId, {
-        component: {
+    pushLoginScreen() {
+        Navigation.push(this.props.componentId, {
+          component: {
             name: 'LoginScreen'
+          }
+        });
+      }
+
+    pushSignout = () => {
+        firebase.auth().signOut();
+        this.pushLoginScreen();
+    }
+
+    pushAddUser = () => Navigation.push(this.props.componentId, {
+        component: {
+            name: 'AddUser'
         }
     });
-}
 
-pushSignout = () => {
-    firebase.auth().signOut();
-    this.pushLoginScreen();
-}
+    popToLogin = () => Navigation.pop(this.props.componentId);
 
-pushAddUser = () => Navigation.push(this.props.componentId, {
-    component: {
-        name: 'AddUser'
-    }
-});
+    render() {
 
-popToLogin = () => Navigation.pop(this.props.componentId);
-
-render() {
-
-    //currently the "share-icon" is being used as the logout button.
-    //Simply need to shift which icon is used to logout.
+        //currently the "share-icon" is being used as the logout button.
+        //Simply need to shift which icon is used to logout.
 
 
-    return (
+        return (
 
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View style={styles.container}>
-                <View style={styles.icons}>
-                    <TouchableOpacity
-                        style={styles.shareIcon}
-                        onPress={this.pushSignout}>
-                        <Icon size={25} name='ios-log-out' color='white' />
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <View style={styles.container}>
+                    <View style={styles.icons}>
+                        <TouchableOpacity
+                            style={styles.shareIcon}
+                            onPress={this.pushSignout}>
+                            <Icon size={25} name='ios-log-out' color='white' />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.addIcon}
+                            onPress={this.pushAddUser}>
+                            <Icon size={35} name='ios-add' color='white' />
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity>
+                        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.addIcon}
-                        onPress={this.pushAddUser}>
-                        <Icon size={35} name='ios-add' color='white' />
+                    <TouchableOpacity>
+                        <Text style={styles.bodyText}>{this.state.friendNameArray[0]}</Text>
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            borderBottomColor: 'white',
+                            borderBottomWidth: 1,
+                            width: '75%'
+                        }}
+                    />
+                    <TouchableOpacity>
+                        <Text style={styles.bodyText}>{this.state.friendNameArray[1]}</Text>
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            borderBottomColor: 'white',
+                            borderBottomWidth: 1,
+                            width: '75%'
+                        }}
+                    />
+                    <TouchableOpacity>
+                        <Text style={styles.bodyText}></Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity>
-                    <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-                </TouchableOpacity>
-                <FlatList
-                    data={
-                        this.state.friendNameArray
-                    }
-
-                    renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
-                />
-            </View>
-        </ScrollView>
-    );
-}
+            </ScrollView>
+        );
+    }
 };
 
 const styles = StyleSheet.create({
@@ -147,11 +157,6 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginTop: 25,
         color: 'white'
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
     },
     bodyText: {
         fontSize: 20,
