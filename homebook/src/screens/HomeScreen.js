@@ -55,17 +55,17 @@ class HomeScreen extends Component {
 
     }
 
-    pushLoginScreen() {
-        Navigation.push(this.props.componentId, {
+    popLoginScreen() {
+        Navigation.pop(this.props.componentId, {
           component: {
             name: 'LoginScreen'
           }
         });
       }
 
-    pushSignout = () => {
+    popSignout = () => {
         firebase.auth().signOut();
-        this.pushLoginScreen();
+        this.popLoginScreen();
     }
 
     pushAddUser = () => Navigation.push(this.props.componentId, {
@@ -89,7 +89,7 @@ class HomeScreen extends Component {
                     <View style={styles.icons}>
                         <TouchableOpacity
                             style={styles.shareIcon}
-                            onPress={this.pushSignout}>
+                            onPress={this.popSignout}>
                             <Icon size={25} name='ios-log-out' color='white' />
                         </TouchableOpacity>
                         <TouchableOpacity

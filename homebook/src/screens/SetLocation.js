@@ -50,7 +50,7 @@ class SetLocation extends Component {
     };
 
     locationPickedHandler = location => {
-        this.setState(preState => {
+        this.setState(prevState => {
             return {
                 controls: {
                     ...prevState.controls,
