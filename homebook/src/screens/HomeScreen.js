@@ -125,7 +125,37 @@ class HomeScreen extends Component {
                         <Text style={styles.bodyText}></Text>
                     </TouchableOpacity>
                 </View>
+<<<<<<< HEAD
             </ScrollView>
+=======
+                <TouchableOpacity>
+                    <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.bodyText}>{this.state.friendNameArray[0]}</Text>
+                </TouchableOpacity>
+                <View
+                    style={{
+                        borderBottomColor: 'white',
+                        borderBottomWidth: 1,
+                        width: '75%'
+                    }}
+                />
+                <TouchableOpacity>
+                    <Text style={styles.bodyText}>{this.state.friendNameArray[1]}</Text>
+                </TouchableOpacity>
+                <View
+                    style={{
+                        borderBottomColor: 'white',
+                        borderBottomWidth: 1,
+                        width: '75%'
+                    }}
+                />
+                <TouchableOpacity>
+                    <Text style={styles.bodyText}></Text>
+                </TouchableOpacity>
+            </View>
+>>>>>>> parent of 359775e... DONT TOUCH THIS
         );
     }
 };
