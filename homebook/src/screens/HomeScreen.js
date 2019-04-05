@@ -10,7 +10,7 @@ class HomeScreen extends Component {
         lastname: '',
         docId: '',
         friendNameArray: [],
-        referenceArray:[],
+        referenceArray: [],
     };
 
     componentDidMount() {
@@ -26,7 +26,7 @@ class HomeScreen extends Component {
                 db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
                         this.setState({
-                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " +doc.data().lastN ]),
+                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
                             referenceArray: this.state.friendNameArray.concat([doc.data().refpoint.id]),
                         });
                     });
@@ -49,16 +49,16 @@ class HomeScreen extends Component {
 
     popLoginScreen() {
         Navigation.pop(this.props.componentId, {
-          component: {
-            name: 'LoginScreen'
-          }
+            component: {
+                name: 'LoginScreen'
+            }
         });
-      }
-      pushUserProfile = () => Navigation.push(this.props.componentId, {
+    }
+    pushUserProfile = () => Navigation.push(this.props.componentId, {
         component: {
-          name: 'UserProfile'
+            name: 'UserProfile'
         }
-      });
+    });
 
 
     popSignout = () => {
@@ -89,6 +89,7 @@ class HomeScreen extends Component {
                         <Icon size={35} name='ios-add' color='white' />
                     </TouchableOpacity>
                 </View>
+
                 <TouchableOpacity
                     onPress={this.pushUserProfile}>
                     <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
@@ -117,6 +118,7 @@ class HomeScreen extends Component {
                     <Text style={styles.bodyText}></Text>
                 </TouchableOpacity>
             </View>
+
         );
     }
 };
