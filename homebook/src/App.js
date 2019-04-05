@@ -15,13 +15,6 @@ firebase.initializeApp(config);
 
 
 
-
-firebase.auth().signOut().then(function() {
-  // Sign-out successful.
-}).catch(function(error) {
-  // An error happened.
-});
-
 function start(){
   registerScreens();
   Navigation.events().registerAppLaunchedListener(() => {
