@@ -34,8 +34,6 @@ class Recover extends Component {
         this.pushLoginScreen();
         }).catch(function (error) {
             alert(error);
-            // An error happened.
-            alert("Not a valid email address");
         });
 
 
