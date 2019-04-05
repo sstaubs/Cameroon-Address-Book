@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -27,7 +27,7 @@ class HomeScreen extends Component {
                     querySnapshot.forEach((doc) => {
                         this.setState({
                             friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
-                            referenceArray: this.state.friendNameArray.concat([doc.data().refpoint.id]),
+                            referenceArray: this.state.friendNameArray.concat([doc.data().refpoint]),
                         });
                     });
                 }).catch(function (error) {
@@ -94,29 +94,22 @@ class HomeScreen extends Component {
                     onPress={this.pushUserProfile}>
                     <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.bodyText}>{this.state.friendNameArray[0]}</Text>
-                </TouchableOpacity>
-                <View
-                    style={{
-                        borderBottomColor: 'white',
-                        borderBottomWidth: 1,
-                        width: '75%'
-                    }}
+
+
+                <FlatList
+                    data={
+                        this.state.friendNameArray
+
+                    }
+                    renderItem={({ item }) =>
+                        <TouchableOpacity >
+                            <Text> {item}</Text>
+                        </TouchableOpacity>}
+
                 />
-                <TouchableOpacity>
-                    <Text style={styles.bodyText}>{this.state.friendNameArray[1]}</Text>
-                </TouchableOpacity>
-                <View
-                    style={{
-                        borderBottomColor: 'white',
-                        borderBottomWidth: 1,
-                        width: '75%'
-                    }}
-                />
-                <TouchableOpacity>
-                    <Text style={styles.bodyText}></Text>
-                </TouchableOpacity>
+
+
+
             </View>
 
         );
