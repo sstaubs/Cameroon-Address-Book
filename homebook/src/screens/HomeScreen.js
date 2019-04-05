@@ -27,139 +27,134 @@ class HomeScreen extends Component {
                     querySnapshot.forEach((doc) => {
 
                         this.setState({
-                            
-
-
-                        
-
                             friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
                             referenceArray: this.state.friendNameArray.concat([doc.data().refpoint]),
                         });
+                    });
                 });
+
             }).catch(function (error) {
                 alert("Error getting documents: " + error);
             });
+        });
+    } 
 
-            this.setState({
-
-                firstname: doc.data().firstN,
-                lastname: doc.data().lastN,
-                docId: doc.id,
+    popLoginScreen() {
+                Navigation.pop(this.props.componentId, {
+                    component: {
+                        name: 'LoginScreen'
+                    }
+                });
+            }
+      pushUserProfile = () => Navigation.push(this.props.componentId, {
+                component: {
+                    name: 'UserProfile'
+                }
             });
 
 
-        });
-
-
-    }).catch(function(error) {
-        alert("Error getting documents: " + error);
-    });
-
-
-
-
-
-}
-
-pushLoginScreen() {
-    Navigation.push(this.props.componentId, {
-        component: {
-            name: 'LoginScreen'
+        popSignout = () => {
+            firebase.auth().signOut();
+            this.popLoginScreen();
         }
-    });
-}
 
-pushSignout = () => {
-    firebase.auth().signOut();
-    this.pushLoginScreen();
-}
+        pushLoginScreen() {
+            Navigation.push(this.props.componentId, {
+                component: {
+                    name: 'LoginScreen'
+                }
+            });
+        }
 
-pushAddUser = () => Navigation.push(this.props.componentId, {
-    component: {
-        name: 'AddUser'
-    }
-});
-
-popToLogin = () => Navigation.pop(this.props.componentId);
-
-render() {
-
-    //currently the "share-icon" is being used as the logout button.
-    //Simply need to shift which icon is used to logout.
-
-
-    return (
-
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View style={styles.container}>
-                <View style={styles.icons}>
+        render() {
+            return (
+                <View style={styles.container}>
+                    <View style={styles.icons}>
+                        <TouchableOpacity
+                            style={styles.shareIcon}
+                            onPress={this.popSignout}>
+                            <Icon size={25} name='ios-log-out' color='white' />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.addIcon}
+                            onPress={this.pushAddUser}>
+                            <Icon size={35} name='ios-add' color='white' />
+                        </TouchableOpacity>
+                    </View>
                     <TouchableOpacity
-                        style={styles.shareIcon}
-                        onPress={this.pushSignout}>
-                        <Icon size={25} name='ios-log-out' color='white' />
+                        onPress={this.pushUserProfile}>
+                        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.addIcon}
-                        onPress={this.pushAddUser}>
-                        <Icon size={35} name='ios-add' color='white' />
+                    <TouchableOpacity>
+                        <Text style={styles.bodyText}>{this.state.friendNameArray[0]}</Text>
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            borderBottomColor: 'white',
+                            borderBottomWidth: 1,
+                            width: '75%'
+                        }}
+                    />
+                    <TouchableOpacity>
+                        <Text style={styles.bodyText}>{this.state.friendNameArray[1]}</Text>
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            borderBottomColor: 'white',
+                            borderBottomWidth: 1,
+                            width: '75%'
+                        }}
+                    />
+                    <TouchableOpacity>
+                        <Text style={styles.bodyText}></Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity>
-                    <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-                </TouchableOpacity>
-                <FlatList
-                    data={
-                        this.state.friendNameArray
-                    }
+            );
+        }
+    };
 
-                    renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
-                />
-            </View>
-        </ScrollView>
-    );
-}
-};
+    const styles = StyleSheet.create({
+        outerContainer: {
+            flex: 1
+        },
+        container: {
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            backgroundColor: '#222222'
+        },
+        icons: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 55
+        },
+        shareIcon: {
+            position: 'relative',
+            right: 120
+        },
+        addIcon: {
+            position: 'relative',
+            left: 120
+        },
+        mainText: {
+            fontWeight: 'bold',
+            fontSize: 30,
+            marginTop: 25,
+            color: 'white'
+        },
+        item: {
+            padding: 10,
+            fontSize: 18,
+            height: 44,
+        },
+        bodyText: {
+            fontSize: 20,
+            color: 'white',
+            marginTop: 14.5,
+            marginBottom: 13.5,
+            right: 100
+        }
+    });
 
-const styles = StyleSheet.create({
-
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#222222'
-    },
-    icons: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 55
-    },
-    shareIcon: {
-        position: 'relative',
-        right: 120
-    },
-    addIcon: {
-        position: 'relative',
-        left: 120
-    },
-    mainText: {
-        fontWeight: 'bold',
-        fontSize: 30,
-        marginTop: 25,
-        color: 'white'
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-    },
-    bodyText: {
-        fontSize: 20,
-        color: 'white',
-        marginTop: 14.5,
-        marginBottom: 13.5,
-        right: 100
-    }
-});
-
-export default HomeScreen;
+    export default HomeScreen;

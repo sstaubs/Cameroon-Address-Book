@@ -52,12 +52,7 @@ class Login extends Component {
     });
   }
 
-
-
-  //has a bug that makes you click that makes you click login twice
   EnterLogin = val => {
-
-
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
       this.pushHomeScreen();
     })
@@ -78,17 +73,9 @@ class Login extends Component {
         console.log(error);
       });
 
-
-
-
-
   };
 
-
-
-
   render() {
-
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor="#5E8D48" barStyle="light-content" />
@@ -139,14 +126,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    padding: 200,
     backgroundColor: '#222222',
   },
   mainText: {
     color: 'white',
     fontSize: 30,
     fontWeight: 'bold',
-    width: 300,
+    marginTop: 200,
     textAlign: 'center'
   },
   supportingText: {
@@ -159,8 +145,8 @@ const styles = StyleSheet.create({
   phoneInfo: {
     width: 300,
     marginTop: 50,
-    padding: 5,
-    borderWidth: 1,
+    paddingBottom: 2,
+    borderBottomWidth: 1,
     borderColor: 'white',
     fontSize: 17,
     height: 32,
@@ -169,14 +155,15 @@ const styles = StyleSheet.create({
   passwordInfo: {
     width: 300,
     marginTop: 20,
-    padding: 5,
-    borderWidth: 1,
+    paddingBottom: 2,
+    borderBottomWidth: 1,
     borderColor: 'white',
     fontSize: 17,
     height: 32,
     color: 'white'
   },
   buttons: {
+    marginTop: 20,
     width: 300,
     flexDirection: 'row',
     justifyContent: 'space-between',
