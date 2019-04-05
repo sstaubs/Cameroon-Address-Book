@@ -62,6 +62,12 @@ class HomeScreen extends Component {
           }
         });
       }
+      pushUserProfile = () => Navigation.push(this.props.componentId, {
+        component: {
+          name: 'UserProfile'
+        }
+      });
+
 
     pushSignout = () => {
         firebase.auth().signOut();
@@ -98,7 +104,8 @@ class HomeScreen extends Component {
                             <Icon size={35} name='ios-add' color='white' />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={this.pushUserProfile}>
                         <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity>
