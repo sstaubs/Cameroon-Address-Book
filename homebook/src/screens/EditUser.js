@@ -126,7 +126,7 @@ class AddUser extends Component {
       <View style={styles.container}>
         <View style={styles.icons}>
           <TouchableOpacity
-            style={styles.shareIcon}
+            style={styles.closeIcon}
             onPress={this.pushCloseButton}>
             <Icon size={35} name='ios-close' color='white' />
           </TouchableOpacity>
@@ -181,20 +181,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 55
   },
-  shareIcon: {
+  closeIcon: {
     position: 'relative',
-    right: 120
-  },
-  addIcon: {
-    position: 'relative',
-    left: 120
+    right: 140
   },
   mainText: {
-    color: 'white',
-    fontSize: 30,
     fontWeight: 'bold',
-    width: 300,
-    textAlign: 'center'
+    fontSize: 30,
+    marginTop: 25,
+    color: 'white'
   },
   textInputStyle: {
     width: 300,

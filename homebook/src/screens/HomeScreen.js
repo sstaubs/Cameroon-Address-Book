@@ -97,13 +97,14 @@ class HomeScreen extends Component {
 
 
                 <FlatList
+                    style={styles.list}
                     data={
                         this.state.friendNameArray
 
                     }
                     renderItem={({ item }) =>
-                        <TouchableOpacity >
-                            <Text> {item}</Text>
+                        <TouchableOpacity>
+                            <Text style={styles.bodyText}>{item}</Text>
                         </TouchableOpacity>}
 
                 />
@@ -146,12 +147,14 @@ const styles = StyleSheet.create({
         marginTop: 25,
         color: 'white'
     },
+    list: {
+        marginTop: 20,
+        right: 80
+    },
     bodyText: {
-        fontSize: 20,
         color: 'white',
-        marginTop: 14.5,
-        marginBottom: 13.5,
-        right: 100
+        marginTop: 10,
+        fontSize: 18
     }
 });
 

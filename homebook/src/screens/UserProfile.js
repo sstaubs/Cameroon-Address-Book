@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
@@ -92,24 +92,19 @@ class UserProfile extends Component {
             <Icon size={35} name='ios-close' color='white' />
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.addIcon}
+            style={styles.edit}
             onPress={this.pushEditButton}>
             <Text style={{color: "white"}}>Edit</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder={this.state.phone}
-          placeholderTextColor="gray"
-          onChangeText={this.phoneNumberHandler}
-        />
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder={this.state.email}
-          placeholderTextColor="gray"
-          onChangeText={this.emailHandler}
-        />
+        <View style={styles.alignment}>
+          <Text style={styles.category}>Phone Number</Text>
+          <Text style={styles.textInputStyle}>{this.state.phone}</Text>
+          <Text style={styles.category}>Email</Text>
+          <Text style={styles.textInputStyle}>{this.state.email}</Text>
+          <Text style={styles.category}>Coordinates</Text>
+        </View>
       </View>
     );
   }
@@ -132,25 +127,30 @@ const styles = StyleSheet.create({
     position: 'relative',
     right: 120
   },
-  addIcon: {
+  edit: {
     position: 'relative',
     left: 120
   },
   mainText: {
-    color: 'white',
-    fontSize: 30,
     fontWeight: 'bold',
-    width: 300,
-    textAlign: 'center'
+    fontSize: 30,
+    marginTop: 25,
+    color: 'white'
+  },
+  alignment: {
+    marginTop: 15,
+    right: 60
+  },
+  category: {
+    marginTop: 23,
+    fontWeight: 'bold',
+    fontSize: 17,
+    color: 'white',
   },
   textInputStyle: {
-    width: 300,
-    marginTop: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: 'white',
+    marginTop: 5,
     fontSize: 17,
-    height: 32,
-    color: 'white'
+    color: 'white',
   },
   confirmButton: {
     width: 300,
