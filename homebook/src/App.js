@@ -15,8 +15,6 @@ firebase.initializeApp(config);
 
 
 
-
-
 function start(){
   registerScreens();
   Navigation.events().registerAppLaunchedListener(() => {

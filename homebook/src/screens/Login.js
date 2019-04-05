@@ -7,8 +7,7 @@ class Login extends Component {
   state = {
     email: '',
     password: '',
-    loading: true,
-    authenticated: false,
+    firstLoading: true,
   };
 
   pushRecovery = () => Navigation.push(this.props.componentId, {
@@ -45,11 +44,10 @@ class Login extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({ loading: false, authenticated: true });
-        this.pushHomeScreen();
+      if (user && this.state.firstLoading) {
+          this.pushHomeScreen();
       } else {
-        this.setState({ loading: false, authenticated: false });
+        this.setState({ firstLoading: false });
       }
     });
   }
@@ -61,10 +59,7 @@ class Login extends Component {
 
 
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
-      var user = firebase.auth().currentUser;
-      if (user) {
-        this.pushHomeScreen();
-      }
+      this.pushHomeScreen();
     })
       .catch(function (error) {
         // Handle Errors here.
@@ -93,6 +88,7 @@ class Login extends Component {
 
 
   render() {
+    
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor="#5E8D48" barStyle="light-content" />
