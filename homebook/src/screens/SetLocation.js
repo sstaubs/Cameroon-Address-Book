@@ -12,7 +12,12 @@ class SetLocation extends Component {
             latitudeDelta: 0.0122,
             longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122
         },
-        locationChosen: false
+        locationChosen: false,
+        location: {
+            value: null,
+            valid: false,
+
+        }
     };
 
     pushHomeScreen = () => Navigation.push(this.props.componentId, {
@@ -37,6 +42,24 @@ class SetLocation extends Component {
                 },
                 locationChosen: true
             };
+        });
+        this.props.onLocationPick({
+            latitude: coords.latitude,
+            longitude: coords.longitude
+        });
+    };
+
+    locationPickedHandler = location => {
+        this.setState(preState => {
+            return {
+                controls: {
+                    ...prevState.controls,
+                    location: {
+                        valid: location,
+                        valid: true
+                    }
+                }
+            }
         });
     }
 
@@ -84,6 +107,7 @@ class SetLocation extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.confirmButton}
+                        onLocationPick={this.locationPickedHandler}
                         onPress={this.pushHomeScreen}
                     >
                         <Text style={{ color: '#222222', fontWeight: '500' }}>CONFIRM COORDINATES</Text>

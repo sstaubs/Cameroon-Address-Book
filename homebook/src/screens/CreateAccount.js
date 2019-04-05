@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
+import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 
 class CreateAccount extends Component {
@@ -15,6 +16,12 @@ class CreateAccount extends Component {
   pushSetLocation = () => Navigation.push(this.props.componentId, {
     component: {
       name: 'SetLocation'
+    }
+  });
+
+  backArrow = () => Navigation.pop(this.props.componentId, {
+    component: {
+      name: 'LoginScreen'
     }
   });
 
@@ -92,6 +99,12 @@ class CreateAccount extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.backIcon}
+          onPress={this.backArrow}
+        >
+          <Icon size={25} name='ios-arrow-back' color='white' />
+        </TouchableOpacity>
         <Text style={styles.mainText}>Create Account</Text>
         <Text style={styles.subText}>First Name</Text>
         <TextInput
@@ -158,15 +171,20 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    padding: 94,
     backgroundColor: '#222222'
+  },
+  backIcon: {
+    position: 'relative',
+    right: 140,
+    marginTop: 70
   },
   mainText: {
     color: 'white',
     fontSize: 30,
     fontWeight: 'bold',
     width: 300,
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: 24
   },
   subText: {
     color: 'white',
