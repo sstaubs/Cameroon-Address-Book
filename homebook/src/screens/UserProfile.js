@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 
-class AddUser extends Component {
+class UserProfile extends Component {
   state = {
     firstName: '',
     lastName: '',
@@ -152,7 +153,6 @@ class AddUser extends Component {
         />
         <TextInput
           style={styles.textInputStyle}
-          autoCapitalize='none'
           placeholder="Email"
           placeholderTextColor="gray"
           onChangeText={this.emailHandler}
@@ -215,4 +215,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddUser;
+export default UserProfile;

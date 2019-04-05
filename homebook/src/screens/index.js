@@ -6,6 +6,7 @@ import CreateAccount from './CreateAccount';
 import HomeScreen from './HomeScreen';
 import AddUser from './AddUser';
 import SetLocation from './SetLocation';
+import UserProfile from './UserProfile';
 
 function registerScreens(){
     Navigation.registerComponent('LoginScreen', () => Login);
@@ -14,6 +15,7 @@ function registerScreens(){
     Navigation.registerComponent('HomeScreen', () => HomeScreen);
     Navigation.registerComponent('AddUser', () => AddUser);
     Navigation.registerComponent('SetLocation', () => SetLocation);
+    Navigation.registerComponent('UserProfile', () => UserProfile);
 }
 
 export default {

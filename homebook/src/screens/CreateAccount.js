@@ -70,7 +70,7 @@ class CreateAccount extends Component {
               console.error("Error adding document: ", error);
             });
 
-          this.pushHomeScreen()
+          this.pushSetLocation()
         }
 
       })
@@ -96,53 +96,54 @@ class CreateAccount extends Component {
         <Text style={styles.subText}>First Name</Text>
         <TextInput
           style={styles.phoneInfo}
-          placeholder="First Name"
-          placeholderTextColor="gray"
+          placeholder='First Name'
+          placeholderTextColor='gray'
           onChangeText={this.firstNameHandler}
         />
         <Text style={styles.sub2Text}>Last Name</Text>
         <TextInput
           style={styles.phoneInfo}
-          placeholder="Last Name"
-          placeholderTextColor="gray"
+          placeholder='Last Name'
+          placeholderTextColor='gray'
           onChangeText={this.lastNameHandler}
         />
         <Text style={styles.sub2Text}>Password</Text>
         <TextInput
           secureTextEntry={true}
           style={styles.phoneInfo}
-          placeholder="Password"
-          placeholderTextColor="gray"
+          placeholder='Password'
+          placeholderTextColor='gray'
           onChangeText={this.passwordHandler}
         />
         <Text style={styles.sub2Text}>Confirm Password</Text>
         <TextInput
           secureTextEntry={true}
           style={styles.phoneInfo}
-          placeholder="Enter Password"
-          placeholderTextColor="gray"
+          placeholder='Enter Password'
+          placeholderTextColor='gray'
           onChangeText={this.passwordHandler}
         />
         <Text style={styles.sub2Text}>Phone Number</Text>
         <TextInput
           keyboardType='number-pad'
           style={styles.phoneInfo}
-          placeholder="Enter Phone Number"
-          placeholderTextColor="gray"
+          placeholder='Enter Phone Number'
+          placeholderTextColor='gray'
           onChangeText={this.phoneHandler}
         />
         <Text style={styles.sub2Text}>Email</Text>
         <TextInput
+          autoCapitalize='none'
           keyboardType='email-address'
           style={styles.phoneInfo}
-          placeholder="Enter Email"
-          placeholderTextColor="gray"
+          placeholder='Enter Email'
+          placeholderTextColor='gray'
           onChangeText={this.emailHandler}
         />
         <TouchableOpacity
           style={styles.confirmButton}
           onPress={this.confirmHandler}
-          onPress={this.pushSetLocation}
+
         >
           <Text style={{ color: '#222222', fontWeight: '500' }}>CONFIRM</Text>
         </TouchableOpacity>
