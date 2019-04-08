@@ -7,76 +7,59 @@ import * as firebase from 'firebase';
 class SetLocation extends Component {
     state = {
         focusedLocation: {
-            latitude: 37.7900352,
-            longitude: -122.4013727,
-            latitudeDelta: 0.0122,
-            longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122
+          latitude: 37.7900352,
+          longitude: -122.4013726,
+          latitudeDelta: 0.0122,
+          longitudeDelta:
+            Dimensions.get("window").width /
+            Dimensions.get("window").height *
+            0.0122
         },
-        locationChosen: false,
-        location: {
-            value: null,
-            valid: false,
+        locationChosen: false
+      };
 
-        }
-    };
+      pickLocationHandler = event => {
+        const coords = event.nativeEvent.coordinate;
+        this.map.animateToRegion({
+          ...this.state.focusedLocation,
+          latitude: coords.latitude,
+          longitude: coords.longitude
+        });
+        this.setState(prevState => {
+          return {
+            focusedLocation: {
+              ...prevState.focusedLocation,
+              latitude: coords.latitude,
+              longitude: coords.longitude
+            },
+            locationChosen: true
+          };
+        });
+      };
+
+      getLocationHandler = () => {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const coordsEvent = {
+            nativeEvent: {
+              coordinate: {
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude
+              }
+            }
+          };
+          this.pickLocationHandler(coordsEvent);
+        },
+      err => {
+        console.log(err);
+        alert("Fetching the Position failed, please pick one manually!");
+      })
+      }
 
     pushHomeScreen = () => Navigation.push(this.props.componentId, {
         component: {
           name: 'HomeScreen'
         }
     });
-
-    pickLocationHandler = event => {
-        const coords = event.nativeEvent.coordinate;
-        this.map.animateToRegion({
-            ...this.state.focusedLocation,
-            latitude: coords.latitude,
-            longitude: coords.longitude
-        });
-        this.setState(prevState => {
-            return {
-                focusedLocation: {
-                    ...prevState.focusedLocation,
-                    latitude: coords.latitude,
-                    longitude: coords.longitude
-                },
-                locationChosen: true
-            };
-        });
-        this.props.onLocationPick({
-            latitude: coords.latitude,
-            longitude: coords.longitude
-        });
-    };
-
-    locationPickedHandler = location => {
-        this.setState(prevState => {
-            return {
-                controls: {
-                    ...prevState.controls,
-                    location: {
-                        valid: location,
-                        valid: true
-                    }
-                }
-            }
-        });
-    }
-
-    getLocationHandler = () => {
-        navigator.geolocation.getCurrentPosition(pos =>{
-            const coordsEvent = {
-                nativeEvent: {
-                    coordinate: {
-                        latitude: pos.coords.latitude,
-                        longitude: pos.coords.longitude
-                    }
-                }
-            };
-            this.pickLocationHandler(coordsEvent);
-        },
-        )
-    }
 
     render() {
         let marker = null;
@@ -92,6 +75,7 @@ class SetLocation extends Component {
                     <Text style={styles.subText}>Adjust pin to correct location</Text>
                     <MapView
                     initialRegion={this.state.focusedLocation}
+                    region={this.state.focusedLocation}
                     style={styles.map}
                     showsUserLocation = {true}
                     onPress={this.pickLocationHandler}
