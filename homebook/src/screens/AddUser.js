@@ -21,7 +21,7 @@ class AddUser extends Component {
 
 
   popHomeScreen() {
-    Navigation.pop(this.props.componentId, {
+    Navigation.push(this.props.componentId, {
       component: {
         name: 'HomeScreen'
       }
