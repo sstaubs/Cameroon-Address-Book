@@ -69,7 +69,6 @@ class SetLocation extends Component {
         }
 
         return (
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={styles.container}>
                     <Text style={styles.mainText}>Set Location</Text>
                     <Text style={styles.subText}>Adjust pin to correct location</Text>
@@ -97,7 +96,6 @@ class SetLocation extends Component {
                         <Text style={{ color: '#222222', fontWeight: '500' }}>CONFIRM COORDINATES</Text>
                     </TouchableOpacity>
                 </View>
-            </ScrollView>
         );
     }
 }
