@@ -18,6 +18,12 @@ class AddUser extends Component {
       name: 'EditUser'
     }
   });
+  
+  pushUserProfile = () => Navigation.push(this.props.componentId, {
+    component: {
+        name: 'UserProfile'
+    }
+});
 
 
   firstNameHandler = val => {
@@ -56,8 +62,8 @@ class AddUser extends Component {
 
         this.setState({
 
-          firstname: doc.data().firstN,
-          lastname: doc.data().lastN,
+          firstName: doc.data().firstN,
+          lastName: doc.data().lastN,
           phone: doc.data().phoneNum,
           email: doc.data().email,
           docId: doc.id,
@@ -79,7 +85,7 @@ class AddUser extends Component {
 
   confirmHandler = val => {
 
-
+    //alert(this.state.phone);
     const accountInfo = {
       firstN: this.state.firstName,
       lastN: this.state.lastName,
@@ -88,40 +94,25 @@ class AddUser extends Component {
     };
     var db = firebase.firestore();
 
-    db.collection("users").update(accountInfo)
-   /*   .then((docRef) => {
-
-
-        const friendsInfo = {
-          firstN: this.state.firstName,
-          lastN: this.state.lastName,
-          phoneNum: this.state.phone,
-          email: this.state.email,
-          refpoint: docRef.id,
-        };
-        db.collection("users").doc(this.state.docId).collection("friends").add(friendsInfo)
-          .then((docRef) => {
-            //alert("Document written with ID: " + docRef.id);
-
-          }).catch((error) => {
-            //alert("error here")
-           //alert("Error adding document: " + error);
-          });
-
+    db.collection("users").doc(this.state.docId).update(accountInfo)
+      .then(() => {
+        console.log("Document successfully updated!");
+      }).then(() => {
+        this.pushUserProfile()
       })
       .catch((error) => {
-        console.error("Error adding document: ", error);
-      });*/
+        // The document probably doesn't exist.
+        alert("Error updating document: "  + error);
+      });
 
-
-    this.UserProfile();
-
+    
 
 
 
   };
 
   render() {
+    
     return (
       <View style={styles.container}>
         <View style={styles.icons}>
@@ -134,13 +125,13 @@ class AddUser extends Component {
         <Text style={styles.mainText}>Edit Contact</Text>
         <TextInput
           style={styles.textInputStyle}
-          placeholder={this.state.firstname}
+          placeholder={this.state.firstName}
           placeholderTextColor="gray"
           onChangeText={this.firstNameHandler}
         />
         <TextInput
           style={styles.textInputStyle}
-          placeholder={this.state.lastname}
+          placeholder={this.state.lastName}
           placeholderTextColor="gray"
           onChangeText={this.lastNameHandler}
         />
