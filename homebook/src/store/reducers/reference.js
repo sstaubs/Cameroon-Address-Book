@@ -1,4 +1,4 @@
-import{GET_REF} from '../actions/actionTypes';
+import {GET_REF} from '../actions/actionTypes';
 const initialState = {
 
 }

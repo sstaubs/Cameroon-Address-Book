@@ -1,1 +1,1 @@
-export {getReference } from './person';
+export { getReference } from './reference';
