@@ -12,6 +12,8 @@ class UserProfile extends Component {
     phone: '',
     email: '',
     docId: '',
+    longitude:'',
+    latitude: '',
   };
 
   pushCloseButton = () => Navigation.pop(this.props.componentId, {
@@ -67,6 +69,8 @@ class UserProfile extends Component {
           phone: doc.data().phoneNum,
           email: doc.data().email,
           docId: doc.id,
+          longitude: doc.data().longitude,
+          latitude: doc.data().latitude,
         });
 
 
@@ -104,6 +108,9 @@ class UserProfile extends Component {
           <Text style={styles.category}>Email</Text>
           <Text style={styles.textInputStyle}>{this.state.email}</Text>
           <Text style={styles.category}>Coordinates</Text>
+          <Text style={styles.textInputStyle}>Longitude: {this.state.longitude} </Text>
+          <Text style={styles.textInputStyle}>Latitude: {this.state.latitude}  </Text>
+
         </View>
       </View>
     );
