@@ -25,9 +25,11 @@ class HomeScreen extends Component {
 
                 db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
+                        
                         this.setState({
+                            referenceArray: this.state.referenceArray.concat([doc.data().refpoint]),
                             friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
-                            referenceArray: this.state.friendNameArray.concat([doc.data().refpoint]),
+                            
                         });
                     });
                 }).catch(function (error) {
@@ -72,6 +74,11 @@ class HomeScreen extends Component {
         }
     });
 
+    friendHandler = val =>{
+        //alert(this.state.referenceArray[val])
+
+    };
+
 
 
     render() {
@@ -102,10 +109,14 @@ class HomeScreen extends Component {
                         this.state.friendNameArray
 
                     }
-                    renderItem={({ item }) =>
-                        <TouchableOpacity>
+                    renderItem= {({ item, index }) => 
+                        <TouchableOpacity
+                        onPress={() => this.friendHandler(index) }>
+                        
                             <Text style={styles.bodyText}>{item}</Text>
-                        </TouchableOpacity>}
+                            
+                        </TouchableOpacity>
+                    }
 
                 />
 
