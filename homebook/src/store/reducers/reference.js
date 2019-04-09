@@ -1,5 +1,6 @@
 import {GET_REF} from '../actions/actionTypes';
 const initialState = {
+    friendref: '',
 
 }
 
