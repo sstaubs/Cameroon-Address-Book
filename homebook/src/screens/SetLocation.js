@@ -15,7 +15,8 @@ class SetLocation extends Component {
             Dimensions.get("window").height *
             0.0122
         },
-        locationChosen: false
+        locationChosen: false,
+        docId: '',
       };
 
       pickLocationHandler = event => {
@@ -61,6 +62,46 @@ class SetLocation extends Component {
         }
     });
 
+    SetLocationAndPush = () => {
+      var db = firebase.firestore();
+      
+      db.collection("users").doc(this.state.docId).set({
+        latitude: this.state.focusedLocation.latitude,
+        longitude: this.state.focusedLocation.longitude,
+      },{merge: true})
+      .then(() => {
+        console.log("Document successfully updated!");
+      }).then(() => {
+        this.pushHomeScreen()
+      })
+      .catch((error) => {
+        // The document probably doesn't exist.
+        alert("Error updating document: "  + error);
+      });
+    
+    };
+    
+    componentDidMount() {
+      var db = firebase.firestore();
+  
+      db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          //alert(doc.data().email);
+          //alert(doc.id, " => ", doc.data());
+          //alert(doc)
+  
+          this.setState({
+            docId: doc.id,
+          });
+        });
+  
+      }).catch(function (error) {
+        alert("Error getting documents: " + error);
+      });
+  
+    }
+
     render() {
         let marker = null;
 
@@ -90,8 +131,8 @@ class SetLocation extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.confirmButton}
-                        onLocationPick={this.locationPickedHandler}
-                        onPress={this.pushHomeScreen}
+                        
+                        onPress={this.SetLocationAndPush}
                     >
                         <Text style={{ color: '#222222', fontWeight: '500' }}>CONFIRM COORDINATES</Text>
                     </TouchableOpacity>
