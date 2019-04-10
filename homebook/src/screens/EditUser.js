@@ -18,13 +18,12 @@ class AddUser extends Component {
       name: 'EditUser'
     }
   });
-  
+
   pushUserProfile = () => Navigation.push(this.props.componentId, {
     component: {
-        name: 'UserProfile'
+      name: 'UserProfile'
     }
-});
-
+  });
 
   firstNameHandler = val => {
     this.setState({
@@ -52,39 +51,26 @@ class AddUser extends Component {
 
   componentDidMount() {
     var db = firebase.firestore();
-
     db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         //alert(doc.data().email);
         //alert(doc.id, " => ", doc.data());
         //alert(doc)
-
         this.setState({
-
           firstName: doc.data().firstN,
           lastName: doc.data().lastN,
           phone: doc.data().phoneNum,
           email: doc.data().email,
           docId: doc.id,
         });
-
-
       });
-
-
     }).catch(function (error) {
       alert("Error getting documents: " + error);
     });
-
-
   }
 
-
-
-
   confirmHandler = val => {
-
     //alert(this.state.phone);
     const accountInfo = {
       firstN: this.state.firstName,
@@ -93,7 +79,6 @@ class AddUser extends Component {
       email: this.state.email,
     };
     var db = firebase.firestore();
-
     db.collection("users").doc(this.state.docId).update(accountInfo)
       .then(() => {
         console.log("Document successfully updated!");
@@ -102,17 +87,11 @@ class AddUser extends Component {
       })
       .catch((error) => {
         // The document probably doesn't exist.
-        alert("Error updating document: "  + error);
+        alert("Error updating document: " + error);
       });
-
-    
-
-
-
   };
 
   render() {
-    
     return (
       <View style={styles.container}>
         <View style={styles.icons}>
@@ -170,11 +149,8 @@ const styles = StyleSheet.create({
   icons: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 55
-  },
-  closeIcon: {
-    position: 'relative',
-    right: 140
+    marginTop: 55,
+    width: '80%'
   },
   mainText: {
     fontWeight: 'bold',
@@ -183,7 +159,7 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   textInputStyle: {
-    width: 300,
+    width: '80%',
     marginTop: 15,
     borderBottomWidth: 1,
     borderBottomColor: 'white',

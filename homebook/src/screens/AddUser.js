@@ -19,7 +19,6 @@ class AddUser extends Component {
     }
   });
 
-
   popHomeScreen() {
     Navigation.push(this.props.componentId, {
       component: {
@@ -54,29 +53,19 @@ class AddUser extends Component {
 
   componentDidMount() {
     var db = firebase.firestore();
-
     db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         //alert(doc.data().email);
         //alert(doc.id, " => ", doc.data());
-
         this.setState({
-
           docId: doc.id,
         });
-
-
       });
-
-
     }).catch(function (error) {
       alert("Error getting documents: " + error);
     });
   }
-
-
-
 
   confirmHandler = val => {
 
@@ -93,10 +82,9 @@ class AddUser extends Component {
         db.collection("users").doc(this.state.docId).collection("friends").add(friendsInfo)
           .then((docRef) => {
             //alert("Document written with ID: " + docRef.id);
-
           }).catch((error) => {
             //alert("error here")
-           //alert("Error adding document: " + error);
+            //alert("Error adding document: " + error);
           });
 
 
@@ -104,10 +92,6 @@ class AddUser extends Component {
 
 
     this.popHomeScreen()
-
-
-
-
   };
 
   render() {

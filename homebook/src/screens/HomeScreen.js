@@ -16,14 +16,12 @@ class HomeScreen extends Component {
 
     componentDidMount() {
         var db = firebase.firestore();
-
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
                 //alert(doc.data().email);
                 //alert(doc.id, " => ", doc.data());
                 //alert(doc)
-
                 db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
 
@@ -36,15 +34,12 @@ class HomeScreen extends Component {
                 }).catch(function (error) {
                     alert("Error getting documents: " + error);
                 });
-
                 this.setState({
-
                     firstname: doc.data().firstN,
                     lastname: doc.data().lastN,
                     docId: doc.id,
                 });
             });
-
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
@@ -57,6 +52,7 @@ class HomeScreen extends Component {
             }
         });
     }
+
     pushUserProfile = () => Navigation.push(this.props.componentId, {
         component: {
             name: 'UserProfile'
@@ -85,8 +81,6 @@ class HomeScreen extends Component {
 
     };
 
-
-
     render() {
         return (
             <View style={styles.container}>
@@ -108,7 +102,6 @@ class HomeScreen extends Component {
                     <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
                 </TouchableOpacity>
 
-
                 <FlatList
                     style={styles.list}
                     data={
@@ -124,13 +117,8 @@ class HomeScreen extends Component {
 
                         </TouchableOpacity>
                     }
-
                 />
-
-
-
             </View>
-
         );
     }
 };
@@ -149,15 +137,9 @@ const styles = StyleSheet.create({
     icons: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 55
-    },
-    signoutIcon: {
-        position: 'relative',
-        right: 120
-    },
-    addIcon: {
-        position: 'relative',
-        left: 120
+        justifyContent: 'space-between',
+        marginTop: 55,
+        width: '80%'
     },
     mainText: {
         fontWeight: 'bold',
