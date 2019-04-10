@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -12,15 +12,15 @@ class Recover extends Component {
 
     backArrow = () => Navigation.pop(this.props.componentId, {
         component: {
-          name: 'LoginScreen'
+            name: 'LoginScreen'
         }
-      });
+    });
 
     pushLoginScreen() {
         Navigation.push(this.props.componentId, {
-          component: {
-            name: 'LoginScreen'
-          }
+            component: {
+                name: 'LoginScreen'
+            }
         });
     };
 
@@ -33,59 +33,56 @@ class Recover extends Component {
     //problem with this.state.email
     sendEmailRecover = val => {
         var auth = firebase.auth();
-
         var emailAddress = this.state.email;
-
         auth.sendPasswordResetEmail(emailAddress).then(() => {
-        // Email sent.
-        this.pushLoginScreen();
+            // Email sent.
+            this.pushLoginScreen();
         }).catch(function (error) {
             alert(error);
         });
-
-
     };
 
-//Below will be used in the settings page when created to change an existing password
-/*
-    changePassword = val => {
-        var user = firebase.auth().currentUser;
-        user.updatePassword(this.state.newPassword).then(() => {
-            alert("Password was changed");
-        }).catch((error) => {
-            alert(error.message);
-        });
-    }
-*/
-popToLogin = () => Navigation.pop(this.props.componentId);
+    //Below will be used in the settings page when created to change an existing password
+    /*
+        changePassword = val => {
+            var user = firebase.auth().currentUser;
+            user.updatePassword(this.state.newPassword).then(() => {
+                alert("Password was changed");
+            }).catch((error) => {
+                alert(error.message);
+            });
+        }
+    */
 
-render(){
-    return (
-        <View style={styles.container}>
-            <TouchableOpacity
-            style={styles.backIcon}
-            onPress={this.backArrow}
-            >
-            <Icon size={25} name='ios-arrow-back' color='white' />
-            </TouchableOpacity>
-            <Text style={styles.mainText}>Reset Password</Text>
-            <Text style={styles.subText}>Email</Text>
-            <TextInput
-                keyboardType="number-pad"
-                style={styles.phoneInfo}
-                placeholder="Email"
-                placeholderTextColor="gray"
-                onChangeText={this.emailHandler}
-            />
-            <TouchableOpacity
-                style={styles.sendButton}
-                onPress={this.sendEmailRecover}
-            >
-                <Text style={{ color: 'white', fontWeight: '500' }}>SEND</Text>
-            </TouchableOpacity>
-        </View>
-    );
-}
+    popToLogin = () => Navigation.pop(this.props.componentId);
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <TouchableOpacity
+                    style={styles.backIcon}
+                    onPress={this.backArrow}
+                >
+                    <Icon size={25} name='ios-arrow-back' color='white' />
+                </TouchableOpacity>
+                <Text style={styles.mainText}>Reset Password</Text>
+                <Text style={styles.subText}>Email</Text>
+                <TextInput
+                    keyboardType="number-pad"
+                    style={styles.phoneInfo}
+                    placeholder="Email"
+                    placeholderTextColor="gray"
+                    onChangeText={this.emailHandler}
+                />
+                <TouchableOpacity
+                    style={styles.sendButton}
+                    onPress={this.sendEmailRecover}
+                >
+                    <Text style={{ color: 'white', fontWeight: '500' }}>SEND</Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -100,7 +97,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         right: 140,
         marginTop: 70
-      },
+    },
     mainText: {
         color: 'white',
         fontSize: 30,

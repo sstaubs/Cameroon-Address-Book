@@ -12,7 +12,7 @@ class UserProfile extends Component {
     phone: '',
     email: '',
     docId: '',
-    longitude:'',
+    longitude: '',
     latitude: '',
   };
 
@@ -54,16 +54,13 @@ class UserProfile extends Component {
 
   componentDidMount() {
     var db = firebase.firestore();
-
     db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         //alert(doc.data().email);
         //alert(doc.id, " => ", doc.data());
         //alert(doc)
-
         this.setState({
-
           firstname: doc.data().firstN,
           lastname: doc.data().lastN,
           phone: doc.data().phoneNum,
@@ -72,33 +69,25 @@ class UserProfile extends Component {
           longitude: doc.data().longitude,
           latitude: doc.data().latitude,
         });
-
-
       });
-
-
     }).catch(function (error) {
       alert("Error getting documents: " + error);
     });
-
-
   }
-
-
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.icons}>
           <TouchableOpacity
-            style={styles.shareIcon}
+            style={styles.closeIcon}
             onPress={this.pushCloseButton}>
             <Icon size={35} name='ios-close' color='white' />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.edit}
             onPress={this.pushEditButton}>
-            <Text style={{color: "white"}}>Edit</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
@@ -110,7 +99,6 @@ class UserProfile extends Component {
           <Text style={styles.category}>Coordinates</Text>
           <Text style={styles.textInputStyle}>Longitude: {this.state.longitude} </Text>
           <Text style={styles.textInputStyle}>Latitude: {this.state.latitude}  </Text>
-
         </View>
       </View>
     );
@@ -128,28 +116,22 @@ const styles = StyleSheet.create({
   icons: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 55
-  },
-  shareIcon: {
-    position: 'relative',
-    right: 120
-  },
-  edit: {
-    position: 'relative',
-    left: 120
+    justifyContent: 'space-between',
+    marginTop: 55,
+    width: '80%'
   },
   mainText: {
     fontWeight: 'bold',
     fontSize: 30,
     marginTop: 25,
-    color: 'white'
+    color: 'white',
+    width: '80%'
   },
   alignment: {
-    marginTop: 15,
-    right: 60
+    width: '80%'
   },
   category: {
-    marginTop: 23,
+    marginTop: 17,
     fontWeight: 'bold',
     fontSize: 17,
     color: 'white',

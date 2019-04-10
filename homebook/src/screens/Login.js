@@ -22,7 +22,6 @@ class Login extends Component {
     }
   });
 
-
   pushHomeScreen = () => Navigation.push(this.props.componentId, {
     component: {
       name: 'HomeScreen'
@@ -41,11 +40,10 @@ class Login extends Component {
     });
   };
 
-
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user && this.state.firstLoading) {
-          this.pushHomeScreen();
+        this.pushHomeScreen();
       } else {
         this.setState({ firstLoading: false });
       }
@@ -58,21 +56,15 @@ class Login extends Component {
     })
       .catch(function (error) {
         // Handle Errors here.
-
         var errorCode = error.code;
         var errorMessage = error.message;
         if (errorCode === 'auth/wrong-password') {
           alert('Wrong password.');
-
-
         } else {
           alert(errorMessage);
-
-
         }
         console.log(error);
       });
-
   };
 
   render() {
