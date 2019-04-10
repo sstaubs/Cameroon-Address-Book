@@ -88,6 +88,7 @@ class HomeScreen extends Component {
         //alert(this.state.referenceArray[val])
         this.ReferenceHandler(this.state.referenceArray[val])
         //alert(this.props.refpoint);
+        this.pushFriendProfile();
     
         
 
@@ -122,8 +123,8 @@ class HomeScreen extends Component {
                     }
                     renderItem={({ item, index }) =>
                         <TouchableOpacity
-                            //onPress={() => this.friendHandler(index)}>
-                            onPress={this.pushFriendProfile}>
+                            onPress={() => this.friendHandler(index)}>
+                            
 
                             <Text style={styles.bodyText}>{item}</Text>
 
@@ -169,12 +170,7 @@ const styles = StyleSheet.create({
         fontSize: 18
     }
 });
-/*const mapStateToProps = state => {
-    return {
-        refpoint: state.reference.friendref,
-    };
-};
-*/
+
 const mapDispatchToProps = dispatch => {
     return {
         onGetReference: name => dispatch(getReference(name)),

@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 
+import { connect } from 'react-redux';
+
 class FriendProfile extends Component {
   state = {
     firstName: '',
@@ -64,13 +66,8 @@ class FriendProfile extends Component {
 
         this.setState({
 
-          firstname: doc.data().firstN,
-          lastname: doc.data().lastN,
-          phone: doc.data().phoneNum,
-          email: doc.data().email,
+          
           docId: doc.id,
-          longitude: doc.data().longitude,
-          latitude: doc.data().latitude,
         });
 
 
@@ -80,6 +77,7 @@ class FriendProfile extends Component {
     }).catch(function (error) {
       alert("Error getting documents: " + error);
     });
+   // db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint)
 
 
   }
@@ -87,6 +85,7 @@ class FriendProfile extends Component {
 
 
   render() {
+    alert(this.props.refpoint);
     return (
       <View style={styles.container}>
         <View style={styles.icons}>
@@ -169,4 +168,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FriendProfile;
+const mapStateToProps = state => {
+    return {
+        refpoint: state.reference.friendref,
+    };
+};
+
+
+export default connect(mapStateToProps)(FriendProfile);
