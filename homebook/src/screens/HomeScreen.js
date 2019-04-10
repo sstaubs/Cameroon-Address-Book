@@ -34,7 +34,7 @@ class HomeScreen extends Component {
                     querySnapshot.forEach((doc) => {
 
                         this.setState({
-                            referenceArray: this.state.referenceArray.concat([doc.data().refpoint]),
+                            referenceArray: this.state.referenceArray.concat([doc.id]),
                             friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
 
                         });
