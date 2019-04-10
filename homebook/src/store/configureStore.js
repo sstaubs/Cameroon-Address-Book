@@ -1,9 +1,12 @@
 import {createStore,combineReducers} from "redux";
 
 import referenceReducer from "./reducers/reference";
+import userReducer from "./reducers/user";
 
 const rootReducer = combineReducers({
-    reference: referenceReducer
+    reference: referenceReducer,
+    user: userReducer,
+    
 });
 
 
