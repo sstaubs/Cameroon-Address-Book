@@ -72,24 +72,20 @@ class AddUser extends Component {
     var db = firebase.firestore();
 
 
-        const friendsInfo = {
-          firstN: this.state.firstName,
-          lastN: this.state.lastName,
-          phoneNum: this.state.phone,
-          email: this.state.email,
-        
-        };
-        db.collection("users").doc(this.state.docId).collection("friends").add(friendsInfo)
-          .then((docRef) => {
-            //alert("Document written with ID: " + docRef.id);
-          }).catch((error) => {
-            //alert("error here")
-            //alert("Error adding document: " + error);
-          });
+    const friendsInfo = {
+      firstN: this.state.firstName,
+      lastN: this.state.lastName,
+      phoneNum: this.state.phone,
+      email: this.state.email,
 
-
-
-
+    };
+    db.collection("users").doc(this.state.docId).collection("friends").add(friendsInfo)
+      .then((docRef) => {
+        //alert("Document written with ID: " + docRef.id);
+      }).catch((error) => {
+        //alert("error here")
+        //alert("Error adding document: " + error);
+      });
 
     this.popHomeScreen()
   };
