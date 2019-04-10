@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
@@ -12,8 +12,15 @@ class UserProfile extends Component {
     phone: '',
     email: '',
     docId: '',
-    longitude: '',
-    latitude: '',
+    focusedLocation: {
+      longitude: '',
+      latitude: '',
+      latitudeDelta: 0.0122,
+      longitudeDelta:
+        Dimensions.get("window").width /
+        Dimensions.get("window").height *
+        0.0122
+    }
   };
 
   pushCloseButton = () => Navigation.pop(this.props.componentId, {
@@ -66,8 +73,11 @@ class UserProfile extends Component {
           phone: doc.data().phoneNum,
           email: doc.data().email,
           docId: doc.id,
-          longitude: doc.data().longitude,
-          latitude: doc.data().latitude,
+          focusedLocation: {
+            //...this.state.focusedLocation,
+            longitude: doc.data().longitude,
+            latitude: doc.data().latitude,
+          },
         });
       });
     }).catch(function (error) {
@@ -76,6 +86,7 @@ class UserProfile extends Component {
   }
 
   render() {
+    marker = <MapView.Marker coordinate={this.state.focusedLocation} />
     return (
       <View style={styles.container}>
         <View style={styles.icons}>
@@ -90,15 +101,23 @@ class UserProfile extends Component {
             <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
         <View style={styles.alignment}>
+          <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
           <Text style={styles.category}>Phone Number</Text>
           <Text style={styles.textInputStyle}>{this.state.phone}</Text>
           <Text style={styles.category}>Email</Text>
           <Text style={styles.textInputStyle}>{this.state.email}</Text>
           <Text style={styles.category}>Coordinates</Text>
-          <Text style={styles.textInputStyle}>Longitude: {this.state.longitude} </Text>
-          <Text style={styles.textInputStyle}>Latitude: {this.state.latitude}  </Text>
+          <Text style={styles.textInputStyle}>Latitude: {this.state.focusedLocation.latitude}</Text>
+          <Text style={styles.textInputStyle}>Longitude: {this.state.focusedLocation.longitude}</Text>
+          <Text style={styles.category}>Map</Text>
+          <MapView
+            region={this.state.focusedLocation}
+            style={styles.map}
+            ref={ref => this.map = ref}
+          >
+            {marker}
+          </MapView>
         </View>
       </View>
     );
@@ -120,15 +139,14 @@ const styles = StyleSheet.create({
     marginTop: 55,
     width: '80%'
   },
+  alignment: {
+    width: '80%'
+  },
   mainText: {
     fontWeight: 'bold',
     fontSize: 30,
     marginTop: 25,
-    color: 'white',
-    width: '80%'
-  },
-  alignment: {
-    width: '80%'
+    color: 'white'
   },
   category: {
     marginTop: 17,
@@ -140,6 +158,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 17,
     color: 'white',
+  },
+  map: {
+    width: '100%',
+    height: 300,
+    marginTop: 20
   },
   confirmButton: {
     width: 300,
