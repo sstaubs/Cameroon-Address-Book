@@ -1,7 +1,8 @@
 import {GET_REF } from './actionTypes'
 
-export const getReference = () => {
+export const getReference = (refpoint) => {
     return{
-        type: GET_REF
+        type: GET_REF,
+        refpoint: refpoint,
     };
-}
+};

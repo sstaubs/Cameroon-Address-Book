@@ -4,6 +4,10 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 
+import { connect } from 'react-redux';
+import { getReference } from "../store/actions/index";
+
+
 
 class HomeScreen extends Component {
     state = {
@@ -12,6 +16,10 @@ class HomeScreen extends Component {
         docId: '',
         friendNameArray: [],
         referenceArray: [],
+    };
+
+    ReferenceHandler = placeName => {
+        this.props.onGetReference(placeName);
     };
 
     componentDidMount() {
@@ -26,11 +34,11 @@ class HomeScreen extends Component {
 
                 db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
-                        
+
                         this.setState({
                             referenceArray: this.state.referenceArray.concat([doc.data().refpoint]),
                             friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
-                            
+
                         });
                     });
                 }).catch(function (error) {
@@ -75,8 +83,12 @@ class HomeScreen extends Component {
         }
     });
 
-    friendHandler = val =>{
+    friendHandler = val => {
         //alert(this.state.referenceArray[val])
+        this.ReferenceHandler(this.state.referenceArray[val])
+        //alert(this.props.refpoint);
+    
+        
 
     };
 
@@ -110,12 +122,12 @@ class HomeScreen extends Component {
                         this.state.friendNameArray
 
                     }
-                    renderItem= {({ item, index }) => 
+                    renderItem={({ item, index }) =>
                         <TouchableOpacity
-                        onPress={() => this.friendHandler(index) }>
-                        
+                            onPress={() => this.friendHandler(index)}>
+
                             <Text style={styles.bodyText}>{item}</Text>
-                            
+
                         </TouchableOpacity>
                     }
 
@@ -169,5 +181,18 @@ const styles = StyleSheet.create({
         fontSize: 18
     }
 });
+/*const mapStateToProps = state => {
+    return {
+        refpoint: state.reference.friendref,
+    };
+};
+*/
+const mapDispatchToProps = dispatch => {
+    return {
+        onGetReference: name => dispatch(getReference(name)),
 
-export default HomeScreen;
+
+    };
+};
+
+export default connect(null, mapDispatchToProps)(HomeScreen);
