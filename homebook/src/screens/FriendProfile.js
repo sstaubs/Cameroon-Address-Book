@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity,Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
@@ -14,16 +14,16 @@ class FriendProfile extends Component {
         phone: '',
         email: '',
         docId: '',
-        
+
         focusedLocation: {
             longitude: '',
             latitude: '',
             latitudeDelta: 0.0122,
             longitudeDelta:
-              Dimensions.get("window").width /
-              Dimensions.get("window").height *
-              0.0122
-          }
+                Dimensions.get("window").width /
+                Dimensions.get("window").height *
+                0.0122
+        }
     };
 
     pushCloseButton = () => Navigation.pop(this.props.componentId, {
@@ -115,6 +115,8 @@ class FriendProfile extends Component {
 
 
     render() {
+        marker = <MapView.Marker coordinate={this.state.focusedLocation} />
+
 
         return (
             <View style={styles.container}>
@@ -139,7 +141,14 @@ class FriendProfile extends Component {
                     <Text style={styles.category}>Coordinates</Text>
                     <Text style={styles.textInputStyle}>Longitude: {this.state.focusedLocation.longitude} </Text>
                     <Text style={styles.textInputStyle}>Latitude: {this.state.focusedLocation.latitude}  </Text>
-
+                    <Text style={styles.category}>Map</Text>
+                    <MapView
+                        region={this.state.focusedLocation}
+                        style={styles.map}
+                        ref={ref => this.map = ref}
+                    >
+                        {marker}
+                    </MapView>
                 </View>
             </View>
         );
@@ -157,15 +166,12 @@ const styles = StyleSheet.create({
     icons: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 55
+        justifyContent: 'space-between',
+        marginTop: 55,
+        width: '80%'
     },
-    shareIcon: {
-        position: 'relative',
-        right: 120
-    },
-    edit: {
-        position: 'relative',
-        left: 120
+    alignment: {
+        width: '80%'
     },
     mainText: {
         fontWeight: 'bold',
@@ -173,12 +179,8 @@ const styles = StyleSheet.create({
         marginTop: 25,
         color: 'white'
     },
-    alignment: {
-        marginTop: 15,
-        right: 60
-    },
     category: {
-        marginTop: 23,
+        marginTop: 17,
         fontWeight: 'bold',
         fontSize: 17,
         color: 'white',
@@ -187,6 +189,11 @@ const styles = StyleSheet.create({
         marginTop: 5,
         fontSize: 17,
         color: 'white',
+    },
+    map: {
+        width: '100%',
+        height: 300,
+        marginTop: 20
     },
     confirmButton: {
         width: 300,
