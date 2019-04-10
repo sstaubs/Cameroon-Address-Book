@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity,Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
@@ -14,8 +14,16 @@ class FriendProfile extends Component {
         phone: '',
         email: '',
         docId: '',
-        longitude: '',
-        latitude: '',
+        
+        focusedLocation: {
+            longitude: '',
+            latitude: '',
+            latitudeDelta: 0.0122,
+            longitudeDelta:
+              Dimensions.get("window").width /
+              Dimensions.get("window").height *
+              0.0122
+          }
     };
 
     pushCloseButton = () => Navigation.pop(this.props.componentId, {
@@ -129,8 +137,8 @@ class FriendProfile extends Component {
                     <Text style={styles.category}>Email</Text>
                     <Text style={styles.textInputStyle}>{this.state.email}</Text>
                     <Text style={styles.category}>Coordinates</Text>
-                    <Text style={styles.textInputStyle}>Longitude: {this.state.longitude} </Text>
-                    <Text style={styles.textInputStyle}>Latitude: {this.state.latitude}  </Text>
+                    <Text style={styles.textInputStyle}>Longitude: {this.state.focusedLocation.longitude} </Text>
+                    <Text style={styles.textInputStyle}>Latitude: {this.state.focusedLocation.latitude}  </Text>
 
                 </View>
             </View>
