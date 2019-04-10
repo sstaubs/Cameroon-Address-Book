@@ -32,9 +32,10 @@ class HomeScreen extends Component {
                 //alert(doc)
                 db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
+                        alert(doc.id)
 
                         this.setState({
-                            referenceArray: this.state.referenceArray.concat([doc.data().refpoint]),
+                            referenceArray: this.state.referenceArray.concat([doc.data()]),
                             friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
 
                         });
