@@ -2,8 +2,6 @@ import React from 'react';
 import { Navigation } from 'react-native-navigation';
 import { Provider } from "react-redux";
 import configureStore from "../store/configureStore.js";
-
-
 import Login from './Login';
 import Recover from './Recover';
 import CreateAccount from './CreateAccount';
@@ -11,16 +9,11 @@ import HomeScreen from './HomeScreen';
 import AddUser from './AddUser';
 import SetLocation from './SetLocation';
 import UserProfile from './UserProfile';
+import FriendProfile from './FriendProfile';
 import EditUser from './EditUser';
 
-
-
-
-
 function registerScreens() {
-
   const reduxStore = configureStore();
-
   Navigation.registerComponent('LoginScreen', () => (props) => (
     <Provider store={reduxStore}>
       <Login {...props} />
@@ -56,6 +49,11 @@ function registerScreens() {
       <UserProfile {...props} />
     </Provider>
   ), () => UserProfile);
+  Navigation.registerComponent('FriendProfile', () => (props) => (
+    <Provider store={reduxStore}>
+      <FriendProfile {...props} />
+    </Provider>
+  ), () => FriendProfile);
   Navigation.registerComponent('EditUser', () => (props) => (
     <Provider store={reduxStore}>
       <EditUser {...props} />

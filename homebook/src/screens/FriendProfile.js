@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 
-class UserProfile extends Component {
+class FriendProfile extends Component {
   state = {
     firstName: '',
     lastName: '',
     phone: '',
     email: '',
     docId: '',
-    focusedLocation: {
-      longitude: '',
-      latitude: '',
-      latitudeDelta: 0.0122,
-      longitudeDelta:
-        Dimensions.get("window").width /
-        Dimensions.get("window").height *
-        0.0122
-    }
+    longitude:'',
+    latitude: '',
   };
 
   pushCloseButton = () => Navigation.pop(this.props.componentId, {
@@ -61,63 +54,63 @@ class UserProfile extends Component {
 
   componentDidMount() {
     var db = firebase.firestore();
+
     db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         //alert(doc.data().email);
         //alert(doc.id, " => ", doc.data());
         //alert(doc)
+
         this.setState({
+
           firstname: doc.data().firstN,
           lastname: doc.data().lastN,
           phone: doc.data().phoneNum,
           email: doc.data().email,
           docId: doc.id,
-          focusedLocation: {
-            //...this.state.focusedLocation,
-            longitude: doc.data().longitude,
-            latitude: doc.data().latitude,
-          },
+          longitude: doc.data().longitude,
+          latitude: doc.data().latitude,
         });
+
+
       });
+
+
     }).catch(function (error) {
       alert("Error getting documents: " + error);
     });
+
+
   }
 
+
+
   render() {
-    marker = <MapView.Marker coordinate={this.state.focusedLocation} />
     return (
       <View style={styles.container}>
         <View style={styles.icons}>
           <TouchableOpacity
-            style={styles.closeIcon}
+            style={styles.shareIcon}
             onPress={this.pushCloseButton}>
             <Icon size={35} name='ios-close' color='white' />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.edit}
             onPress={this.pushEditButton}>
-            <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
+            <Text style={{color: "white"}}>Edit</Text>
           </TouchableOpacity>
         </View>
+        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
         <View style={styles.alignment}>
-          <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
           <Text style={styles.category}>Phone Number</Text>
           <Text style={styles.textInputStyle}>{this.state.phone}</Text>
           <Text style={styles.category}>Email</Text>
           <Text style={styles.textInputStyle}>{this.state.email}</Text>
           <Text style={styles.category}>Coordinates</Text>
-          <Text style={styles.textInputStyle}>Latitude: {this.state.focusedLocation.latitude}</Text>
-          <Text style={styles.textInputStyle}>Longitude: {this.state.focusedLocation.longitude}</Text>
-          <Text style={styles.category}>Map</Text>
-          <MapView
-            region={this.state.focusedLocation}
-            style={styles.map}
-            ref={ref => this.map = ref}
-          >
-            {marker}
-          </MapView>
+          <Text style={styles.textInputStyle}>Longitude: {this.state.longitude} </Text>
+          <Text style={styles.textInputStyle}>Latitude: {this.state.latitude}  </Text>
+
         </View>
       </View>
     );
@@ -135,12 +128,15 @@ const styles = StyleSheet.create({
   icons: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 55,
-    width: '80%'
+    marginTop: 55
   },
-  alignment: {
-    width: '80%'
+  shareIcon: {
+    position: 'relative',
+    right: 120
+  },
+  edit: {
+    position: 'relative',
+    left: 120
   },
   mainText: {
     fontWeight: 'bold',
@@ -148,8 +144,12 @@ const styles = StyleSheet.create({
     marginTop: 25,
     color: 'white'
   },
+  alignment: {
+    marginTop: 15,
+    right: 60
+  },
   category: {
-    marginTop: 17,
+    marginTop: 23,
     fontWeight: 'bold',
     fontSize: 17,
     color: 'white',
@@ -158,11 +158,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 17,
     color: 'white',
-  },
-  map: {
-    width: '100%',
-    height: 300,
-    marginTop: 20
   },
   confirmButton: {
     width: 300,
@@ -174,4 +169,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default UserProfile;
+export default FriendProfile;

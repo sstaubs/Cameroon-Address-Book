@@ -72,7 +72,6 @@ class CreateAccount extends Component {
 
   confirmHandler = val => {
     if (this.passwordConfirm()) {
-
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then(() => {
           var user = firebase.auth().currentUser;
@@ -92,10 +91,8 @@ class CreateAccount extends Component {
               .catch(function (error) {
                 console.error("Error adding document: ", error);
               });
-
             this.pushSetLocation()
           }
-
         })
         .catch(function (error) {
           // Handle Errors here.
@@ -109,74 +106,73 @@ class CreateAccount extends Component {
           console.log(error);
         });
     }
-
-
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.backIcon}
-          onPress={this.backArrow}
-        >
-          <Icon size={25} name='ios-arrow-back' color='white' />
-        </TouchableOpacity>
-        <Text style={styles.mainText}>Create Account</Text>
-        <Text style={styles.subText}>First Name</Text>
-        <TextInput
-          style={styles.phoneInfo}
-          placeholder='First Name'
-          placeholderTextColor='gray'
-          onChangeText={this.firstNameHandler}
-        />
-        <Text style={styles.sub2Text}>Last Name</Text>
-        <TextInput
-          style={styles.phoneInfo}
-          placeholder='Last Name'
-          placeholderTextColor='gray'
-          onChangeText={this.lastNameHandler}
-        />
-        <Text style={styles.sub2Text}>Password</Text>
-        <TextInput
-          secureTextEntry={true}
-          style={styles.phoneInfo}
-          placeholder='Password'
-          placeholderTextColor='gray'
-          onChangeText={this.passwordHandler}
-        />
-        <Text style={styles.sub2Text}>Confirm Password</Text>
-        <TextInput
-          secureTextEntry={true}
-          style={styles.phoneInfo}
-          placeholder='Enter Password'
-          placeholderTextColor='gray'
-          onChangeText={this.confirmPassHandler}
-        />
-        <Text style={styles.sub2Text}>Phone Number</Text>
-        <TextInput
-          keyboardType='number-pad'
-          style={styles.phoneInfo}
-          placeholder='Enter Phone Number'
-          placeholderTextColor='gray'
-          onChangeText={this.phoneHandler}
-        />
-        <Text style={styles.sub2Text}>Email</Text>
-        <TextInput
-          autoCapitalize='none'
-          keyboardType='email-address'
-          style={styles.phoneInfo}
-          placeholder='Enter Email'
-          placeholderTextColor='gray'
-          onChangeText={this.emailHandler}
-        />
-        <TouchableOpacity
-          style={styles.confirmButton}
-          onPress={this.confirmHandler}
-
-        >
-          <Text style={{ color: '#222222', fontWeight: '500' }}>CONFIRM</Text>
-        </TouchableOpacity>
+        <View style={styles.alignment}>
+          <TouchableOpacity
+            style={styles.backIcon}
+            onPress={this.backArrow}
+          >
+            <Icon size={25} name='ios-arrow-back' color='white' />
+          </TouchableOpacity>
+          <Text style={styles.mainText}>Create Account</Text>
+          <Text style={styles.subText}>First Name</Text>
+          <TextInput
+            style={styles.phoneInfo}
+            placeholder='First Name'
+            placeholderTextColor='gray'
+            onChangeText={this.firstNameHandler}
+          />
+          <Text style={styles.sub2Text}>Last Name</Text>
+          <TextInput
+            style={styles.phoneInfo}
+            placeholder='Last Name'
+            placeholderTextColor='gray'
+            onChangeText={this.lastNameHandler}
+          />
+          <Text style={styles.sub2Text}>Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.phoneInfo}
+            placeholder='Password'
+            placeholderTextColor='gray'
+            onChangeText={this.passwordHandler}
+          />
+          <Text style={styles.sub2Text}>Confirm Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.phoneInfo}
+            placeholder='Enter Password'
+            placeholderTextColor='gray'
+            onChangeText={this.confirmPassHandler}
+          />
+          <Text style={styles.sub2Text}>Phone Number</Text>
+          <TextInput
+            keyboardType='number-pad'
+            style={styles.phoneInfo}
+            placeholder='Enter Phone Number'
+            placeholderTextColor='gray'
+            onChangeText={this.phoneHandler}
+          />
+          <Text style={styles.sub2Text}>Email</Text>
+          <TextInput
+            autoCapitalize='none'
+            keyboardType='email-address'
+            style={styles.phoneInfo}
+            placeholder='Enter Email'
+            placeholderTextColor='gray'
+            onChangeText={this.emailHandler}
+          />
+          <TouchableOpacity
+            style={styles.confirmButton}
+            onPress={this.confirmHandler}
+          >
+            <Text style={{ color: '#222222', fontWeight: '500' }}>CONFIRM</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -190,33 +186,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#222222'
   },
+  alignment: {
+    width: '80%'
+  },
   backIcon: {
-    position: 'relative',
-    right: 140,
-    marginTop: 70
+    flexDirection: 'row',
+    marginTop: 55
   },
   mainText: {
     color: 'white',
     fontSize: 30,
     fontWeight: 'bold',
-    width: 300,
     textAlign: 'center',
     marginTop: 24
   },
   subText: {
     color: 'white',
     fontSize: 17,
-    marginTop: 50,
-    width: 300
+    marginTop: 50
   },
   sub2Text: {
     color: 'white',
     fontSize: 17,
-    marginTop: 20,
-    width: 300
+    marginTop: 20
   },
   phoneInfo: {
-    width: 300,
     marginTop: 5,
     padding: 5,
     borderWidth: 1,
@@ -226,7 +220,6 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   confirmButton: {
-    width: 300,
     marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
