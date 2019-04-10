@@ -11,6 +11,7 @@ import HomeScreen from './HomeScreen';
 import AddUser from './AddUser';
 import SetLocation from './SetLocation';
 import UserProfile from './UserProfile';
+import FriendProfile from './FriendProfile';
 import EditUser from './EditUser';
 
 
@@ -56,6 +57,11 @@ function registerScreens() {
       <UserProfile {...props} />
     </Provider>
   ), () => UserProfile);
+  Navigation.registerComponent('FriendProfile', () => (props) => (
+    <Provider store={reduxStore}>
+      <FriendProfile {...props} />
+    </Provider>
+  ), () => FriendProfile);
   Navigation.registerComponent('EditUser', () => (props) => (
     <Provider store={reduxStore}>
       <EditUser {...props} />

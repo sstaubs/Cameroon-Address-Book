@@ -26,11 +26,11 @@ class HomeScreen extends Component {
 
                 db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
-                        
+
                         this.setState({
                             referenceArray: this.state.referenceArray.concat([doc.data().refpoint]),
                             friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
-                            
+
                         });
                     });
                 }).catch(function (error) {
@@ -63,6 +63,11 @@ class HomeScreen extends Component {
         }
     });
 
+    pushFriendProfile = () => Navigation.push(this.props.componentId, {
+        component: {
+            name: 'FriendProfile'
+        }
+    });
 
     pushSignout = () => {
         firebase.auth().signOut();
@@ -75,8 +80,8 @@ class HomeScreen extends Component {
         }
     });
 
-    friendHandler = val =>{
-        //alert(this.state.referenceArray[val])
+    friendHandler = val => {
+        alert(this.state.referenceArray[val])
 
     };
 
@@ -110,12 +115,13 @@ class HomeScreen extends Component {
                         this.state.friendNameArray
 
                     }
-                    renderItem= {({ item, index }) => 
+                    renderItem={({ item, index }) =>
                         <TouchableOpacity
-                        onPress={() => this.friendHandler(index) }>
-                        
+                            //onPress={() => this.friendHandler(index)}>
+                            onPress={this.pushFriendProfile}>
+
                             <Text style={styles.bodyText}>{item}</Text>
-                            
+
                         </TouchableOpacity>
                     }
 

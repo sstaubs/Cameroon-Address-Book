@@ -80,17 +80,7 @@ class AddUser extends Component {
 
   confirmHandler = val => {
 
-
-    const accountInfo = {
-      firstN: this.state.firstName,
-      lastN: this.state.lastName,
-      phoneNum: this.state.phone,
-      email: this.state.email,
-    };
     var db = firebase.firestore();
-
-    db.collection("users").add(accountInfo)
-      .then((docRef) => {
 
 
         const friendsInfo = {
@@ -98,7 +88,7 @@ class AddUser extends Component {
           lastN: this.state.lastName,
           phoneNum: this.state.phone,
           email: this.state.email,
-          refpoint: docRef.id,
+        
         };
         db.collection("users").doc(this.state.docId).collection("friends").add(friendsInfo)
           .then((docRef) => {
@@ -109,10 +99,8 @@ class AddUser extends Component {
            //alert("Error adding document: " + error);
           });
 
-      })
-      .catch((error) => {
-        console.error("Error adding document: ", error);
-      });
+
+
 
 
     this.popHomeScreen()
