@@ -6,7 +6,18 @@ import * as firebase from 'firebase';
 
 
 class SideMenu extends Component {
-
+    signout = () => {
+        firebase.auth().signOut();
+        Navigation.popToRoot(this.props.componentId);
+    };
+    changePassword = () => {
+        var user = firebase.auth().currentUser;
+        user.updatePassword("123456").then(function () {
+            // Update successful.
+        }).catch(function (error) {
+            // An error happened.
+        });
+    }
 
     render() {
         return (
@@ -19,13 +30,15 @@ class SideMenu extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.content}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={this.changePassword}>
                         <Text style={styles.innerText}>Reset Password</Text>
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <Text style={styles.innerText}>Change Email</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={this.signout}>
                         <Text style={styles.innerText}>Logout</Text>
                     </TouchableOpacity>
                     <TouchableOpacity>
