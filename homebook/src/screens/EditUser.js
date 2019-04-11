@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 
-class AddUser extends Component {
+class EditUser extends Component {
   state = {
     firstName: '',
     lastName: '',
@@ -13,8 +13,8 @@ class AddUser extends Component {
     email: '',
     docId: '',
     focusedLocation: {
-      longitude: '',
-      latitude: '',
+      longitude: 0,
+      latitude: 0,
       latitudeDelta: 0.0122,
       longitudeDelta:
         Dimensions.get("window").width /
@@ -157,53 +157,57 @@ class AddUser extends Component {
           </TouchableOpacity>
         </View>
         <Text style={styles.mainText}>Edit Contact</Text>
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder={this.state.firstName}
-          placeholderTextColor="gray"
-          onChangeText={this.firstNameHandler}
-        />
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder={this.state.lastName}
-          placeholderTextColor="gray"
-          onChangeText={this.lastNameHandler}
-        />
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder={this.state.phone}
-          placeholderTextColor="gray"
-          onChangeText={this.phoneNumberHandler}
-        />
-        <TextInput
-          style={styles.textInputStyle}
-          autoCapitalize='none'
-          placeholder={this.state.email}
-          placeholderTextColor="gray"
-          onChangeText={this.emailHandler}
-        />
-        <MapView
-          initialRegion={this.state.focusedLocation}
-          region={this.state.focusedLocation}
-          style={styles.map}
-          showsUserLocation={true}
-          onPress={this.pickLocationHandler}
-          ref={ref => this.map = ref}
-        >
-          {marker}
-        </MapView>
-        <TouchableOpacity
-          style={styles.locateButton}
-          onPress={this.getLocationHandler}
-        >
-          <Text style={{ color: 'white', fontWeight: '500' }}>LOCATE ME!</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.confirmButton}
-          onPress={this.confirmHandler}
-        >
-          <Text style={{ color: 'white', fontWeight: '500' }}>SUBMIT</Text>
-        </TouchableOpacity>
+
+          <ScrollView style={styles.alignment}>
+            <Text style={styles.category}>First Name</Text>
+            <TextInput
+              style={styles.textInputStyle}
+              value={this.state.firstName}
+              onChangeText={this.firstNameHandler}
+            />
+            <Text style={styles.category}>Last Name</Text>
+            <TextInput
+              style={styles.textInputStyle}
+              value={this.state.lastName}
+              onChangeText={this.lastNameHandler}
+            />
+            <Text style={styles.category}>Phone Number</Text>
+            <TextInput
+              style={styles.textInputStyle}
+              value={this.state.phone}
+              onChangeText={this.phoneNumberHandler}
+            />
+            <Text style={styles.category}>Email</Text>
+            <TextInput
+              style={styles.textInputStyle}
+              autoCapitalize='none'
+              value={this.state.email}
+              onChangeText={this.emailHandler}
+            />
+            <MapView
+              initialRegion={this.state.focusedLocation}
+              region={this.state.focusedLocation}
+              style={styles.map}
+              showsUserLocation={true}
+              onPress={this.pickLocationHandler}
+              ref={ref => this.map = ref}
+            >
+              {marker}
+            </MapView>
+            <TouchableOpacity
+              style={styles.locateButton}
+              onPress={this.getLocationHandler}
+            >
+              <Text style={{ color: 'white', fontWeight: '500' }}>LOCATE ME!</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={this.confirmHandler}
+            >
+              <Text style={{ color: 'white', fontWeight: '500' }}>SUBMIT</Text>
+            </TouchableOpacity>
+          </ScrollView>
+
       </View>
     );
   }
@@ -221,7 +225,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 55,
-    width: '80%'
+    width: '85%'
   },
   mainText: {
     fontWeight: 'bold',
@@ -229,17 +233,22 @@ const styles = StyleSheet.create({
     marginTop: 25,
     color: 'white'
   },
-  textInputStyle: {
-    width: '80%',
-    marginTop: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: 'white',
+  alignment: {
+    width: '85%'
+  },
+  category: {
+    marginTop: 17,
+    fontWeight: 'bold',
     fontSize: 17,
-    height: 32,
-    color: 'white'
+    color: 'white',
+  },
+  textInputStyle: {
+    marginTop: 5,
+    fontSize: 17,
+    color: 'grey'
   },
   confirmButton: {
-    width: 300,
+    width: '100%',
     marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
@@ -252,7 +261,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   locateButton: {
-    width: '80%',
+    width: '100%',
     marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
@@ -261,4 +270,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddUser;
+export default EditUser;

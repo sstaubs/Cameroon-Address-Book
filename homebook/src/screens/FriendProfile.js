@@ -132,15 +132,12 @@ class FriendProfile extends Component {
                         <Text style={{ color: "white" }}>Edit</Text>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
                 <View style={styles.alignment}>
+                    <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
                     <Text style={styles.category}>Phone Number</Text>
                     <Text style={styles.textInputStyle}>{this.state.phone}</Text>
                     <Text style={styles.category}>Email</Text>
                     <Text style={styles.textInputStyle}>{this.state.email}</Text>
-                    <Text style={styles.category}>Coordinates</Text>
-                    <Text style={styles.textInputStyle}>Longitude: {this.state.focusedLocation.longitude} </Text>
-                    <Text style={styles.textInputStyle}>Latitude: {this.state.focusedLocation.latitude}  </Text>
                     <Text style={styles.category}>Map</Text>
                     <MapView
                         region={this.state.focusedLocation}
