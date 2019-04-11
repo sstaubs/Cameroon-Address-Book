@@ -92,9 +92,6 @@ class HomeScreen extends Component {
         this.ReferenceHandler(this.state.referenceArray[val])
         //alert(this.props.refpoint);
         this.pushFriendProfile();
-
-
-
     };
 
     render() {

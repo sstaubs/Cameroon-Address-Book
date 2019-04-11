@@ -247,14 +247,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: 'grey'
   },
-  confirmButton: {
-    width: '100%',
-    marginTop: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#4A90E2',
-    height: 32
-  },
   map: {
     width: '100%',
     height: 300,
@@ -268,6 +260,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#4A90E2',
     height: 32
   },
+  confirmButton: {
+    width: '100%',
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#4A90E2',
+    height: 32
+  }
 });
 
 export default EditUser;
