@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#222222'
     },
     alignment: {
-        width: '80%'
+        width: '85%'
     },
     icons: {
         flexDirection: 'row',

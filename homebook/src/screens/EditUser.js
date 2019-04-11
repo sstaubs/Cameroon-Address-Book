@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
@@ -13,8 +13,8 @@ class EditUser extends Component {
     email: '',
     docId: '',
     focusedLocation: {
-      longitude: '',
-      latitude: '',
+      longitude: 0,
+      latitude: 0,
       latitudeDelta: 0.0122,
       longitudeDelta:
         Dimensions.get("window").width /
@@ -157,39 +157,57 @@ class EditUser extends Component {
           </TouchableOpacity>
         </View>
         <Text style={styles.mainText}>Edit Contact</Text>
-        <View style={styles.alignment}>
-          <Text style={styles.category}>First Name</Text>
-          <TextInput
-            style={styles.textInputStyle}
-            value={this.state.firstName}
-            onChangeText={this.firstNameHandler}
-          />
-          <Text style={styles.category}>Last Name</Text>
-          <TextInput
-            style={styles.textInputStyle}
-            value={this.state.lastName}
-            onChangeText={this.lastNameHandler}
-          />
-          <Text style={styles.category}>Phone Number</Text>
-          <TextInput
-            style={styles.textInputStyle}
-            value={this.state.phone}
-            onChangeText={this.phoneNumberHandler}
-          />
-          <Text style={styles.category}>Email</Text>
-          <TextInput
-            style={styles.textInputStyle}
-            autoCapitalize='none'
-            value={this.state.email}
-            onChangeText={this.emailHandler}
-          />
-        </View>
-        <TouchableOpacity
-          style={styles.confirmButton}
-          onPress={this.confirmHandler}
-        >
-          <Text style={{ color: 'white', fontWeight: '500' }}>SUBMIT</Text>
-        </TouchableOpacity>
+
+          <ScrollView style={styles.alignment}>
+            <Text style={styles.category}>First Name</Text>
+            <TextInput
+              style={styles.textInputStyle}
+              value={this.state.firstName}
+              onChangeText={this.firstNameHandler}
+            />
+            <Text style={styles.category}>Last Name</Text>
+            <TextInput
+              style={styles.textInputStyle}
+              value={this.state.lastName}
+              onChangeText={this.lastNameHandler}
+            />
+            <Text style={styles.category}>Phone Number</Text>
+            <TextInput
+              style={styles.textInputStyle}
+              value={this.state.phone}
+              onChangeText={this.phoneNumberHandler}
+            />
+            <Text style={styles.category}>Email</Text>
+            <TextInput
+              style={styles.textInputStyle}
+              autoCapitalize='none'
+              value={this.state.email}
+              onChangeText={this.emailHandler}
+            />
+            <MapView
+              initialRegion={this.state.focusedLocation}
+              region={this.state.focusedLocation}
+              style={styles.map}
+              showsUserLocation={true}
+              onPress={this.pickLocationHandler}
+              ref={ref => this.map = ref}
+            >
+              {marker}
+            </MapView>
+            <TouchableOpacity
+              style={styles.locateButton}
+              onPress={this.getLocationHandler}
+            >
+              <Text style={{ color: 'white', fontWeight: '500' }}>LOCATE ME!</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={this.confirmHandler}
+            >
+              <Text style={{ color: 'white', fontWeight: '500' }}>SUBMIT</Text>
+            </TouchableOpacity>
+          </ScrollView>
+
       </View>
     );
   }
@@ -207,7 +225,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 55,
-    width: '80%'
+    width: '85%'
   },
   mainText: {
     fontWeight: 'bold',
@@ -216,7 +234,7 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   alignment: {
-    width: '80%'
+    width: '85%'
   },
   category: {
     marginTop: 17,
@@ -230,7 +248,7 @@ const styles = StyleSheet.create({
     color: 'grey'
   },
   confirmButton: {
-    width: 300,
+    width: '100%',
     marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
@@ -243,7 +261,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   locateButton: {
-    width: '80%',
+    width: '100%',
     marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
