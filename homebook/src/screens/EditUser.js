@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 
 class AddUser extends Component {
@@ -11,6 +12,15 @@ class AddUser extends Component {
     phone: '',
     email: '',
     docId: '',
+    focusedLocation: {
+      longitude: '',
+      latitude: '',
+      latitudeDelta: 0.0122,
+      longitudeDelta:
+        Dimensions.get("window").width /
+        Dimensions.get("window").height *
+        0.0122
+    }
   };
 
   pushCloseButton = () => Navigation.pop(this.props.componentId, {
@@ -19,7 +29,7 @@ class AddUser extends Component {
     }
   });
 
-  pushUserProfile = () => Navigation.push(this.props.componentId, {
+  pushUserProfile = () => Navigation.pop(this.props.componentId, {
     component: {
       name: 'UserProfile'
     }
@@ -63,11 +73,53 @@ class AddUser extends Component {
           phone: doc.data().phoneNum,
           email: doc.data().email,
           docId: doc.id,
+          focusedLocation: {
+            ...this.state.focusedLocation,
+            longitude: doc.data().longitude,
+            latitude: doc.data().latitude,
+          },
         });
       });
     }).catch(function (error) {
       alert("Error getting documents: " + error);
     });
+  }
+
+  pickLocationHandler = event => {
+    const coords = event.nativeEvent.coordinate;
+    this.map.animateToRegion({
+      ...this.state.focusedLocation,
+      latitude: coords.latitude,
+      longitude: coords.longitude
+    });
+    this.setState(prevState => {
+      return {
+        focusedLocation: {
+          ...prevState.focusedLocation,
+          latitude: coords.latitude,
+          longitude: coords.longitude
+        },
+        locationChosen: true
+      };
+    });
+  };
+
+  getLocationHandler = () => {
+    navigator.geolocation.getCurrentPosition(pos => {
+      const coordsEvent = {
+        nativeEvent: {
+          coordinate: {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude
+          }
+        }
+      };
+      this.pickLocationHandler(coordsEvent);
+    },
+      err => {
+        console.log(err);
+        alert("Fetching the Position failed, please pick one manually!");
+      })
   }
 
   confirmHandler = val => {
@@ -77,6 +129,8 @@ class AddUser extends Component {
       lastN: this.state.lastName,
       phoneNum: this.state.phone,
       email: this.state.email,
+      latitude: this.state.focusedLocation.latitude,
+      longitude: this.state.focusedLocation.longitude,
     };
     var db = firebase.firestore();
     db.collection("users").doc(this.state.docId).update(accountInfo)
@@ -92,6 +146,7 @@ class AddUser extends Component {
   };
 
   render() {
+    marker = <MapView.Marker coordinate={this.state.focusedLocation} />
     return (
       <View style={styles.container}>
         <View style={styles.icons}>
@@ -127,6 +182,22 @@ class AddUser extends Component {
           placeholderTextColor="gray"
           onChangeText={this.emailHandler}
         />
+        <MapView
+          initialRegion={this.state.focusedLocation}
+          region={this.state.focusedLocation}
+          style={styles.map}
+          showsUserLocation={true}
+          onPress={this.pickLocationHandler}
+          ref={ref => this.map = ref}
+        >
+          {marker}
+        </MapView>
+        <TouchableOpacity
+          style={styles.locateButton}
+          onPress={this.getLocationHandler}
+        >
+          <Text style={{ color: 'white', fontWeight: '500' }}>LOCATE ME!</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.confirmButton}
           onPress={this.confirmHandler}
@@ -174,7 +245,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#4A90E2',
     height: 32
-  }
+  },
+  map: {
+    width: '100%',
+    height: 300,
+    marginTop: 20
+  },
+  locateButton: {
+    width: '80%',
+    marginTop: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#4A90E2',
+    height: 32
+  },
 });
 
 export default AddUser;
