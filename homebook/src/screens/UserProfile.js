@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
@@ -74,7 +74,7 @@ class UserProfile extends Component {
           email: doc.data().email,
           docId: doc.id,
           focusedLocation: {
-            //...this.state.focusedLocation,
+            ...this.state.focusedLocation,
             longitude: doc.data().longitude,
             latitude: doc.data().latitude,
           },
@@ -101,21 +101,23 @@ class UserProfile extends Component {
             <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.alignment}>
-          <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-          <Text style={styles.category}>Phone Number</Text>
-          <Text style={styles.textInputStyle}>{this.state.phone}</Text>
-          <Text style={styles.category}>Email</Text>
-          <Text style={styles.textInputStyle}>{this.state.email}</Text>
-          <Text style={styles.category}>Location</Text>
-          <MapView
-            region={this.state.focusedLocation}
-            style={styles.map}
-            ref={ref => this.map = ref}
-          >
-            {marker}
-          </MapView>
-        </View>
+          <View style={styles.alignment}>
+          <ScrollView>
+            <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+            <Text style={styles.category}>Phone Number</Text>
+            <Text style={styles.textInputStyle}>{this.state.phone}</Text>
+            <Text style={styles.category}>Email</Text>
+            <Text style={styles.textInputStyle}>{this.state.email}</Text>
+            <Text style={styles.category}>Location</Text>
+            <MapView
+              region={this.state.focusedLocation}
+              style={styles.map}
+              ref={ref => this.map = ref}
+            >
+              {marker}
+            </MapView>
+            </ScrollView>
+          </View>
       </View>
     );
   }
@@ -134,10 +136,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: 55,
-    width: '80%'
+    width: '85%'
   },
   alignment: {
-    width: '80%'
+    width: '85%'
   },
   mainText: {
     fontWeight: 'bold',
