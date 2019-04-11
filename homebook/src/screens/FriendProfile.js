@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
@@ -16,8 +16,8 @@ class FriendProfile extends Component {
         docId: '',
 
         focusedLocation: {
-            longitude: '',
-            latitude: '',
+            longitude: 0,
+            latitude: 0,
             latitudeDelta: 0.0122,
             longitudeDelta:
                 Dimensions.get("window").width /
@@ -94,7 +94,7 @@ class FriendProfile extends Component {
                         email: doc.data().email,
                         docId: doc.id,
                         focusedLocation: {
-                            //...this.state.focusedLocation,
+                            ...this.state.focusedLocation,
                             longitude: doc.data().longitude,
                             latitude: doc.data().latitude,
                         },
@@ -106,18 +106,10 @@ class FriendProfile extends Component {
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
-
     }
-
-
-
-
-
 
     render() {
         marker = <MapView.Marker coordinate={this.state.focusedLocation} />
-
-
         return (
             <View style={styles.container}>
                 <View style={styles.icons}>
@@ -133,19 +125,21 @@ class FriendProfile extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.alignment}>
-                    <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-                    <Text style={styles.category}>Phone Number</Text>
-                    <Text style={styles.textInputStyle}>{this.state.phone}</Text>
-                    <Text style={styles.category}>Email</Text>
-                    <Text style={styles.textInputStyle}>{this.state.email}</Text>
-                    <Text style={styles.category}>Map</Text>
-                    <MapView
-                        region={this.state.focusedLocation}
-                        style={styles.map}
-                        ref={ref => this.map = ref}
-                    >
-                        {marker}
-                    </MapView>
+                    <ScrollView>
+                        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+                        <Text style={styles.category}>Phone Number</Text>
+                        <Text style={styles.textInputStyle}>{this.state.phone}</Text>
+                        <Text style={styles.category}>Email</Text>
+                        <Text style={styles.textInputStyle}>{this.state.email}</Text>
+                        <Text style={styles.category}>Map</Text>
+                        <MapView
+                            region={this.state.focusedLocation}
+                            style={styles.map}
+                            ref={ref => this.map = ref}
+                        >
+                            {marker}
+                        </MapView>
+                    </ScrollView>
                 </View>
             </View>
         );

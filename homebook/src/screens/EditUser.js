@@ -25,7 +25,7 @@ class EditUser extends Component {
 
   pushCloseButton = () => Navigation.pop(this.props.componentId, {
     component: {
-      name: 'EditUser'
+      name: 'UserProfile'
     }
   });
 
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     width: '100%',
-    marginTop: 30,
+    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#4A90E2',

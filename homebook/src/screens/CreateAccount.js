@@ -119,59 +119,55 @@ class CreateAccount extends Component {
             <Icon size={25} name='ios-arrow-back' color='white' />
           </TouchableOpacity>
           <Text style={styles.mainText}>Create Account</Text>
-          <Text style={styles.subText}>First Name</Text>
-          <TextInput
-            style={styles.phoneInfo}
-            placeholder='First Name'
-            placeholderTextColor='gray'
-            onChangeText={this.firstNameHandler}
-          />
-          <Text style={styles.sub2Text}>Last Name</Text>
-          <TextInput
-            style={styles.phoneInfo}
-            placeholder='Last Name'
-            placeholderTextColor='gray'
-            onChangeText={this.lastNameHandler}
-          />
-          <Text style={styles.sub2Text}>Password</Text>
-          <TextInput
-            secureTextEntry={true}
-            style={styles.phoneInfo}
-            placeholder='Password'
-            placeholderTextColor='gray'
-            onChangeText={this.passwordHandler}
-          />
-          <Text style={styles.sub2Text}>Confirm Password</Text>
-          <TextInput
-            secureTextEntry={true}
-            style={styles.phoneInfo}
-            placeholder='Enter Password'
-            placeholderTextColor='gray'
-            onChangeText={this.confirmPassHandler}
-          />
-          <Text style={styles.sub2Text}>Phone Number</Text>
-          <TextInput
-            keyboardType='number-pad'
-            style={styles.phoneInfo}
-            placeholder='Enter Phone Number'
-            placeholderTextColor='gray'
-            onChangeText={this.phoneHandler}
-          />
-          <Text style={styles.sub2Text}>Email</Text>
-          <TextInput
-            autoCapitalize='none'
-            keyboardType='email-address'
-            style={styles.phoneInfo}
-            placeholder='Enter Email'
-            placeholderTextColor='gray'
-            onChangeText={this.emailHandler}
-          />
-          <TouchableOpacity
-            style={styles.confirmButton}
-            onPress={this.confirmHandler}
-          >
-            <Text style={{ color: '#222222', fontWeight: '500' }}>CONFIRM</Text>
-          </TouchableOpacity>
+          <View style={styles.inputs}>
+            <TextInput
+              style={styles.userInput}
+              placeholder='First Name'
+              placeholderTextColor='gray'
+              onChangeText={this.firstNameHandler}
+            />
+            <TextInput
+              style={styles.userInput}
+              placeholder='Last Name'
+              placeholderTextColor='gray'
+              onChangeText={this.lastNameHandler}
+            />
+            <TextInput
+              secureTextEntry={true}
+              style={styles.userInput}
+              placeholder='Password'
+              placeholderTextColor='gray'
+              onChangeText={this.passwordHandler}
+            />
+            <TextInput
+              secureTextEntry={true}
+              style={styles.userInput}
+              placeholder='Confirm Password'
+              placeholderTextColor='gray'
+              onChangeText={this.confirmPassHandler}
+            />
+            <TextInput
+              keyboardType='number-pad'
+              style={styles.userInput}
+              placeholder='Phone Number'
+              placeholderTextColor='gray'
+              onChangeText={this.phoneHandler}
+            />
+            <TextInput
+              autoCapitalize='none'
+              keyboardType='email-address'
+              style={styles.userInput}
+              placeholder='Email'
+              placeholderTextColor='gray'
+              onChangeText={this.emailHandler}
+            />
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={this.confirmHandler}
+            >
+              <Text style={{ color: '#222222', fontWeight: '500' }}>CONFIRM</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -200,23 +196,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 24
   },
-  subText: {
-    color: 'white',
-    fontSize: 17,
-    marginTop: 50
+  inputs: {
+    marginTop: 30
   },
-  sub2Text: {
+  subText: {
     color: 'white',
     fontSize: 17,
     marginTop: 20
   },
-  phoneInfo: {
-    marginTop: 5,
-    padding: 5,
-    borderWidth: 1,
-    borderColor: 'white',
+  userInput: {
+    backgroundColor: '#282828',
+    padding: 10,
+    marginTop: 15,
     fontSize: 17,
-    height: 32,
     color: 'white'
   },
   confirmButton: {

@@ -54,14 +54,6 @@ class HomeScreen extends Component {
         });
     }
 
-    pushLoginScreen() {
-        Navigation.push(this.props.componentId, {
-            component: {
-                name: 'LoginScreen'
-            }
-        });
-    }
-
     pushUserProfile = () => Navigation.push(this.props.componentId, {
         component: {
             name: 'UserProfile'
@@ -74,9 +66,9 @@ class HomeScreen extends Component {
         }
     });
 
-    pushSignout = () => {
+    signout = () => {
         firebase.auth().signOut();
-        this.pushLoginScreen();
+        Navigation.popToRoot(this.props.componentId);
     }
 
     pushAddUser = () => Navigation.push(this.props.componentId, {
@@ -102,8 +94,8 @@ class HomeScreen extends Component {
                     <View style={styles.icons}>
                         <TouchableOpacity
                             style={styles.signoutIcon}
-                            onPress={this.pushSignout}>
-                            <Icon size={25} name='ios-settings' color='white' />
+                            onPress={this.signout}>
+                            <Icon size={25} name='ios-log-out' color='white' />
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.addIcon}
@@ -127,8 +119,10 @@ class HomeScreen extends Component {
                                 onPress={() => this.friendHandler(index)}
                             >
                                 <Text style={styles.bodyText}>{item}</Text>
+
                             </TouchableOpacity>
                         }
+                        keyExtractor={(index) => index.toString()}
                     />
                 </View>
             </View>

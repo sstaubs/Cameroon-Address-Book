@@ -80,7 +80,6 @@ class Login extends Component {
             style={styles.phoneInfo}
             placeholder="Email"
             placeholderTextColor="gray"
-            value={this.state.email}
             onChangeText={this.emailHandler}
           />
           <TextInput
@@ -88,7 +87,6 @@ class Login extends Component {
             style={styles.passwordInfo}
             placeholder="Password"
             placeholderTextColor="gray"
-            value={this.state.password}
             onChangeText={this.passwordHandler}
           />
           <View style={styles.buttons}>

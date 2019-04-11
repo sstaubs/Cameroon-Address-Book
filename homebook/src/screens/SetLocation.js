@@ -105,7 +105,7 @@ class SetLocation extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.mainText}>Set Location</Text>
-        <Text style={styles.subText}>Adjust pin to correct location</Text>
+        <Text style={styles.subText}>Tap to drop pin on location</Text>
         <MapView
           initialRegion={this.state.focusedLocation}
           region={this.state.focusedLocation}
