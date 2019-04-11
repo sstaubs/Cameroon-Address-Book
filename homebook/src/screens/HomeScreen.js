@@ -22,7 +22,17 @@ class HomeScreen extends Component {
         this.props.onGetReference(placeName);
     };
 
+    
+
+    openSideMenu = () => Navigation.mergeOptions(this.props.componentId, {
+        sideMenu: {
+            left: { visible: true }
+        }
+    });
+
+
     componentDidMount() {
+       
         var db = firebase.firestore();
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -102,7 +112,7 @@ class HomeScreen extends Component {
                     <View style={styles.icons}>
                         <TouchableOpacity
                             style={styles.signoutIcon}
-                            onPress={this.pushSignout}>
+                            onPress={this.openSideMenu}>
                             <Icon size={25} name='ios-settings' color='white' />
                         </TouchableOpacity>
                         <TouchableOpacity

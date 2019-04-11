@@ -11,6 +11,7 @@ import SetLocation from './SetLocation';
 import UserProfile from './UserProfile';
 import FriendProfile from './FriendProfile';
 import EditUser from './EditUser';
+import SideMenu from './SideMenu';
 
 function registerScreens() {
   const reduxStore = configureStore();
@@ -59,6 +60,11 @@ function registerScreens() {
       <EditUser {...props} />
     </Provider>
   ), () => EditUser);
+  Navigation.registerComponent('SideMenu', () => (props) => (
+    <Provider store={reduxStore}>
+      <SideMenu {...props} />
+    </Provider>
+  ), () => SideMenu);
 }
 
 export default {

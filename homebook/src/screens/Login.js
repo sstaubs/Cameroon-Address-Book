@@ -20,11 +20,23 @@ class Login extends Component {
     component: {
       name: 'CreateAccountScreen'
     }
+
   });
 
+
   pushHomeScreen = () => Navigation.push(this.props.componentId, {
-    component: {
-      name: 'HomeScreen'
+    sideMenu: {
+      left: {
+        component: {
+          name: 'SideMenu'
+        }
+        
+      },
+      center:{
+        component: {
+          name: 'HomeScreen'
+        }
+      }
     }
   });
 
