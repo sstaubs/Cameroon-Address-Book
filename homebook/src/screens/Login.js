@@ -7,7 +7,7 @@ class Login extends Component {
   state = {
     email: '',
     password: '',
-    firstLoading: true,
+    firstLoading: true
   };
 
   pushRecovery = () => Navigation.push(this.props.componentId, {
@@ -42,19 +42,24 @@ class Login extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
-      if (user && this.state.firstLoading) {
+      if (user && this.state.firstLoading && user.emailVerified) {
         this.pushHomeScreen();
       } else {
         this.setState({ firstLoading: false });
       }
-    });
+    })
   }
 
   EnterLogin = val => {
+
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
-      this.pushHomeScreen();
-    })
-      .catch(function (error) {
+      var user = firebase.auth().currentUser;
+      if (user.emailVerified) {
+        this.pushHomeScreen();
+      } else {
+        alert("Email has not yet been verified");
+      }
+    }).catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
