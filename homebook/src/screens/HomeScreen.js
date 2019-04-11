@@ -32,7 +32,7 @@ class HomeScreen extends Component {
                 //alert(doc)
                 db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
-                        
+
 
                         this.setState({
                             referenceArray: this.state.referenceArray.concat([doc.id]),
@@ -90,48 +90,47 @@ class HomeScreen extends Component {
         this.ReferenceHandler(this.state.referenceArray[val])
         //alert(this.props.refpoint);
         this.pushFriendProfile();
-    
-        
+
+
 
     };
 
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.icons}>
-                    <TouchableOpacity
-                        style={styles.signoutIcon}
-                        onPress={this.pushSignout}>
-                        <Icon size={25} name='ios-log-out' color='white' />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.addIcon}
-                        onPress={this.pushAddUser}>
-                        <Icon size={35} name='ios-add' color='white' />
-                    </TouchableOpacity>
-                </View>
-
-                <TouchableOpacity
-                    onPress={this.pushUserProfile}>
-                    <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-                </TouchableOpacity>
-
-                <FlatList
-                    style={styles.list}
-                    data={
-                        this.state.friendNameArray
-
-                    }
-                    renderItem={({ item, index }) =>
+                <View style={styles.alignment}>
+                    <View style={styles.icons}>
                         <TouchableOpacity
-                            onPress={() => this.friendHandler(index)}>
-                            
-
-                            <Text style={styles.bodyText}>{item}</Text>
-
+                            style={styles.signoutIcon}
+                            onPress={this.pushSignout}>
+                            <Icon size={25} name='ios-settings' color='white' />
                         </TouchableOpacity>
-                    }
-                />
+                        <TouchableOpacity
+                            style={styles.addIcon}
+                            onPress={this.pushAddUser}>
+                            <Icon size={35} name='ios-add' color='white' />
+                        </TouchableOpacity>
+                    </View>
+
+                    <TouchableOpacity
+                        onPress={this.pushUserProfile}>
+                        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+                    </TouchableOpacity>
+
+                    <FlatList
+                        style={styles.list}
+                        data={
+                            this.state.friendNameArray
+                        }
+                        renderItem={({ item, index }) =>
+                            <TouchableOpacity
+                                onPress={() => this.friendHandler(index)}
+                            >
+                                <Text style={styles.bodyText}>{item}</Text>
+                            </TouchableOpacity>
+                        }
+                    />
+                </View>
             </View>
         );
     }
@@ -148,12 +147,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#222222'
     },
+    alignment: {
+        width: '80%'
+    },
     icons: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: 55,
-        width: '80%'
+        marginTop: 55
     },
     mainText: {
         fontWeight: 'bold',
@@ -162,8 +163,7 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     list: {
-        marginTop: 20,
-        right: 80
+        marginTop: 20
     },
     bodyText: {
         color: 'white',

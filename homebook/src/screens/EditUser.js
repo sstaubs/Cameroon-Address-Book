@@ -4,7 +4,7 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 
-class AddUser extends Component {
+class EditUser extends Component {
   state = {
     firstName: '',
     lastName: '',
@@ -102,31 +102,33 @@ class AddUser extends Component {
           </TouchableOpacity>
         </View>
         <Text style={styles.mainText}>Edit Contact</Text>
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder={this.state.firstName}
-          placeholderTextColor="gray"
-          onChangeText={this.firstNameHandler}
-        />
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder={this.state.lastName}
-          placeholderTextColor="gray"
-          onChangeText={this.lastNameHandler}
-        />
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder={this.state.phone}
-          placeholderTextColor="gray"
-          onChangeText={this.phoneNumberHandler}
-        />
-        <TextInput
-          style={styles.textInputStyle}
-          autoCapitalize='none'
-          placeholder={this.state.email}
-          placeholderTextColor="gray"
-          onChangeText={this.emailHandler}
-        />
+        <View style={styles.alignment}>
+          <Text style={styles.category}>First Name</Text>
+          <TextInput
+            style={styles.textInputStyle}
+            value={this.state.firstName}
+            onChangeText={this.firstNameHandler}
+          />
+          <Text style={styles.category}>Last Name</Text>
+          <TextInput
+            style={styles.textInputStyle}
+            value={this.state.lastName}
+            onChangeText={this.lastNameHandler}
+          />
+          <Text style={styles.category}>Phone Number</Text>
+          <TextInput
+            style={styles.textInputStyle}
+            value={this.state.phone}
+            onChangeText={this.phoneNumberHandler}
+          />
+          <Text style={styles.category}>Email</Text>
+          <TextInput
+            style={styles.textInputStyle}
+            autoCapitalize='none'
+            value={this.state.email}
+            onChangeText={this.emailHandler}
+          />
+        </View>
         <TouchableOpacity
           style={styles.confirmButton}
           onPress={this.confirmHandler}
@@ -158,14 +160,19 @@ const styles = StyleSheet.create({
     marginTop: 25,
     color: 'white'
   },
-  textInputStyle: {
-    width: '80%',
-    marginTop: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: 'white',
+  alignment: {
+    width: '80%'
+  },
+  category: {
+    marginTop: 17,
+    fontWeight: 'bold',
     fontSize: 17,
-    height: 32,
-    color: 'white'
+    color: 'white',
+  },
+  textInputStyle: {
+    marginTop: 5,
+    fontSize: 17,
+    color: 'grey'
   },
   confirmButton: {
     width: 300,
@@ -177,4 +184,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddUser;
+export default EditUser;

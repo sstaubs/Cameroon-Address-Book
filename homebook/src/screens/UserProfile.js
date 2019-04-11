@@ -13,8 +13,8 @@ class UserProfile extends Component {
     email: '',
     docId: '',
     focusedLocation: {
-      longitude: '',
-      latitude: '',
+      longitude: 0,
+      latitude: 0,
       latitudeDelta: 0.0122,
       longitudeDelta:
         Dimensions.get("window").width /
@@ -107,10 +107,7 @@ class UserProfile extends Component {
           <Text style={styles.textInputStyle}>{this.state.phone}</Text>
           <Text style={styles.category}>Email</Text>
           <Text style={styles.textInputStyle}>{this.state.email}</Text>
-          <Text style={styles.category}>Coordinates</Text>
-          <Text style={styles.textInputStyle}>Latitude: {this.state.focusedLocation.latitude}</Text>
-          <Text style={styles.textInputStyle}>Longitude: {this.state.focusedLocation.longitude}</Text>
-          <Text style={styles.category}>Map</Text>
+          <Text style={styles.category}>Location</Text>
           <MapView
             region={this.state.focusedLocation}
             style={styles.map}
