@@ -3,7 +3,6 @@
 To -Do List
     Back-End
         Share function
-        Email verification
         Delete friends
         (add more as we run into things)
         Redux stuff

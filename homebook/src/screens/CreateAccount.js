@@ -75,6 +75,13 @@ class CreateAccount extends Component {
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then(() => {
           var user = firebase.auth().currentUser;
+
+          user.sendEmailVerification().then(function() {
+            // Email sent.
+          }).catch(function(error) {
+            // An error happened.
+          });
+          
           if (user) {
             const accountInfo = {
               firstN: this.state.firstName,

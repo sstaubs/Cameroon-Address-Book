@@ -56,9 +56,9 @@ class SetLocation extends Component {
       })
   }
 
-  pushHomeScreen = () => Navigation.push(this.props.componentId, {
+  pushLoginScreen = () => Navigation.push(this.props.componentId, {
     component: {
-      name: 'HomeScreen'
+      name: 'LoginScreen'
     }
   });
 
@@ -71,7 +71,7 @@ class SetLocation extends Component {
       .then(() => {
         console.log("Document successfully updated!");
       }).then(() => {
-        this.pushHomeScreen()
+        this.pushLoginScreen()
       })
       .catch((error) => {
         // The document probably doesn't exist.
