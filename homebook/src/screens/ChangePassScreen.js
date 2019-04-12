@@ -4,9 +4,10 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 
-class Recover extends Component {
+class ChangePassScreen extends Component {
     state = {
         email: '',
+        currentPassword: '',
         newPassword: '',
         confirmPassword: ''
     };
@@ -35,6 +36,12 @@ class Recover extends Component {
         });
     };
 
+    currentPassHandler = val => {
+        this.setState({
+            currentPassword: val,
+        });
+    };
+
     passwordConfirm = () => {
         if (this.state.password != this.state.confirmpassword) {
             alert("Password does not match");
@@ -48,12 +55,27 @@ class Recover extends Component {
     changePassword = val => {
         if (this.passwordConfirm()) {
             var user = firebase.auth().currentUser;
-            user.updatePassword(this.state.newPassword).then(() => {
-                alert("Password was changed")
-            }).catch((error) => {
-                alert(error.message);
-            })
+
+            const credential = firebase.auth.EmailAuthProvider.credential(
+                user.email,
+                this.state.currentPassword
+            );
+
+
+            user.reauthenticateAndRetrieveDataWithCredential(credential).then(() => {
+                // User re-authenticated.
+                user.updatePassword(this.state.newPassword).then(() => {
+                    alert("Password was changed")
+                }).catch((error) => {
+                    alert(error.message);
+                })
+            }).catch( (error) => {
+                // An error happened.
+                alert("Was not authenticated");
+            });
+
             this.backArrow();
+
         }
     }
 
@@ -70,18 +92,16 @@ class Recover extends Component {
                     <Icon size={25} name='ios-arrow-back' color='white' />
                 </TouchableOpacity>
                 <Text style={styles.mainText}>Change Password</Text>
-                <Text style={styles.subText}>New Password</Text>
                 <TextInput
                     keyboardType="number-pad"
-                    style={styles.phoneInfo}
+                    style={styles.userInput}
                     placeholder="New Password"
                     placeholderTextColor="gray"
                     onChangeText={this.passHandler}
                 />
-                <Text style={styles.subText}>Confirm New Password</Text>
                 <TextInput
                     keyboardType="number-pad"
-                    style={styles.phoneInfo}
+                    style={styles.userInput}
                     placeholder="Confirm New Password"
                     placeholderTextColor="gray"
                     onChangeText={this.confirmPassHandler}
@@ -90,7 +110,7 @@ class Recover extends Component {
                     style={styles.sendButton}
                     onPress={this.changePassword}
                 >
-                    <Text style={{ color: 'white', fontWeight: '500' }}>UPDATE</Text>
+                    <Text style={{ color: 'white', fontWeight: '500' }}>UPDATE PASSWORD</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -106,8 +126,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#222222',
     },
     backIcon: {
-        position: 'relative',
-        right: 140,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        width: '85%',
         marginTop: 70
     },
     mainText: {
@@ -116,27 +137,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         width: 300,
         textAlign: 'center',
-        marginTop: 24
+        marginTop: 24,
+        marginBottom: 30
     },
-    subText: {
-        color: 'white',
+    userInput: {
+        width: '85%',
+        backgroundColor: '#282828',
+        padding: 10,
+        marginTop: 15,
         fontSize: 17,
-        marginTop: 50,
-        width: 300
-    },
-    phoneInfo: {
-        width: 300,
-        marginTop: 5,
-        padding: 5,
-        borderWidth: 1,
-        borderColor: 'white',
-        fontSize: 17,
-        height: 32,
         color: 'white'
-    },
+      },
     sendButton: {
-        width: 300,
-        marginTop: 20,
+        width: '85%',
+        marginTop: 30,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#4A90E2',
@@ -144,4 +158,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Recover;
+export default ChangePassScreen;

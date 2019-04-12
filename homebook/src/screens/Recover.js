@@ -36,23 +36,13 @@ class Recover extends Component {
         var emailAddress = this.state.email;
         auth.sendPasswordResetEmail(emailAddress).then(() => {
             // Email sent.
+            //alert("Recovery email has been sent to:" + this.state.email);
             this.pushLoginScreen();
         }).catch(function (error) {
             alert(error);
         });
     };
 
-    //Below will be used in the settings page when created to change an existing password
-    /*
-        changePassword = val => {
-            var user = firebase.auth().currentUser;
-            user.updatePassword(this.state.newPassword).then(() => {
-                alert("Password was changed");
-            }).catch((error) => {
-                alert(error.message);
-            });
-        }
-    */
 
     popToLogin = () => Navigation.pop(this.props.componentId);
 
