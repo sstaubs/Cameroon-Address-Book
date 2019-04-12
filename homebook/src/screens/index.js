@@ -12,6 +12,7 @@ import UserProfile from './UserProfile';
 import FriendProfile from './FriendProfile';
 import EditUser from './EditUser';
 import SideMenu from './SideMenu';
+import SearchUser from  './SearchUser';
 
 function registerScreens() {
   const reduxStore = configureStore();
@@ -20,16 +21,19 @@ function registerScreens() {
       <Login {...props} />
     </Provider>
   ), () => Login);
+
   Navigation.registerComponent('RecoveryScreen', () => (props) => (
     <Provider store={reduxStore}>
       <Recover {...props} />
     </Provider>
   ), () => Recover);
+
   Navigation.registerComponent('CreateAccountScreen', () => (props) => (
     <Provider store={reduxStore}>
       <CreateAccount {...props} />
     </Provider>
   ), () => CreateAccount);
+
   Navigation.registerComponent('HomeScreen', () => (props) => (
     <Provider store={reduxStore}>
       <HomeScreen {...props} />
@@ -40,6 +44,7 @@ function registerScreens() {
       <AddUser {...props} />
     </Provider>
   ), () => AddUser);
+
   Navigation.registerComponent('SetLocation', () => (props) => (
     <Provider store={reduxStore}>
       <SetLocation {...props} />
@@ -50,21 +55,30 @@ function registerScreens() {
       <UserProfile {...props} />
     </Provider>
   ), () => UserProfile);
+
   Navigation.registerComponent('FriendProfile', () => (props) => (
     <Provider store={reduxStore}>
       <FriendProfile {...props} />
     </Provider>
   ), () => FriendProfile);
+
   Navigation.registerComponent('EditUser', () => (props) => (
     <Provider store={reduxStore}>
       <EditUser {...props} />
     </Provider>
   ), () => EditUser);
+
   Navigation.registerComponent('SideMenu', () => (props) => (
     <Provider store={reduxStore}>
       <SideMenu {...props} />
     </Provider>
   ), () => SideMenu);
+  
+  Navigation.registerComponent('SearchUser', () => (props) => (
+    <Provider store={reduxStore}>
+      <SearchUser {...props} />
+    </Provider>
+  ), () => SearchUser);
 }
 
 export default {

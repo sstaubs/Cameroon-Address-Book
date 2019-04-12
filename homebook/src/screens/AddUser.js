@@ -24,11 +24,9 @@ class AddUser extends Component {
 
   };
 
-  pushCloseButton = () => Navigation.pop(this.props.componentId, {
-    component: {
-      name: 'AddUser'
-    }
-  });
+  pushCloseButton = () => {
+    Navigation.pop(this.props.componentId);
+  }
 
   popHomeScreen() {
     Navigation.push(this.props.componentId, {
@@ -37,6 +35,15 @@ class AddUser extends Component {
       }
     });
   }
+
+  pushSearchUser = () => {
+    
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'SearchUser'
+      }
+    })
+  };
 
   firstNameHandler = val => {
     this.setState({
@@ -155,6 +162,12 @@ class AddUser extends Component {
             onPress={this.pushCloseButton}>
             <Icon size={35} name='ios-close' color='white' />
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.addIcon}
+            onPress={this.pushSearchUser}
+          >
+            <Icon size={35} name='ios-search' color='white' />
+          </TouchableOpacity>
         </View>
         <Text style={styles.mainText}>Add Contact</Text>
         <TextInput
@@ -195,7 +208,7 @@ class AddUser extends Component {
         >
           <Text style={{ color: 'white', fontWeight: '500' }}>LOCATE ME!</Text>
         </TouchableOpacity>
-    
+
         <TouchableOpacity
           style={styles.confirmButton}
           onPress={this.confirmHandler}
@@ -260,7 +273,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4A90E2',
     height: 32
   },
-  
+
 });
 
 export default AddUser;
