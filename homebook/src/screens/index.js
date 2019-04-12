@@ -12,6 +12,7 @@ import UserProfile from './UserProfile';
 import FriendProfile from './FriendProfile';
 import EditUser from './EditUser';
 import SideMenu from './SideMenu';
+import ChangePassScreen from './ChangePassScreen';
 
 function registerScreens() {
   const reduxStore = configureStore();
@@ -65,6 +66,11 @@ function registerScreens() {
       <SideMenu {...props} />
     </Provider>
   ), () => SideMenu);
+  Navigation.registerComponent('ChangePassScreen', () => (props) => (
+    <Provider store={reduxStore}>
+      <ChangePassScreen {...props} />
+    </Provider>
+  ), () => ChangePassScreen);
 }
 
 export default {

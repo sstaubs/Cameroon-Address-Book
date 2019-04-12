@@ -10,14 +10,22 @@ class SideMenu extends Component {
         firebase.auth().signOut();
         Navigation.popToRoot(this.props.componentId);
     };
-    changePassword = () => {
+
+    changePassword = () => Navigation.push(this.props.componentId, {
+        component: {
+          name: 'ChangePassScreen'
+        }
+    });
+
+
+    /*changePassword = () => {
         var user = firebase.auth().currentUser;
         user.updatePassword("123456").then(function () {
             // Update successful.
         }).catch(function (error) {
             // An error happened.
-        });
-    }
+        }); 
+    }*/
 
     render() {
         return (
