@@ -15,6 +15,7 @@ import SideMenu from './SideMenu';
 import SearchUser from  './SearchUser';
 import ChangePassScreen from './ChangePassScreen';
 import ChangeEmailScreen from './ChangeEmailScreen';
+import RequestPage from './RequestPage';
 
 function registerScreens() {
   const reduxStore = configureStore();
@@ -86,11 +87,18 @@ function registerScreens() {
       <ChangePassScreen {...props} />
     </Provider>
   ), () => ChangePassScreen);
+
   Navigation.registerComponent('ChangeEmailScreen', () => (props) => (
     <Provider store={reduxStore}>
       <ChangeEmailScreen {...props} />
     </Provider>
   ), () => ChangeEmailScreen);
+
+  Navigation.registerComponent('RequestPage', () => (props) => (
+    <Provider store={reduxStore}>
+      <RequestPage {...props} />
+    </Provider>
+  ), () => RequestPage);
 }
 
 export default {

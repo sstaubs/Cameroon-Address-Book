@@ -35,29 +35,18 @@ class UserProfile extends Component {
     }
   });
 
-  firstNameHandler = val => {
-    this.setState({
-      firstName: val,
-    });
-  };
 
-  lastNameHandler = val => {
-    this.setState({
-      lastName: val,
-    });
-  };
+  pushRequestPage = () => Navigation.push(this.props.componentId, {
+    component: {
+      name: 'RequestPage'
+    }
+  });
 
-  phoneNumberHandler = val => {
-    this.setState({
-      phone: val,
-    });
-  };
 
-  emailHandler = val => {
-    this.setState({
-      email: val,
-    });
-  };
+
+
+
+
 
   componentDidMount() {
     var db = firebase.firestore();
@@ -95,29 +84,35 @@ class UserProfile extends Component {
             onPress={this.pushCloseButton}>
             <Icon size={35} name='ios-close' color='white' />
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.edit}
             onPress={this.pushEditButton}>
             <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
           </TouchableOpacity>
         </View>
-          <View style={styles.alignment}>
-            <ScrollView>
-              <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-              <Text style={styles.category}>Phone Number</Text>
-              <Text style={styles.textInputStyle}>{this.state.phone}</Text>
-              <Text style={styles.category}>Email</Text>
-              <Text style={styles.textInputStyle}>{this.state.email}</Text>
-              <Text style={styles.category}>Location</Text>
-              <MapView
-                region={this.state.focusedLocation}
-                style={styles.map}
-                ref={ref => this.map = ref}
-              >
-                {marker}
-              </MapView>
-            </ScrollView>
-          </View>
+        <View style={styles.alignment}>
+          <ScrollView>
+            <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+            <TouchableOpacity
+              style={styles.closeIcon}
+              onPress={this.pushRequestPage}>
+              <Icon size={35} name='ios-alert' color='white' />
+            </TouchableOpacity>
+            <Text style={styles.category}>Phone Number</Text>
+            <Text style={styles.textInputStyle}>{this.state.phone}</Text>
+            <Text style={styles.category}>Email</Text>
+            <Text style={styles.textInputStyle}>{this.state.email}</Text>
+            <Text style={styles.category}>Location</Text>
+            <MapView
+              region={this.state.focusedLocation}
+              style={styles.map}
+              ref={ref => this.map = ref}
+            >
+              {marker}
+            </MapView>
+          </ScrollView>
+        </View>
       </View>
     );
   }
