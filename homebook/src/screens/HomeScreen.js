@@ -3,11 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
-
 import { connect } from 'react-redux';
 import { getReference } from "../store/actions/index";
-
-
 
 class HomeScreen extends Component {
     state = {
@@ -22,14 +19,11 @@ class HomeScreen extends Component {
         this.props.onGetReference(placeName);
     };
 
-
-
     openSideMenu = () => Navigation.mergeOptions(this.props.componentId, {
         sideMenu: {
             left: { visible: true }
         }
     });
-
 
     componentDidMount() {
 
@@ -76,8 +70,6 @@ class HomeScreen extends Component {
         }
     });
 
-    
-
     pushAddUser = () => Navigation.push(this.props.componentId, {
         component: {
             name: 'AddUser'
@@ -99,7 +91,7 @@ class HomeScreen extends Component {
                         <TouchableOpacity
                             style={styles.signoutIcon}
                             onPress={this.openSideMenu}>
-                            <Icon size={25} name='ios-settings' color='white' />
+                            <Icon size={25} name='ios-menu' color='white' />
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.addIcon}
@@ -115,15 +107,12 @@ class HomeScreen extends Component {
 
                     <FlatList
                         style={styles.list}
-                        data={
-                            this.state.friendNameArray
-                        }
+                        data={this.state.friendNameArray}
                         renderItem={({ item, index }) =>
                             <TouchableOpacity
                                 onPress={() => this.friendHandler(index)}
                             >
                                 <Text style={styles.bodyText}>{item}</Text>
-
                             </TouchableOpacity>
                         }
                         keyExtractor={(index) => index.toString()}

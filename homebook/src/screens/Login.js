@@ -30,7 +30,7 @@ class Login extends Component {
         component: {
           name: 'SideMenu'
         }
-        
+
       },
       center:{
         component: {
@@ -88,39 +88,38 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor="#5E8D48" barStyle="light-content" />
-        <View>
+        <View style={styles.alignment}>
           <Text style={styles.mainText}>HomeBook</Text>
           <Text style={styles.supportingText}>Addressing Your Home</Text>
           <TextInput
             autoCapitalize="none"
             keyboardType='email-address'
-            style={styles.phoneInfo}
+            style={styles.userInputPhone}
             placeholder="Email"
             placeholderTextColor="gray"
             onChangeText={this.emailHandler}
           />
           <TextInput
             secureTextEntry={true}
-            style={styles.passwordInfo}
+            style={styles.userInputPassword}
             placeholder="Password"
             placeholderTextColor="gray"
             onChangeText={this.passwordHandler}
           />
-          <View style={styles.buttons}>
-            <TouchableOpacity
-              style={styles.loginButton}
-              onPress={this.EnterLogin}
-            >
-              <Text style={{ color: '#222222', fontWeight: '500' }}>LOGIN</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.signupButton}
-              onPress={this.pushCreateAccount}
-            >
-              <Text style={{ color: '#70B456', fontWeight: '500' }}>CREATE ACCOUNT</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={this.EnterLogin}
+          >
+            <Text style={{ color: '#222222', fontWeight: '500' }}>LOGIN</Text>
+          </TouchableOpacity>
+
+          <Text onPress={this.pushRecovery} style={styles.forgotPassword}>Forgot Password?</Text>
+          <View style={styles.signupLine}>
+            <Text style={styles.signup}>Don't have an account?</Text>
+              <TouchableOpacity>
+                <Text onPress={this.pushCreateAccount} style={styles.clickSignup}>Create Account</Text>
+              </TouchableOpacity>
           </View>
-          <Text onPress={this.pushRecovery} style={styles.linkText}>FORGOT PASSWORD?</Text>
         </View>
       </View>
     );
@@ -131,9 +130,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#222222',
+  },
+  alignment: {
+    width: '85%'
   },
   mainText: {
     color: 'white',
@@ -149,55 +150,47 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 5
   },
-  phoneInfo: {
-    width: 300,
-    marginTop: 50,
-    paddingBottom: 2,
-    borderBottomWidth: 1,
-    borderColor: 'white',
+  userInputPhone: {
+    backgroundColor: '#282828',
+    padding: 10,
+    marginTop: 30,
     fontSize: 17,
-    height: 32,
     color: 'white'
   },
-  passwordInfo: {
-    width: 300,
-    marginTop: 20,
-    paddingBottom: 2,
-    borderBottomWidth: 1,
-    borderColor: 'white',
+  userInputPassword: {
+    backgroundColor: '#282828',
+    padding: 10,
+    marginTop: 10,
     fontSize: 17,
-    height: 32,
     color: 'white'
-  },
-  buttons: {
-    marginTop: 20,
-    width: 300,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end'
   },
   loginButton: {
-    width: 145,
+    width: '100%',
     marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#70B456',
     height: 32
   },
-  signupButton: {
-    width: 145,
-    marginTop: 10,
-    alignItems: 'center',
+  signupLine: {
+    flexDirection: 'row',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#70B456',
-    backgroundColor: '#222222',
-    height: 32
+    alignItems: 'center',
+    marginTop: 260,
+    fontSize: 20
   },
-  linkText: {
+  signup: {
+    color: 'gray'
+  },
+  clickSignup: {
+    color: '#70B456',
+    marginLeft: 10
+  },
+  forgotPassword: {
     color: 'gray',
-    fontSize: 12,
-    marginTop: 20
+    fontSize: 14,
+    marginTop: 20,
+    textAlign: 'center'
   }
 });
 
