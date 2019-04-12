@@ -254,13 +254,6 @@ const styles = StyleSheet.create({
     height: 300,
     marginTop: 20
   },
-  confirmButton: {
-    marginTop: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#4A90E2',
-    height: 32
-  },
   locateButton: {
     marginTop: 30,
     alignItems: 'center',
@@ -268,7 +261,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#4A90E2',
     height: 32
   },
-
+  confirmButton: {
+    marginTop: 30,
+    marginBottom: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#4A90E2',
+    height: 32
+  }
 });
 
 export default AddUser;
