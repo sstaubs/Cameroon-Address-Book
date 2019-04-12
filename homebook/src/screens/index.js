@@ -13,6 +13,7 @@ import FriendProfile from './FriendProfile';
 import EditUser from './EditUser';
 import SideMenu from './SideMenu';
 import ChangePassScreen from './ChangePassScreen';
+import ChangeEmailScreen from './ChangeEmailScreen';
 
 function registerScreens() {
   const reduxStore = configureStore();
@@ -71,6 +72,11 @@ function registerScreens() {
       <ChangePassScreen {...props} />
     </Provider>
   ), () => ChangePassScreen);
+  Navigation.registerComponent('ChangeEmailScreen', () => (props) => (
+    <Provider store={reduxStore}>
+      <ChangeEmailScreen {...props} />
+    </Provider>
+  ), () => ChangeEmailScreen);
 }
 
 export default {

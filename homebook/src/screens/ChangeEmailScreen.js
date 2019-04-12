@@ -4,12 +4,11 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 
-class ChangePassScreen extends Component {
+class ChangeEmailScreen extends Component {
     state = {
-        email: '',
         currentPassword: '',
-        newPassword: '',
-        confirmPassword: ''
+        email: '',
+        newEmail: ''
     };
 
     backArrow = () => Navigation.pop(this.props.componentId, {
@@ -24,23 +23,18 @@ class ChangePassScreen extends Component {
         });
     };
 
+    newEmailHandler = val => {
+        this.setState({
+            newEmail: val,
+        });
+    };
+
     passHandler = val => {
-        this.setState({
-            newPassword: val,
-        });
-    };
-
-    confirmPassHandler = val => {
-        this.setState({
-            confirmPassword: val,
-        });
-    };
-
-    currentPassHandler = val => {
         this.setState({
             currentPassword: val,
         });
     };
+
 
     passwordConfirm = () => {
         if (this.state.password != this.state.confirmpassword) {
@@ -52,31 +46,38 @@ class ChangePassScreen extends Component {
 
     //Below will be used in the settings page when created to change an existing password
 
-    changePassword = val => {
-        if (this.passwordConfirm()) {
-            var user = firebase.auth().currentUser;
+    changeEmail = val => {
 
-            const credential = firebase.auth.EmailAuthProvider.credential(
-                user.email,
-                this.state.currentPassword
-            );
+        var user = firebase.auth().currentUser;
+
+        const credential = firebase.auth.EmailAuthProvider.credential(
+            user.email,
+            this.state.currentPassword
+        );
 
 
-            user.reauthenticateAndRetrieveDataWithCredential(credential).then(() => {
-                // User re-authenticated.
-                user.updatePassword(this.state.newPassword).then(() => {
-                    alert("Password was changed")
-                }).catch((error) => {
-                    alert(error.message);
-                })
-            }).catch( (error) => {
-                // An error happened.
-                alert("Was not authenticated");
-            });
+        user.reauthenticateAndRetrieveDataWithCredential(credential).then(() => {
+            // User re-authenticated.
+            user.updateEmail(this.state.newEmail).then(() => {
+                //authentication email changed
+                user.sendEmailVerification().then(() => {
+                    // Email sent.
+                    alert("Verification email sent to:" + this.state.newEmail);
+                }).catch(() => {
+                    // An error happened.
+                    alert("Problem with verification email");
+                });
+            }).catch((error) => {
+                alert(error.message);
+            })
+        }).catch(() => {
+            // An error happened.
+            alert("Was not authenticated");
+        });
 
-            this.backArrow();
 
-        }
+        this.backArrow();
+
     }
 
 
@@ -91,34 +92,34 @@ class ChangePassScreen extends Component {
                 >
                     <Icon size={25} name='ios-arrow-back' color='white' />
                 </TouchableOpacity>
-                <Text style={styles.mainText}>Change Password</Text>
+                <Text style={styles.mainText}>Change Email</Text>
+                <Text style={styles.subText}>Current Email</Text>
+                <TextInput
+                    keyboardType="number-pad"
+                    style={styles.phoneInfo}
+                    placeholder="Current Email"
+                    placeholderTextColor="gray"
+                    onChangeText={this.emailHandler}
+                />
                 <Text style={styles.subText}>Current Password</Text>
                 <TextInput
                     keyboardType="number-pad"
                     style={styles.phoneInfo}
                     placeholder="Current Password"
                     placeholderTextColor="gray"
-                    onChangeText={this.currentPassHandler}
-                />
-                <Text style={styles.subText}>New Password</Text>
-                <TextInput
-                    keyboardType="number-pad"
-                    style={styles.phoneInfo}
-                    placeholder="New Password"
-                    placeholderTextColor="gray"
                     onChangeText={this.passHandler}
                 />
-                <Text style={styles.subText}>Confirm New Password</Text>
+                <Text style={styles.subText}>New Email</Text>
                 <TextInput
                     keyboardType="number-pad"
                     style={styles.phoneInfo}
-                    placeholder="Confirm New Password"
+                    placeholder="New Email"
                     placeholderTextColor="gray"
-                    onChangeText={this.confirmPassHandler}
+                    onChangeText={this.newEmailHandler}
                 />
                 <TouchableOpacity
                     style={styles.sendButton}
-                    onPress={this.changePassword}
+                    onPress={this.changeEmail}
                 >
                     <Text style={{ color: 'white', fontWeight: '500' }}>UPDATE</Text>
                 </TouchableOpacity>
@@ -174,4 +175,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ChangePassScreen;
+export default ChangeEmailScreen;

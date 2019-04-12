@@ -17,6 +17,11 @@ class SideMenu extends Component {
         }
     });
 
+    changeEmail = () => Navigation.push(this.props.componentId, {
+        component: {
+          name: 'ChangeEmailScreen'
+        }
+    });
 
     /*changePassword = () => {
         var user = firebase.auth().currentUser;
@@ -40,9 +45,10 @@ class SideMenu extends Component {
                 <View style={styles.content}>
                     <TouchableOpacity
                         onPress={this.changePassword}>
-                        <Text style={styles.innerText}>Reset Password</Text>
+                        <Text style={styles.innerText}>Change Password</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={this.changeEmail}>
                         <Text style={styles.innerText}>Change Email</Text>
                     </TouchableOpacity>
                     <TouchableOpacity

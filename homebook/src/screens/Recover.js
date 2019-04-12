@@ -36,6 +36,7 @@ class Recover extends Component {
         var emailAddress = this.state.email;
         auth.sendPasswordResetEmail(emailAddress).then(() => {
             // Email sent.
+            //alert("Recovery email has been sent to:" + this.state.email);
             this.pushLoginScreen();
         }).catch(function (error) {
             alert(error);
