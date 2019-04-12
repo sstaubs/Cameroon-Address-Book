@@ -23,14 +23,6 @@ class SideMenu extends Component {
         }
     });
 
-    /*changePassword = () => {
-        var user = firebase.auth().currentUser;
-        user.updatePassword("123456").then(function () {
-            // Update successful.
-        }).catch(function (error) {
-            // An error happened.
-        }); 
-    }*/
 
     closeSideMenu = () => Navigation.mergeOptions(this.props.componentId, {
         sideMenu: {
@@ -56,7 +48,8 @@ class SideMenu extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.textPadding}>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={this.changeEmail}>
                             <Text style={styles.innerText}>Change Email</Text>
                         </TouchableOpacity>
                     </View>

@@ -43,17 +43,6 @@ class Recover extends Component {
         });
     };
 
-    //Below will be used in the settings page when created to change an existing password
-    /*
-        changePassword = val => {
-            var user = firebase.auth().currentUser;
-            user.updatePassword(this.state.newPassword).then(() => {
-                alert("Password was changed");
-            }).catch((error) => {
-                alert(error.message);
-            });
-        }
-    */
 
     popToLogin = () => Navigation.pop(this.props.componentId);
 
