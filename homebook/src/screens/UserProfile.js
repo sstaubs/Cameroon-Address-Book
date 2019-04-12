@@ -102,20 +102,20 @@ class UserProfile extends Component {
           </TouchableOpacity>
         </View>
           <View style={styles.alignment}>
-          <ScrollView>
-            <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-            <Text style={styles.category}>Phone Number</Text>
-            <Text style={styles.textInputStyle}>{this.state.phone}</Text>
-            <Text style={styles.category}>Email</Text>
-            <Text style={styles.textInputStyle}>{this.state.email}</Text>
-            <Text style={styles.category}>Location</Text>
-            <MapView
-              region={this.state.focusedLocation}
-              style={styles.map}
-              ref={ref => this.map = ref}
-            >
-              {marker}
-            </MapView>
+            <ScrollView>
+              <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+              <Text style={styles.category}>Phone Number</Text>
+              <Text style={styles.textInputStyle}>{this.state.phone}</Text>
+              <Text style={styles.category}>Email</Text>
+              <Text style={styles.textInputStyle}>{this.state.email}</Text>
+              <Text style={styles.category}>Location</Text>
+              <MapView
+                region={this.state.focusedLocation}
+                style={styles.map}
+                ref={ref => this.map = ref}
+              >
+                {marker}
+              </MapView>
             </ScrollView>
           </View>
       </View>

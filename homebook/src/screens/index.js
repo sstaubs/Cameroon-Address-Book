@@ -13,6 +13,7 @@ import FriendProfile from './FriendProfile';
 import EditUser from './EditUser';
 import SideMenu from './SideMenu';
 import SearchUser from  './SearchUser';
+import ChangePassScreen from './ChangePassScreen';
 
 function registerScreens() {
   const reduxStore = configureStore();
@@ -79,6 +80,11 @@ function registerScreens() {
       <SearchUser {...props} />
     </Provider>
   ), () => SearchUser);
+  Navigation.registerComponent('ChangePassScreen', () => (props) => (
+    <Provider store={reduxStore}>
+      <ChangePassScreen {...props} />
+    </Provider>
+  ), () => ChangePassScreen);
 }
 
 export default {

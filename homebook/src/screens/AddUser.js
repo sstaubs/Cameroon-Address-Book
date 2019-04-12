@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
@@ -13,8 +13,8 @@ class AddUser extends Component {
     email: '',
     docId: '',
     focusedLocation: {
-      longitude: '',
-      latitude: '',
+      longitude: 0,
+      latitude: 0,
       latitudeDelta: 0.0122,
       longitudeDelta:
         Dimensions.get("window").width /
@@ -156,65 +156,70 @@ class AddUser extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.icons}>
-          <TouchableOpacity
-            style={styles.closeIcon}
-            onPress={this.pushCloseButton}>
-            <Icon size={35} name='ios-close' color='white' />
-          </TouchableOpacity>
-          <TouchableOpacity
+        <TouchableOpacity
+          style={styles.closeIcon}
+          onPress={this.pushCloseButton}>
+          <Icon size={35} name='ios-close' color='white' />
+        </TouchableOpacity>
+        <TouchableOpacity
             style={styles.addIcon}
             onPress={this.pushSearchUser}
           >
             <Icon size={35} name='ios-search' color='white' />
           </TouchableOpacity>
-        </View>
         <Text style={styles.mainText}>Add Contact</Text>
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder="First Name"
-          placeholderTextColor="gray"
-          onChangeText={this.firstNameHandler}
-        />
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder="Last Name"
-          placeholderTextColor="gray"
-          onChangeText={this.lastNameHandler}
-        />
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder="Phone Number"
-          placeholderTextColor="gray"
-          onChangeText={this.phoneNumberHandler}
-        />
-        <TextInput
-          style={styles.textInputStyle}
-          autoCapitalize='none'
-          placeholder="Email"
-          placeholderTextColor="gray"
-          onChangeText={this.emailHandler}
-        />
-        <MapView
-          region={this.state.focusedLocation}
-          style={styles.map}
-          ref={ref => this.map = ref}
-        >
-          {marker}
-        </MapView>
-        <TouchableOpacity
-          style={styles.locateButton}
-          onPress={this.getLocationHandler}
-        >
-          <Text style={{ color: 'white', fontWeight: '500' }}>LOCATE ME!</Text>
-        </TouchableOpacity>
+        <View style={styles.alignment}>
+          <ScrollView>
+            <TextInput
+              style={styles.userInput}
+              placeholder="First Name"
+              placeholderTextColor="gray"
+              onChangeText={this.firstNameHandler}
+            />
+            <TextInput
+              style={styles.userInput}
+              placeholder="Last Name"
+              placeholderTextColor="gray"
+              onChangeText={this.lastNameHandler}
+            />
+            <TextInput
+              style={styles.userInput}
+              placeholder="Phone Number"
+              placeholderTextColor="gray"
+              onChangeText={this.phoneNumberHandler}
+            />
+            <TextInput
+              style={styles.userInput}
+              autoCapitalize='none'
+              placeholder="Email"
+              placeholderTextColor="gray"
+              onChangeText={this.emailHandler}
+            />
 
-        <TouchableOpacity
-          style={styles.confirmButton}
-          onPress={this.confirmHandler}
-        >
-          <Text style={{ color: 'white', fontWeight: '500' }}>ADD CONTACT</Text>
-        </TouchableOpacity>
+            <Text style={styles.mapText}>Set Location</Text>
+
+            <MapView
+              region={this.state.focusedLocation}
+              style={styles.map}
+              ref={ref => this.map = ref}
+            >
+              {marker}
+            </MapView>
+            <TouchableOpacity
+              style={styles.locateButton}
+              onPress={this.getLocationHandler}
+            >
+              <Text style={{ color: 'white', fontWeight: '500' }}>LOCATE ME!</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={this.confirmHandler}
+            >
+              <Text style={{ color: 'white', fontWeight: '500' }}>ADD CONTACT</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
       </View>
     );
   }
@@ -228,14 +233,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#222222',
   },
-  icons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 55
-  },
   closeIcon: {
-    position: 'relative',
-    right: 140
+    marginTop: 55,
+    width: '85%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  alignment: {
+    width: '85%',
+    marginTop: 20
   },
   mainText: {
     fontWeight: 'bold',
@@ -243,30 +249,32 @@ const styles = StyleSheet.create({
     marginTop: 25,
     color: 'white'
   },
-  textInputStyle: {
-    width: 300,
+  userInput: {
+    backgroundColor: '#282828',
+    padding: 10,
     marginTop: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: 'white',
     fontSize: 17,
-    height: 32,
     color: 'white'
   },
+  mapText: {
+    color: 'white',
+    alignItems: 'center',
+    marginTop: 20,
+    fontSize: 17,
+    fontWeight: 'bold'
+  },
+  map: {
+    height: 300,
+    marginTop: 20
+  },
   confirmButton: {
-    width: 300,
     marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#4A90E2',
     height: 32
   },
-  map: {
-    width: '100%',
-    height: 300,
-    marginTop: 20
-  },
   locateButton: {
-    width: '80%',
     marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',

@@ -28,12 +28,12 @@ class SearchUser extends Component {
 
     searchedEmailHandler = val => {
         this.setState({
-            email: val,
+            searchedEmail: val,
         });
     };
     searchBySearchedEmail = () => {
         var db = firebase.firestore();
-        db.collection("users").where("email", "==", this.state.email).get()
+        db.collection("users").where("email", "==", this.state.searchedEmail).get()
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
 
@@ -72,8 +72,12 @@ class SearchUser extends Component {
             
     };
 
-    ComponentDidMount() {
+   
 
+        
+    
+
+    render() {
         var db = firebase.firestore();
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -81,6 +85,7 @@ class SearchUser extends Component {
                 //alert(doc.data().email);
                 //alert(doc.id, " => ", doc.data());
                 //alert(doc)
+                 
 
                 this.setState({
                     firstname: doc.data().firstN,
@@ -92,10 +97,7 @@ class SearchUser extends Component {
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
-    }
-
-    render() {
-
+        
         return (
             <View style={styles.container}>
                 <TouchableOpacity

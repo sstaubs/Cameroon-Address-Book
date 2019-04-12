@@ -10,40 +10,62 @@ class SideMenu extends Component {
         firebase.auth().signOut();
         Navigation.popToRoot(this.props.componentId);
     };
-    changePassword = () => {
+
+    changePassword = () => Navigation.push(this.props.componentId, {
+        component: {
+          name: 'ChangePassScreen'
+        }
+    });
+
+
+    /*changePassword = () => {
         var user = firebase.auth().currentUser;
         user.updatePassword("123456").then(function () {
             // Update successful.
         }).catch(function (error) {
             // An error happened.
-        });
-    }
+        }); 
+    }*/
+
+    closeSideMenu = () => Navigation.mergeOptions(this.props.componentId, {
+        sideMenu: {
+            left: { visible: false }
+        }
+    });
 
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.icons}>
-                    <TouchableOpacity
-                        style={styles.closeIcon}
-                        onPress={this.pushCloseButton}>
-                        <Icon size={35} name='ios-close' color='white' />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.content}>
-                    <TouchableOpacity
-                        onPress={this.changePassword}>
-                        <Text style={styles.innerText}>Reset Password</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={styles.innerText}>Change Email</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={this.signout}>
-                        <Text style={styles.innerText}>Logout</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={styles.innerText}>Delete Account</Text>
-                    </TouchableOpacity>
+                <View style={styles.alignment}>
+                    <View style={styles.icons}>
+                        <TouchableOpacity
+                            style={styles.closeIcon}
+                            onPress={this.closeSideMenu}>
+                            <Icon size={35} name='ios-close' color='white' />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.textPadding}>
+                        <TouchableOpacity
+                            onPress={this.changePassword}>
+                            <Text style={styles.innerText}>Reset Password</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.textPadding}>
+                        <TouchableOpacity>
+                            <Text style={styles.innerText}>Change Email</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.textPadding}>
+                        <TouchableOpacity
+                            onPress={this.signout}>
+                            <Text style={styles.innerText}>Logout</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.textPadding}>
+                        <TouchableOpacity>
+                            <Text style={styles.innerRedText}>Delete Account</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         );
@@ -54,19 +76,25 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#282828',
-        flexDirection: 'column'
+        flexDirection: 'row',
+        justifyContent: 'flex-start'
+    },
+    alignment: {
+        left: '3.5%'
     },
     closeIcon: {
         marginTop: 55
     },
-    content: {
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     innerText: {
         color: 'white',
-        fontSize: 18,
-        margin: 30
+        fontSize: 25
+    },
+    textPadding: {
+        paddingTop: 30
+    },
+    innerRedText: {
+        color: '#E24A4A',
+        fontSize: 25
     }
 });
 
