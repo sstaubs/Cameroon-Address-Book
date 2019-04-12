@@ -7,7 +7,8 @@ import * as firebase from 'firebase';
 class Recover extends Component {
     state = {
         email: '',
-        newPassword: ''
+        newPassword: '',
+        confirmPassword: ''
     };
 
     backArrow = () => Navigation.pop(this.props.componentId, {
@@ -16,43 +17,46 @@ class Recover extends Component {
         }
     });
 
-    pushLoginScreen() {
-        Navigation.push(this.props.componentId, {
-            component: {
-                name: 'LoginScreen'
-            }
-        });
-    };
-
     emailHandler = val => {
         this.setState({
             email: val,
         });
     };
 
-    //problem with this.state.email
-    sendEmailRecover = val => {
-        var auth = firebase.auth();
-        var emailAddress = this.state.email;
-        auth.sendPasswordResetEmail(emailAddress).then(() => {
-            // Email sent.
-            this.pushLoginScreen();
-        }).catch(function (error) {
-            alert(error);
+    passHandler = val => {
+        this.setState({
+            newPassword: val,
         });
     };
 
+    confirmPassHandler = val => {
+        this.setState({
+            confirmPassword: val,
+        });
+    };
+
+    passwordConfirm = () => {
+        if (this.state.password != this.state.confirmpassword) {
+            alert("Password does not match");
+            return false;
+        }
+        return true;
+    };
+
     //Below will be used in the settings page when created to change an existing password
-    /*
-        changePassword = val => {
+
+    changePassword = val => {
+        if (this.passwordConfirm()) {
             var user = firebase.auth().currentUser;
             user.updatePassword(this.state.newPassword).then(() => {
-                alert("Password was changed");
+                alert("Password was changed")
             }).catch((error) => {
                 alert(error.message);
-            });
+            })
+            this.backArrow();
         }
-    */
+    }
+
 
     popToLogin = () => Navigation.pop(this.props.componentId);
 
@@ -70,15 +74,23 @@ class Recover extends Component {
                 <TextInput
                     keyboardType="number-pad"
                     style={styles.phoneInfo}
-                    placeholder="Email"
+                    placeholder="New Password"
                     placeholderTextColor="gray"
-                    onChangeText={this.emailHandler}
+                    onChangeText={this.passHandler}
+                />
+                <Text style={styles.subText}>Confirm New Password</Text>
+                <TextInput
+                    keyboardType="number-pad"
+                    style={styles.phoneInfo}
+                    placeholder="Confirm New Password"
+                    placeholderTextColor="gray"
+                    onChangeText={this.confirmPassHandler}
                 />
                 <TouchableOpacity
                     style={styles.sendButton}
-                    onPress={this.sendEmailRecover}
+                    onPress={this.changePassword}
                 >
-                    <Text style={{ color: 'white', fontWeight: '500' }}>SEND</Text>
+                    <Text style={{ color: 'white', fontWeight: '500' }}>UPDATE</Text>
                 </TouchableOpacity>
             </View>
         );
