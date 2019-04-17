@@ -3,9 +3,16 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
+import Modal from "react-native-modal";
+
+
 
 
 class SideMenu extends Component {
+state = {
+    isModalVisible: false,
+};
+
     signout = () => {
         firebase.auth().signOut();
         Navigation.popToRoot(this.props.componentId);
@@ -13,13 +20,13 @@ class SideMenu extends Component {
 
     changePassword = () => Navigation.push(this.props.componentId, {
         component: {
-          name: 'ChangePassScreen'
+            name: 'ChangePassScreen'
         }
     });
 
     changeEmail = () => Navigation.push(this.props.componentId, {
         component: {
-          name: 'ChangeEmailScreen'
+            name: 'ChangeEmailScreen'
         }
     });
 
@@ -29,6 +36,11 @@ class SideMenu extends Component {
             left: { visible: false }
         }
     });
+
+
+  _toggleModal = () =>
+  this.setState({ isModalVisible: !this.state.isModalVisible });
+
 
     render() {
         return (
@@ -60,9 +72,18 @@ class SideMenu extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.textPadding}>
-                        <TouchableOpacity>
+                        <TouchableOpacity 
+                            onPress={this._toggleModal}>
                             <Text style={styles.innerRedText}>Delete Account</Text>
                         </TouchableOpacity>
+                        <Modal isVisible={this.state.isModalVisible}>
+                            <View style={{ flex: 1 }}>
+                                <Text style={styles.innerText}>Hello!</Text>
+                                <TouchableOpacity onPress={this._toggleModal}>
+                                    <Text style={styles.innerText}>Cancel</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </Modal>
                     </View>
                 </View>
             </View>
