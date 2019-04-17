@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     marginTop: 17,
     fontWeight: 'bold',
     fontSize: 17,
-    color: 'white',
+    color: 'white'
   },
   textInputStyle: {
     marginTop: 5,

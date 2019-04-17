@@ -37,7 +37,7 @@ class AddUser extends Component {
   }
 
   pushSearchUser = () => {
-    
+
     Navigation.push(this.props.componentId, {
       component: {
         name: 'SearchUser'
@@ -168,58 +168,60 @@ class AddUser extends Component {
             <Icon size={35} name='ios-search' color='white' />
           </TouchableOpacity>
         <Text style={styles.mainText}>Add Contact</Text>
-        <View style={styles.alignment}>
-          <ScrollView>
-            <TextInput
-              style={styles.userInput}
-              placeholder="First Name"
-              placeholderTextColor="gray"
-              onChangeText={this.firstNameHandler}
-            />
-            <TextInput
-              style={styles.userInput}
-              placeholder="Last Name"
-              placeholderTextColor="gray"
-              onChangeText={this.lastNameHandler}
-            />
-            <TextInput
-              style={styles.userInput}
-              placeholder="Phone Number"
-              placeholderTextColor="gray"
-              onChangeText={this.phoneNumberHandler}
-            />
-            <TextInput
-              style={styles.userInput}
-              autoCapitalize='none'
-              placeholder="Email"
-              placeholderTextColor="gray"
-              onChangeText={this.emailHandler}
-            />
+        <ScrollView style={styles.alignment}>
+          <Text style={styles.label}>First Name</Text>
+          <TextInput
+            style={styles.userInput}
+            placeholder="First Name"
+            placeholderTextColor="gray"
+            onChangeText={this.firstNameHandler}
+          />
+          <Text style={styles.label}>Last Name</Text>
+          <TextInput
+            style={styles.userInput}
+            placeholder="Last Name"
+            placeholderTextColor="gray"
+            onChangeText={this.lastNameHandler}
+          />
+          <Text style={styles.label}>Phone Number</Text>
+          <TextInput
+            style={styles.userInput}
+            placeholder="Phone Number"
+            placeholderTextColor="gray"
+            onChangeText={this.phoneNumberHandler}
+          />
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            style={styles.userInput}
+            autoCapitalize='none'
+            placeholder="Email"
+            placeholderTextColor="gray"
+            onChangeText={this.emailHandler}
+          />
 
-            <Text style={styles.mapText}>Set Location</Text>
+          <Text style={styles.mapText}>Set Location</Text>
 
-            <MapView
-              region={this.state.focusedLocation}
-              style={styles.map}
-              ref={ref => this.map = ref}
-            >
-              {marker}
-            </MapView>
-            <TouchableOpacity
-              style={styles.locateButton}
-              onPress={this.getLocationHandler}
-            >
-              <Text style={{ color: 'white', fontWeight: '500' }}>LOCATE ME!</Text>
-            </TouchableOpacity>
+          <MapView
+            region={this.state.focusedLocation}
+            style={styles.map}
+            ref={ref => this.map = ref}
+          >
+            {marker}
+          </MapView>
+          <TouchableOpacity
+            style={styles.locateButton}
+            onPress={this.getLocationHandler}
+          >
+            <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>LOCATE ME!</Text>
+          </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.confirmButton}
-              onPress={this.confirmHandler}
-            >
-              <Text style={{ color: 'white', fontWeight: '500' }}>ADD CONTACT</Text>
-            </TouchableOpacity>
-          </ScrollView>
-        </View>
+          <TouchableOpacity
+            style={styles.confirmButton}
+            onPress={this.confirmHandler}
+          >
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>ADD CONTACT</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
     );
   }
@@ -249,10 +251,15 @@ const styles = StyleSheet.create({
     marginTop: 25,
     color: 'white'
   },
+  label: {
+    color: '#ffffe0',
+    paddingTop: 30,
+    fontSize: 13
+  },
   userInput: {
-    backgroundColor: '#282828',
-    padding: 10,
-    marginTop: 15,
+    borderColor: '#ffffe0',
+    borderBottomWidth: 1,
+    height: 40,
     fontSize: 17,
     color: 'white'
   },
@@ -268,19 +275,22 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   locateButton: {
+    width: '100%',
     marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4A90E2',
-    height: 32
+    backgroundColor: 'white',
+    borderRadius: 20,
+    height: 40
   },
   confirmButton: {
-    marginTop: 30,
-    marginBottom: 200,
+    width: '100%',
+    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4A90E2',
-    height: 32
+    backgroundColor: '#3F7F40',
+    borderRadius: 20,
+    height: 40
   }
 });
 

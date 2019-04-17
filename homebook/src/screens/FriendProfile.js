@@ -121,17 +121,17 @@ class FriendProfile extends Component {
                     <TouchableOpacity
                         style={styles.edit}
                         onPress={this.pushEditButton}>
-                        <Text style={{ color: "white" }}>Edit</Text>
+                        <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.alignment}>
                     <ScrollView>
                         <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-                        <Text style={styles.category}>Phone Number</Text>
+                        <Text style={styles.category}>Phone Number:</Text>
                         <Text style={styles.textInputStyle}>{this.state.phone}</Text>
-                        <Text style={styles.category}>Email</Text>
+                        <Text style={styles.category}>Email:</Text>
                         <Text style={styles.textInputStyle}>{this.state.email}</Text>
-                        <Text style={styles.category}>Map</Text>
+                        <Text style={styles.location}>Location</Text>
                         <MapView
                             region={this.state.focusedLocation}
                             style={styles.map}
@@ -139,6 +139,12 @@ class FriendProfile extends Component {
                         >
                             {marker}
                         </MapView>
+                        <TouchableOpacity
+                        style={styles.deleteButton}
+                        onPress={this.deleteUser}
+                        >
+                            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>DELETE USER</Text>
+                        </TouchableOpacity>
                     </ScrollView>
                 </View>
             </View>
@@ -159,10 +165,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: 55,
-        width: '80%'
+        width: '85%'
     },
     alignment: {
-        width: '80%'
+        width: '85%'
     },
     mainText: {
         fontWeight: 'bold',
@@ -176,6 +182,13 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: 'white',
     },
+    location: {
+        marginTop: 17,
+        fontWeight: 'bold',
+        fontSize: 17,
+        color: 'white',
+        textAlign: 'center'
+    },
     textInputStyle: {
         marginTop: 5,
         fontSize: 17,
@@ -186,13 +199,14 @@ const styles = StyleSheet.create({
         height: 300,
         marginTop: 20
     },
-    confirmButton: {
-        width: 300,
-        marginTop: 30,
+    deleteButton: {
+        width: '100%',
+        marginTop: 35,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#4A90E2',
-        height: 32
+        backgroundColor: '#BF1736',
+        borderRadius: 20,
+        height: 40
     }
 });
 

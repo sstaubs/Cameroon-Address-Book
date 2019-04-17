@@ -159,31 +159,32 @@ class EditUser extends Component {
         <Text style={styles.mainText}>Edit Contact</Text>
 
           <ScrollView style={styles.alignment}>
-            <Text style={styles.category}>First Name</Text>
+            <Text style={styles.label}>First Name</Text>
             <TextInput
-              style={styles.textInputStyle}
+              style={styles.userInput}
               value={this.state.firstName}
               onChangeText={this.firstNameHandler}
             />
-            <Text style={styles.category}>Last Name</Text>
+            <Text style={styles.label}>Last Name</Text>
             <TextInput
-              style={styles.textInputStyle}
+              style={styles.userInput}
               value={this.state.lastName}
               onChangeText={this.lastNameHandler}
             />
-            <Text style={styles.category}>Phone Number</Text>
+            <Text style={styles.label}>Phone Number</Text>
             <TextInput
-              style={styles.textInputStyle}
+              style={styles.userInput}
               value={this.state.phone}
               onChangeText={this.phoneNumberHandler}
             />
-            <Text style={styles.category}>Email</Text>
+            <Text style={styles.label}>Email</Text>
             <TextInput
-              style={styles.textInputStyle}
+              style={styles.userInput}
               autoCapitalize='none'
               value={this.state.email}
               onChangeText={this.emailHandler}
             />
+            <Text style={styles.editLocation}>Edit Location</Text>
             <MapView
               initialRegion={this.state.focusedLocation}
               region={this.state.focusedLocation}
@@ -198,13 +199,13 @@ class EditUser extends Component {
               style={styles.locateButton}
               onPress={this.getLocationHandler}
             >
-              <Text style={{ color: 'white', fontWeight: '500' }}>LOCATE ME!</Text>
+              <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>LOCATE ME!</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.confirmButton}
               onPress={this.confirmHandler}
             >
-              <Text style={{ color: 'white', fontWeight: '500' }}>SUBMIT</Text>
+              <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SUBMIT</Text>
             </TouchableOpacity>
           </ScrollView>
 
@@ -236,16 +237,24 @@ const styles = StyleSheet.create({
   alignment: {
     width: '85%'
   },
-  category: {
-    marginTop: 17,
+  label: {
+    color: '#ffffe0',
+    paddingTop: 30,
+    fontSize: 13
+  },
+  userInput: {
+      borderColor: '#ffffe0',
+      borderBottomWidth: 1,
+      height: 40,
+      fontSize: 17,
+      color: 'lightgray'
+  },
+  editLocation: {
+    marginTop: 20,
     fontWeight: 'bold',
     fontSize: 17,
     color: 'white',
-  },
-  textInputStyle: {
-    marginTop: 5,
-    fontSize: 17,
-    color: 'grey'
+    textAlign: 'center'
   },
   map: {
     width: '100%',
@@ -257,16 +266,18 @@ const styles = StyleSheet.create({
     marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4A90E2',
-    height: 32
+    backgroundColor: 'white',
+    borderRadius: 20,
+    height: 40
   },
   confirmButton: {
     width: '100%',
     marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4A90E2',
-    height: 32
+    backgroundColor: '#3F7F40',
+    borderRadius: 20,
+    height: 40
   }
 });
 

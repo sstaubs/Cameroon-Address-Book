@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -81,7 +81,7 @@ class CreateAccount extends Component {
           }).catch(function(error) {
             // An error happened.
           });
-          
+
           if (user) {
             const accountInfo = {
               firstN: this.state.firstName,
@@ -118,64 +118,68 @@ class CreateAccount extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.alignment}>
+        <TouchableOpacity
+          style={styles.backIcon}
+          onPress={this.backArrow}
+        >
+          <Icon size={25} name='ios-arrow-back' color='white' />
+        </TouchableOpacity>
+        <Text style={styles.mainText}>Create Account</Text>
+        <ScrollView style={styles.alignment}>
+          <Text style={styles.label}>First Name</Text>
+          <TextInput
+            style={styles.userInput}
+            placeholder='First Name'
+            placeholderTextColor='gray'
+            onChangeText={this.firstNameHandler}
+          />
+          <Text style={styles.label}>Last Name</Text>
+          <TextInput
+            style={styles.userInput}
+            placeholder='Last Name'
+            placeholderTextColor='gray'
+            onChangeText={this.lastNameHandler}
+          />
+          <Text style={styles.label}>Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.userInput}
+            placeholder='Password'
+            placeholderTextColor='gray'
+            onChangeText={this.passwordHandler}
+          />
+          <Text style={styles.label}>Confirm Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.userInput}
+            placeholder='Confirm Password'
+            placeholderTextColor='gray'
+            onChangeText={this.confirmPassHandler}
+          />
+          <Text style={styles.label}>Phone Number</Text>
+          <TextInput
+            keyboardType='number-pad'
+            style={styles.userInput}
+            placeholder='Phone Number'
+            placeholderTextColor='gray'
+            onChangeText={this.phoneHandler}
+          />
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            autoCapitalize='none'
+            keyboardType='email-address'
+            style={styles.userInput}
+            placeholder='Email'
+            placeholderTextColor='gray'
+            onChangeText={this.emailHandler}
+          />
           <TouchableOpacity
-            style={styles.backIcon}
-            onPress={this.backArrow}
+            style={styles.confirmButton}
+            onPress={this.confirmHandler}
           >
-            <Icon size={25} name='ios-arrow-back' color='white' />
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONTINUE</Text>
           </TouchableOpacity>
-          <Text style={styles.mainText}>Create Account</Text>
-          <View style={styles.inputs}>
-            <TextInput
-              style={styles.userInput}
-              placeholder='First Name'
-              placeholderTextColor='gray'
-              onChangeText={this.firstNameHandler}
-            />
-            <TextInput
-              style={styles.userInput}
-              placeholder='Last Name'
-              placeholderTextColor='gray'
-              onChangeText={this.lastNameHandler}
-            />
-            <TextInput
-              secureTextEntry={true}
-              style={styles.userInput}
-              placeholder='Password'
-              placeholderTextColor='gray'
-              onChangeText={this.passwordHandler}
-            />
-            <TextInput
-              secureTextEntry={true}
-              style={styles.userInput}
-              placeholder='Confirm Password'
-              placeholderTextColor='gray'
-              onChangeText={this.confirmPassHandler}
-            />
-            <TextInput
-              keyboardType='number-pad'
-              style={styles.userInput}
-              placeholder='Phone Number'
-              placeholderTextColor='gray'
-              onChangeText={this.phoneHandler}
-            />
-            <TextInput
-              autoCapitalize='none'
-              keyboardType='email-address'
-              style={styles.userInput}
-              placeholder='Email'
-              placeholderTextColor='gray'
-              onChangeText={this.emailHandler}
-            />
-            <TouchableOpacity
-              style={styles.confirmButton}
-              onPress={this.confirmHandler}
-            >
-              <Text style={{ color: '#222222', fontWeight: '500' }}>CONFIRM</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        </ScrollView>
       </View>
     );
   }
@@ -190,10 +194,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#222222'
   },
   alignment: {
-    width: '80%'
+    width: '85%'
   },
   backIcon: {
     flexDirection: 'row',
+    justifyContent: 'flex-start',
+    width: '85%',
     marginTop: 55
   },
   mainText: {
@@ -203,27 +209,30 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 24
   },
-  inputs: {
-    marginTop: 30
-  },
   subText: {
     color: 'white',
     fontSize: 17,
     marginTop: 20
   },
+  label: {
+    color: '#ffffe0',
+    paddingTop: 25,
+    fontSize: 13
+  },
   userInput: {
-    backgroundColor: '#282828',
-    padding: 10,
-    marginTop: 15,
+    borderColor: '#ffffe0',
+    borderBottomWidth: 1,
+    height: 40,
     fontSize: 17,
     color: 'white'
   },
   confirmButton: {
-    marginTop: 30,
+    marginTop: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#70B456',
-    height: 32
+    backgroundColor: '#3F7F40',
+    borderRadius: 20,
+    height: 40
   }
 });
 

@@ -91,35 +91,33 @@ class Login extends Component {
         <View style={styles.alignment}>
           <Text style={styles.mainText}>HomeBook</Text>
           <Text style={styles.supportingText}>Addressing Your Home</Text>
+          <Text style={styles.label}>Email</Text>
           <TextInput
             autoCapitalize="none"
             keyboardType='email-address'
-            style={styles.userInputPhone}
+            style={styles.userInput}
             placeholder="Email"
             placeholderTextColor="gray"
             onChangeText={this.emailHandler}
           />
+          <Text style={styles.label}>Password</Text>
           <TextInput
             secureTextEntry={true}
-            style={styles.userInputPassword}
+            style={styles.userInput}
             placeholder="Password"
             placeholderTextColor="gray"
             onChangeText={this.passwordHandler}
           />
+          <Text onPress={this.pushRecovery} style={styles.forgotPassword}>Forgot Password?</Text>
           <TouchableOpacity
             style={styles.loginButton}
             onPress={this.EnterLogin}
           >
-            <Text style={{ color: '#222222', fontWeight: '500' }}>LOGIN</Text>
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>LOGIN</Text>
           </TouchableOpacity>
-
-          <Text onPress={this.pushRecovery} style={styles.forgotPassword}>Forgot Password?</Text>
-          <View style={styles.signupLine}>
-            <Text style={styles.signup}>Don't have an account?</Text>
-              <TouchableOpacity>
-                <Text onPress={this.pushCreateAccount} style={styles.clickSignup}>Create Account</Text>
-              </TouchableOpacity>
-          </View>
+          <TouchableOpacity style={styles.signupLine}>
+            <Text onPress={this.pushCreateAccount} style={styles.clickSignup}>Create Account</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -148,49 +146,45 @@ const styles = StyleSheet.create({
     fontSize: 20,
     width: 300,
     textAlign: 'center',
-    padding: 5
+    paddingTop: 5,
+    paddingBottom: 15
   },
-  userInputPhone: {
-    backgroundColor: '#282828',
-    padding: 10,
-    marginTop: 30,
-    fontSize: 17,
-    color: 'white'
+  label: {
+    color: '#ffffe0',
+    paddingTop: 30,
+    fontSize: 13
   },
-  userInputPassword: {
-    backgroundColor: '#282828',
-    padding: 10,
-    marginTop: 10,
+  userInput: {
+    borderColor: '#ffffe0',
+    borderBottomWidth: 1,
+    height: 40,
     fontSize: 17,
     color: 'white'
   },
   loginButton: {
     width: '100%',
-    marginTop: 20,
+    marginTop: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#70B456',
-    height: 32
+    backgroundColor: '#3F7F40',
+    borderRadius: 20,
+    height: 40
   },
   signupLine: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 260,
-    fontSize: 20
-  },
-  signup: {
-    color: 'gray'
+    marginTop: 25,
+    fontSize: 18,
   },
   clickSignup: {
-    color: '#70B456',
-    marginLeft: 10
+    color: '#70B456'
   },
   forgotPassword: {
-    color: 'gray',
-    fontSize: 14,
-    marginTop: 20,
-    textAlign: 'center'
+    color: '#ffffe0',
+    fontSize: 13,
+    marginTop: 10,
+    textAlign: 'right'
   }
 });
 

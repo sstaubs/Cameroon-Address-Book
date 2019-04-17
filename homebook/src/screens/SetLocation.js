@@ -120,13 +120,13 @@ class SetLocation extends Component {
           style={styles.locateButton}
           onPress={this.getLocationHandler}
         >
-          <Text style={{ color: 'white', fontWeight: '500' }}>LOCATE ME!</Text>
+          <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>LOCATE ME!</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.confirmButton}
           onPress={this.SetLocationAndPush}
         >
-          <Text style={{ color: '#222222', fontWeight: '500' }}>CONFIRM COORDINATES</Text>
+          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONFIRM COORDINATES</Text>
         </TouchableOpacity>
       </View>
     );
@@ -166,16 +166,18 @@ const styles = StyleSheet.create({
     marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4A90E2',
-    height: 32
+    backgroundColor: 'white',
+    borderRadius: 20,
+    height: 40
   },
   confirmButton: {
     width: '80%',
-    marginTop: 10,
+    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#70B456',
-    height: 32,
+    backgroundColor: '#3F7F40',
+    borderRadius: 20,
+    height: 40,
     marginBottom: 100
   }
 });

@@ -49,27 +49,29 @@ class Recover extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity
-                    style={styles.backIcon}
-                    onPress={this.backArrow}
-                >
-                    <Icon size={25} name='ios-arrow-back' color='white' />
-                </TouchableOpacity>
-                <Text style={styles.mainText}>Change Password</Text>
-                <Text style={styles.subText}>New Password</Text>
-                <TextInput
-                    keyboardType="number-pad"
-                    style={styles.phoneInfo}
-                    placeholder="Email"
-                    placeholderTextColor="gray"
-                    onChangeText={this.emailHandler}
-                />
-                <TouchableOpacity
-                    style={styles.sendButton}
-                    onPress={this.sendEmailRecover}
-                >
-                    <Text style={{ color: 'white', fontWeight: '500' }}>SEND</Text>
-                </TouchableOpacity>
+                <View style={styles.alignment}>
+                    <TouchableOpacity
+                        style={styles.backIcon}
+                        onPress={this.backArrow}
+                    >
+                        <Icon size={25} name='ios-arrow-back' color='white' />
+                    </TouchableOpacity>
+                    <Text style={styles.mainText}>Change Password</Text>
+                    <Text style={styles.label}>Email</Text>
+                    <TextInput
+                        keyboardType="number-pad"
+                        style={styles.userInput}
+                        placeholder="Email"
+                        placeholderTextColor="gray"
+                        onChangeText={this.emailHandler}
+                    />
+                    <TouchableOpacity
+                        style={styles.sendButton}
+                        onPress={this.sendEmailRecover}
+                    >
+                        <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>SEND</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -83,42 +85,41 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#222222',
     },
+    alignment: {
+        width: '85%'
+    },
     backIcon: {
-        position: 'relative',
-        right: 140,
-        marginTop: 70
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginTop: 55
     },
     mainText: {
         color: 'white',
         fontSize: 30,
         fontWeight: 'bold',
-        width: 300,
         textAlign: 'center',
         marginTop: 24
     },
-    subText: {
-        color: 'white',
-        fontSize: 17,
-        marginTop: 50,
-        width: 300
+    label: {
+        color: '#ffffe0',
+        paddingTop: 30,
+        fontSize: 13
     },
-    phoneInfo: {
-        width: 300,
-        marginTop: 5,
-        padding: 5,
-        borderWidth: 1,
-        borderColor: 'white',
+    userInput: {
+        borderColor: '#ffffe0',
+        borderBottomWidth: 1,
+        height: 40,
         fontSize: 17,
-        height: 32,
         color: 'white'
     },
     sendButton: {
-        width: 300,
-        marginTop: 20,
+        width: '100%',
+        marginTop: 35,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#4A90E2',
-        height: 32
+        backgroundColor: 'white',
+        borderRadius: 20,
+        height: 40
     }
 });
 

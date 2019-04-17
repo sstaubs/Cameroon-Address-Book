@@ -86,43 +86,45 @@ class ChangeEmailScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity
-                    style={styles.backIcon}
-                    onPress={this.backArrow}
-                >
-                    <Icon size={25} name='ios-arrow-back' color='white' />
-                </TouchableOpacity>
-                <Text style={styles.mainText}>Change Email</Text>
-                <Text style={styles.subText}>Current Email</Text>
-                <TextInput
-                    keyboardType="number-pad"
-                    style={styles.phoneInfo}
-                    placeholder="Current Email"
-                    placeholderTextColor="gray"
-                    onChangeText={this.emailHandler}
-                />
-                <Text style={styles.subText}>Current Password</Text>
-                <TextInput
-                    keyboardType="number-pad"
-                    style={styles.phoneInfo}
-                    placeholder="Current Password"
-                    placeholderTextColor="gray"
-                    onChangeText={this.passHandler}
-                />
-                <Text style={styles.subText}>New Email</Text>
-                <TextInput
-                    keyboardType="number-pad"
-                    style={styles.phoneInfo}
-                    placeholder="New Email"
-                    placeholderTextColor="gray"
-                    onChangeText={this.newEmailHandler}
-                />
-                <TouchableOpacity
-                    style={styles.sendButton}
-                    onPress={this.changeEmail}
-                >
-                    <Text style={{ color: 'white', fontWeight: '500' }}>UPDATE</Text>
-                </TouchableOpacity>
+                <View style={styles.alignment}>
+                    <TouchableOpacity
+                        style={styles.backIcon}
+                        onPress={this.backArrow}
+                    >
+                        <Icon size={25} name='ios-arrow-back' color='white' />
+                    </TouchableOpacity>
+                    <Text style={styles.mainText}>Change Email</Text>
+                    <Text style={styles.label}>Current Email</Text>
+                    <TextInput
+                        keyboardType="number-pad"
+                        style={styles.userInput}
+                        placeholder="Current Email"
+                        placeholderTextColor="gray"
+                        onChangeText={this.emailHandler}
+                    />
+                    <Text style={styles.label}>Current Password</Text>
+                    <TextInput
+                        keyboardType="number-pad"
+                        style={styles.userInput}
+                        placeholder="Current Password"
+                        placeholderTextColor="gray"
+                        onChangeText={this.passHandler}
+                    />
+                    <Text style={styles.label}>New Email</Text>
+                    <TextInput
+                        keyboardType="number-pad"
+                        style={styles.userInput}
+                        placeholder="New Email"
+                        placeholderTextColor="gray"
+                        onChangeText={this.newEmailHandler}
+                    />
+                    <TouchableOpacity
+                        style={styles.sendButton}
+                        onPress={this.changeEmail}
+                    >
+                        <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>UPDATE EMAIL</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -136,10 +138,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#222222',
     },
+    alignment: {
+        width: '85%'
+    },
     backIcon: {
-        position: 'relative',
-        right: 140,
-        marginTop: 70
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginTop: 55
     },
     mainText: {
         color: 'white',
@@ -155,23 +160,26 @@ const styles = StyleSheet.create({
         marginTop: 50,
         width: 300
     },
-    phoneInfo: {
-        width: 300,
-        marginTop: 5,
-        padding: 5,
-        borderWidth: 1,
-        borderColor: 'white',
+    label: {
+        color: '#ffffe0',
+        paddingTop: 30,
+        fontSize: 13
+    },
+    userInput: {
+        borderColor: '#ffffe0',
+        borderBottomWidth: 1,
+        height: 40,
         fontSize: 17,
-        height: 32,
         color: 'white'
     },
     sendButton: {
-        width: 300,
-        marginTop: 20,
+        width: '100%',
+        marginTop: 35,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#4A90E2',
-        height: 32
+        backgroundColor: 'white',
+        borderRadius: 20,
+        height: 40
     }
 });
 

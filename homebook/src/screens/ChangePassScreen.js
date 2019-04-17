@@ -85,33 +85,37 @@ class ChangePassScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity
-                    style={styles.backIcon}
-                    onPress={this.backArrow}
-                >
-                    <Icon size={25} name='ios-arrow-back' color='white' />
-                </TouchableOpacity>
-                <Text style={styles.mainText}>Change Password</Text>
-                <TextInput
-                    keyboardType="number-pad"
-                    style={styles.userInput}
-                    placeholder="New Password"
-                    placeholderTextColor="gray"
-                    onChangeText={this.passHandler}
-                />
-                <TextInput
-                    keyboardType="number-pad"
-                    style={styles.userInput}
-                    placeholder="Confirm New Password"
-                    placeholderTextColor="gray"
-                    onChangeText={this.confirmPassHandler}
-                />
-                <TouchableOpacity
-                    style={styles.sendButton}
-                    onPress={this.changePassword}
-                >
-                    <Text style={{ color: 'white', fontWeight: '500' }}>UPDATE PASSWORD</Text>
-                </TouchableOpacity>
+                <View style={styles.alignment}>
+                    <TouchableOpacity
+                        style={styles.backIcon}
+                        onPress={this.backArrow}
+                    >
+                        <Icon size={25} name='ios-arrow-back' color='white' />
+                    </TouchableOpacity>
+                    <Text style={styles.mainText}>Change Password</Text>
+                    <Text style={styles.label}>New Password</Text>
+                    <TextInput
+                        keyboardType="number-pad"
+                        style={styles.userInput}
+                        placeholder="New Password"
+                        placeholderTextColor="gray"
+                        onChangeText={this.passHandler}
+                    />
+                    <Text style={styles.label}>Confirm New Password</Text>
+                    <TextInput
+                        keyboardType="number-pad"
+                        style={styles.userInput}
+                        placeholder="Confirm New Password"
+                        placeholderTextColor="gray"
+                        onChangeText={this.confirmPassHandler}
+                    />
+                    <TouchableOpacity
+                        style={styles.sendButton}
+                        onPress={this.changePassword}
+                    >
+                        <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>UPDATE PASSWORD</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -125,36 +129,42 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#222222',
     },
+    alignment: {
+        width: '85%'
+    },
     backIcon: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        width: '85%',
-        marginTop: 70
+        marginTop: 55
     },
     mainText: {
         color: 'white',
         fontSize: 30,
         fontWeight: 'bold',
-        width: 300,
         textAlign: 'center',
         marginTop: 24,
         marginBottom: 30
     },
+    label: {
+        color: '#ffffe0',
+        paddingTop: 30,
+        fontSize: 13
+    },
     userInput: {
-        width: '85%',
-        backgroundColor: '#282828',
-        padding: 10,
-        marginTop: 15,
+        borderColor: '#ffffe0',
+        borderBottomWidth: 1,
+        height: 40,
         fontSize: 17,
         color: 'white'
-      },
+    },
     sendButton: {
-        width: '85%',
-        marginTop: 30,
+        width: '100%',
+        marginTop: 35,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#4A90E2',
-        height: 32
+        backgroundColor: 'white',
+        borderRadius: 20,
+        height: 40
     }
 });
 
