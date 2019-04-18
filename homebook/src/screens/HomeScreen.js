@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -86,20 +86,20 @@ class HomeScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.alignment}>
-                    <View style={styles.icons}>
-                        <TouchableOpacity
-                            style={styles.signoutIcon}
-                            onPress={this.openSideMenu}>
-                            <Icon size={25} name='ios-menu' color='white' />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.addIcon}
-                            onPress={this.pushAddUser}>
-                            <Icon size={35} name='ios-add' color='white' />
-                        </TouchableOpacity>
-                    </View>
+                <View style={styles.icons}>
+                    <TouchableOpacity
+                        style={styles.signoutIcon}
+                        onPress={this.openSideMenu}>
+                        <Icon size={25} name='ios-menu' color='white' />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.addIcon}
+                        onPress={this.pushAddUser}>
+                        <Icon size={35} name='ios-add' color='white' />
+                    </TouchableOpacity>
+                </View>
 
+                <ScrollView style={styles.alignment}>
                     <TouchableOpacity
                         onPress={this.pushUserProfile}>
                         <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
@@ -117,16 +117,13 @@ class HomeScreen extends Component {
                         }
                         keyExtractor={(index) => index.toString()}
                     />
-                </View>
+                </ScrollView>
             </View>
         );
     }
 };
 
 const styles = StyleSheet.create({
-    outerContainer: {
-        flex: 1
-    },
     container: {
         flex: 1,
         flexDirection: 'column',
@@ -141,7 +138,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: 55
+        width: '85%',
+        marginTop: 35
     },
     mainText: {
         fontWeight: 'bold',

@@ -44,7 +44,7 @@ class UserProfile extends Component {
   });
 
   showDirections = () => {
-    
+
 
     const endPoint = {
       longitude: this.state.focusedLocation.longitude,
@@ -107,35 +107,32 @@ class UserProfile extends Component {
             <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.alignment}>
-          <ScrollView>
-            <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-            <TouchableOpacity
-              style={styles.closeIcon}
-              onPress={this.pushRequestPage}>
-              <Icon size={35} name='ios-alert' color='white' />
-            </TouchableOpacity>
-            <Text style={styles.category}>Phone Number</Text>
-            <Text style={styles.textInputStyle}>{this.state.phone}</Text>
-            <Text style={styles.category}>Email</Text>
-            <Text style={styles.textInputStyle}>{this.state.email}</Text>
-            <Text style={styles.category}>Location</Text>
-            <MapView
-              region={this.state.focusedLocation}
-              style={styles.map}
-              ref={ref => this.map = ref}
-            >
-              {marker}
-            </MapView>
-            <TouchableOpacity
-              style={styles.locateButton}
-              onPress={this.showDirections}
-            >
-              <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
-            </TouchableOpacity>
-
-          </ScrollView>
-        </View>
+        <ScrollView style={styles.alignment}>
+          <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+          <TouchableOpacity
+            style={styles.closeIcon}
+            onPress={this.pushRequestPage}>
+            <Icon size={35} name='ios-alert' color='white' />
+          </TouchableOpacity>
+          <Text style={styles.category}>Phone Number</Text>
+          <Text style={styles.textInputStyle}>{this.state.phone}</Text>
+          <Text style={styles.category}>Email</Text>
+          <Text style={styles.textInputStyle}>{this.state.email}</Text>
+          <Text style={styles.category}>Location</Text>
+          <MapView
+            region={this.state.focusedLocation}
+            style={styles.map}
+            ref={ref => this.map = ref}
+          >
+            {marker}
+          </MapView>
+          <TouchableOpacity
+            style={styles.locateButton}
+            onPress={this.showDirections}
+          >
+            <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
     );
   }
@@ -153,7 +150,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 55,
+    marginTop: 35,
     width: '85%'
   },
   alignment: {
@@ -183,20 +180,13 @@ const styles = StyleSheet.create({
   },
   locateButton: {
     width: '100%',
+    height: 40,
     marginTop: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
+    marginBottom: 30,
     borderRadius: 20,
-    height: 40
-  },
-  confirmButton: {
-    width: 300,
-    marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4A90E2',
-    height: 32
+    backgroundColor: 'white'
   }
 });
 

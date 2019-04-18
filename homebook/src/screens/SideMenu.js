@@ -72,7 +72,7 @@ state = {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.textPadding}>
-                        <TouchableOpacity 
+                        <TouchableOpacity
                             onPress={this._toggleModal}>
                             <Text style={styles.innerRedText}>Delete Account</Text>
                         </TouchableOpacity>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         left: '3.5%'
     },
     closeIcon: {
-        marginTop: 55
+        marginTop: 35
     },
     innerText: {
         color: 'white',

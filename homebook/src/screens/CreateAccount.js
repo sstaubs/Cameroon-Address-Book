@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -118,67 +118,72 @@ class CreateAccount extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.backIcon}
-          onPress={this.backArrow}
-        >
-          <Icon size={25} name='ios-arrow-back' color='white' />
-        </TouchableOpacity>
+        <View style={styles.iconAlignment}>
+          <TouchableOpacity
+            style={styles.backIcon}
+            onPress={this.backArrow}
+          >
+            <Icon size={25} name='ios-arrow-back' color='white' />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.mainText}>Create Account</Text>
         <ScrollView style={styles.alignment}>
-          <Text style={styles.label}>First Name</Text>
-          <TextInput
-            style={styles.userInput}
-            placeholder='John'
-            placeholderTextColor='gray'
-            onChangeText={this.firstNameHandler}
-          />
-          <Text style={styles.label}>Last Name</Text>
-          <TextInput
-            style={styles.userInput}
-            placeholder='Doe'
-            placeholderTextColor='gray'
-            onChangeText={this.lastNameHandler}
-          />
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            secureTextEntry={true}
-            style={styles.userInput}
-            placeholder='••••••••••'
-            placeholderTextColor='gray'
-            onChangeText={this.passwordHandler}
-          />
-          <Text style={styles.label}>Confirm Password</Text>
-          <TextInput
-            secureTextEntry={true}
-            style={styles.userInput}
-            placeholder='••••••••••'
-            placeholderTextColor='gray'
-            onChangeText={this.confirmPassHandler}
-          />
-          <Text style={styles.label}>Phone Number</Text>
-          <TextInput
-            keyboardType='number-pad'
-            style={styles.userInput}
-            placeholder='(123) 456-7890'
-            placeholderTextColor='gray'
-            onChangeText={this.phoneHandler}
-          />
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            autoCapitalize='none'
-            keyboardType='email-address'
-            style={styles.userInput}
-            placeholder='johndoe@gmail.com'
-            placeholderTextColor='gray'
-            onChangeText={this.emailHandler}
-          />
-          <TouchableOpacity
-            style={styles.confirmButton}
-            onPress={this.confirmHandler}
-          >
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONTINUE</Text>
-          </TouchableOpacity>
+          <KeyboardAvoidingView behavior='padding'>
+            <Text style={styles.label}>First Name</Text>
+            <TextInput
+              style={styles.userInput}
+              placeholder='John'
+              placeholderTextColor='gray'
+              onChangeText={this.firstNameHandler}
+            />
+            <Text style={styles.label}>Last Name</Text>
+            <TextInput
+              style={styles.userInput}
+              placeholder='Doe'
+              placeholderTextColor='gray'
+              onChangeText={this.lastNameHandler}
+            />
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              secureTextEntry={true}
+              style={styles.userInput}
+              placeholder='••••••••••'
+              placeholderTextColor='gray'
+              onChangeText={this.passwordHandler}
+            />
+            <Text style={styles.label}>Confirm Password</Text>
+            <TextInput
+              secureTextEntry={true}
+              style={styles.userInput}
+              placeholder='••••••••••'
+              placeholderTextColor='gray'
+              onChangeText={this.confirmPassHandler}
+            />
+            <Text style={styles.label}>Phone Number</Text>
+            <TextInput
+              keyboardType='number-pad'
+              style={styles.userInput}
+              placeholder='(123) 456-7890'
+              placeholderTextColor='gray'
+              onChangeText={this.phoneHandler}
+            />
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              autoCapitalize='none'
+              autoCorrect={false}
+              keyboardType='email-address'
+              style={styles.userInput}
+              placeholder='example@gmail.com'
+              placeholderTextColor='gray'
+              onChangeText={this.emailHandler}
+            />
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={this.confirmHandler}
+            >
+              <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONTINUE</Text>
+            </TouchableOpacity>
+          </KeyboardAvoidingView>
         </ScrollView>
       </View>
     );
@@ -196,11 +201,13 @@ const styles = StyleSheet.create({
   alignment: {
     width: '85%'
   },
+  iconAlignment: {
+    width: '85%'
+  },
   backIcon: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    width: '85%',
-    marginTop: 55
+    marginTop: 35
   },
   mainText: {
     color: 'white',
@@ -228,6 +235,7 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     marginTop: 35,
+    marginBottom: 30,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#3F7F40',

@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   icons: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 55,
+    marginTop: 35,
     width: '85%'
   },
   mainText: {
@@ -273,6 +273,7 @@ const styles = StyleSheet.create({
   confirmButton: {
     width: '100%',
     marginTop: 20,
+    marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#3F7F40',

@@ -124,29 +124,27 @@ class FriendProfile extends Component {
                         <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.alignment}>
-                    <ScrollView>
-                        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-                        <Text style={styles.category}>Phone Number:</Text>
-                        <Text style={styles.textInputStyle}>{this.state.phone}</Text>
-                        <Text style={styles.category}>Email:</Text>
-                        <Text style={styles.textInputStyle}>{this.state.email}</Text>
-                        <Text style={styles.location}>Location</Text>
-                        <MapView
-                            region={this.state.focusedLocation}
-                            style={styles.map}
-                            ref={ref => this.map = ref}
-                        >
-                            {marker}
-                        </MapView>
-                        <TouchableOpacity
-                        style={styles.deleteButton}
-                        onPress={this.deleteUser}
-                        >
-                            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>DELETE USER</Text>
-                        </TouchableOpacity>
-                    </ScrollView>
-                </View>
+                <ScrollView style={styles.alignment}>
+                    <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+                    <Text style={styles.category}>Phone Number:</Text>
+                    <Text style={styles.textInputStyle}>{this.state.phone}</Text>
+                    <Text style={styles.category}>Email:</Text>
+                    <Text style={styles.textInputStyle}>{this.state.email}</Text>
+                    <Text style={styles.location}>Location</Text>
+                    <MapView
+                        region={this.state.focusedLocation}
+                        style={styles.map}
+                        ref={ref => this.map = ref}
+                    >
+                        {marker}
+                    </MapView>
+                    <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={this.deleteUser}
+                    >
+                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>DELETE USER</Text>
+                    </TouchableOpacity>
+                </ScrollView>
             </View>
         );
     }
@@ -164,7 +162,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: 55,
+        marginTop: 35,
         width: '85%'
     },
     alignment: {
@@ -201,12 +199,13 @@ const styles = StyleSheet.create({
     },
     deleteButton: {
         width: '100%',
-        marginTop: 35,
+        height: 40,
+        marginTop: 30,
+        marginBottom: 30,
+        borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#BF1736',
-        borderRadius: 20,
-        height: 40
+        backgroundColor: '#BF1736'
     }
 });
 

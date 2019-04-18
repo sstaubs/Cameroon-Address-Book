@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, Text, TextInput, ScrollView, View, TouchableOpacity, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import * as firebase from 'firebase';
 
@@ -88,37 +88,39 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor="#5E8D48" barStyle="light-content" />
-        <View style={styles.alignment}>
+        <ScrollView style={styles.alignment}>
           <Text style={styles.mainText}>HomeBook</Text>
           <Text style={styles.supportingText}>Addressing Your Home</Text>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            autoCapitalize="none"
-            keyboardType='email-address'
-            style={styles.userInput}
-            placeholder="johndoe@gmail.com"
-            placeholderTextColor="gray"
-            onChangeText={this.emailHandler}
-          />
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            secureTextEntry={true}
-            style={styles.userInput}
-            placeholder="••••••••••"
-            placeholderTextColor="gray"
-            onChangeText={this.passwordHandler}
-          />
-          <Text onPress={this.pushRecovery} style={styles.forgotPassword}>Forgot Password?</Text>
-          <TouchableOpacity
-            style={styles.loginButton}
-            onPress={this.EnterLogin}
-          >
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>LOGIN</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.signupLine}>
-            <Text onPress={this.pushCreateAccount} style={styles.clickSignup}>Create Account</Text>
-          </TouchableOpacity>
-        </View>
+          <KeyboardAvoidingView behavior='padding'>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              autoCapitalize="none"
+              keyboardType='email-address'
+              style={styles.userInput}
+              placeholder="example@gmail.com"
+              placeholderTextColor="gray"
+              onChangeText={this.emailHandler}
+            />
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              secureTextEntry={true}
+              style={styles.userInput}
+              placeholder="••••••••••"
+              placeholderTextColor="gray"
+              onChangeText={this.passwordHandler}
+            />
+            <Text onPress={this.pushRecovery} style={styles.forgotPassword}>Forgot Password?</Text>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={this.EnterLogin}
+            >
+              <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>LOGIN</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.signupLine}>
+              <Text onPress={this.pushCreateAccount} style={styles.clickSignup}>Create Account</Text>
+            </TouchableOpacity>
+          </KeyboardAvoidingView>
+        </ScrollView>
       </View>
     );
   }
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
     color: '#7ABAF2',
     fontSize: 30,
     fontWeight: 'bold',
-    marginTop: 200,
+    marginTop: '50%',
     textAlign: 'center'
   },
   supportingText: {

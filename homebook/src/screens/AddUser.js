@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#222222',
   },
   closeIcon: {
-    marginTop: 55,
+    marginTop: 35,
     width: '85%',
     flexDirection: 'row',
     justifyContent: 'flex-start'

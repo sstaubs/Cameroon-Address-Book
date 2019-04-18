@@ -104,30 +104,32 @@ class SetLocation extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.mainText}>Set Location</Text>
-        <Text style={styles.subText}>Tap to drop pin on location</Text>
-        <MapView
-          initialRegion={this.state.focusedLocation}
-          region={this.state.focusedLocation}
-          style={styles.map}
-          showsUserLocation={true}
-          onPress={this.pickLocationHandler}
-          ref={ref => this.map = ref}
-        >
-          {marker}
-        </MapView>
-        <TouchableOpacity
-          style={styles.locateButton}
-          onPress={this.getLocationHandler}
-        >
-          <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>LOCATE ME!</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.confirmButton}
-          onPress={this.SetLocationAndPush}
-        >
-          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONFIRM COORDINATES</Text>
-        </TouchableOpacity>
+        <ScrollView style={styles.alignment}>
+          <Text style={styles.mainText}>Set Location</Text>
+          <Text style={styles.subText}>Tap to drop pin on location</Text>
+          <MapView
+            initialRegion={this.state.focusedLocation}
+            region={this.state.focusedLocation}
+            style={styles.map}
+            showsUserLocation={true}
+            onPress={this.pickLocationHandler}
+            ref={ref => this.map = ref}
+          >
+            {marker}
+          </MapView>
+          <TouchableOpacity
+            style={styles.locateButton}
+            onPress={this.getLocationHandler}
+          >
+            <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>LOCATE ME!</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.confirmButton}
+            onPress={this.SetLocationAndPush}
+          >
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONFIRM COORDINATES</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
     );
   }
@@ -141,28 +143,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#222222'
   },
+  alignment: {
+    width: '85%'
+  },
   mainText: {
     color: 'white',
     fontSize: 30,
     fontWeight: 'bold',
-    width: '80%',
     textAlign: 'center',
-    marginTop: 94
+    marginTop: 30
   },
   subText: {
     color: 'white',
     fontSize: 17,
-    marginTop: 50,
-    width: '80%',
+    marginTop: 20,
     textAlign: 'center'
   },
   map: {
     width: '100%',
-    height: 400,
+    height: 300,
     marginTop: 20
   },
   locateButton: {
-    width: '80%',
+    width: '100%',
     marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
@@ -171,7 +174,7 @@ const styles = StyleSheet.create({
     height: 40
   },
   confirmButton: {
-    width: '80%',
+    width: '100%',
     marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',

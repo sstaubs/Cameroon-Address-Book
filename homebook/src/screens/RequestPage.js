@@ -57,20 +57,20 @@ class RequestPage extends Component {
     }
 
     removeRequest = val => {
-        
+
         var db = firebase.firestore();
-        
+
         db.collection("users").doc(this.state.docId).collection("requests").doc(this.state.docArray[val]).delete().then(() => {
             //console.log("Document successfully deleted!");
         }).catch((error) => {
             //console.error("Error removing document: ", error);
         });
-        
-        
+
+
     }
 
     acceptHandler = val => {
-        
+
         const UserInfo = {
             firstN: this.state.firstname,
             lastN: this.state.lastname,
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: 55
+        marginTop: 35
     },
     mainText: {
         fontWeight: 'bold',
