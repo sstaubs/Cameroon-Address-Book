@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         refpoint: state.reference.friendref,
+
     };
 };
 

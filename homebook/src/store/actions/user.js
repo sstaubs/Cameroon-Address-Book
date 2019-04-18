@@ -1,8 +1,8 @@
 import {GET_USER } from './actionTypes'
 
-export const getUser = (uid) => {
+export const getUser = (user) => {
     return{
         type: GET_USER,
-        uid: uid,
+        user: user,
     };
 };

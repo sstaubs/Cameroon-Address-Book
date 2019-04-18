@@ -3,6 +3,8 @@ import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity } from 
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
+import { connect } from 'react-redux';
+import { getUser } from "../store/actions/index";
 
 class CreateAccount extends Component {
   state = {
@@ -70,6 +72,10 @@ class CreateAccount extends Component {
     });
   };
 
+  GetHandler = user => {
+    this.props.onGetUser(user);
+};
+
   confirmHandler = val => {
     if (this.passwordConfirm()) {
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
@@ -90,6 +96,7 @@ class CreateAccount extends Component {
               phoneNum: this.state.phone,
               uid: user.uid
             };
+            this.GetHandler(user)
             var db = firebase.firestore();
             db.collection("users").add(accountInfo)
               .then(function (docRef) {
@@ -236,4 +243,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CreateAccount;
+const mapDispatchToProps = dispatch => {
+  return {
+      onGetUser: user => dispatch(getUser(user)),
+
+
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CreateAccount);

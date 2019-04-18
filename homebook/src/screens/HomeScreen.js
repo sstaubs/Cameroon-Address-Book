@@ -158,6 +158,13 @@ const styles = StyleSheet.create({
         fontSize: 18
     }
 });
+const mapStateToProps = state => {
+    return {
+        firstName: state.user.firstName,
+
+    };
+};
+
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -167,4 +174,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
