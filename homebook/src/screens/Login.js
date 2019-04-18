@@ -96,7 +96,7 @@ class Login extends Component {
             autoCapitalize="none"
             keyboardType='email-address'
             style={styles.userInput}
-            placeholder="Email"
+            placeholder="johndoe@gmail.com"
             placeholderTextColor="gray"
             onChangeText={this.emailHandler}
           />
@@ -104,7 +104,7 @@ class Login extends Component {
           <TextInput
             secureTextEntry={true}
             style={styles.userInput}
-            placeholder="Password"
+            placeholder="••••••••••"
             placeholderTextColor="gray"
             onChangeText={this.passwordHandler}
           />
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     width: '85%'
   },
   mainText: {
-    color: 'white',
+    color: '#7ABAF2',
     fontSize: 30,
     fontWeight: 'bold',
     marginTop: 200,
@@ -144,18 +144,17 @@ const styles = StyleSheet.create({
   supportingText: {
     color: 'white',
     fontSize: 20,
-    width: 300,
     textAlign: 'center',
     paddingTop: 5,
     paddingBottom: 15
   },
   label: {
-    color: '#ffffe0',
+    color: '#7ABAF2',
     paddingTop: 30,
     fontSize: 13
   },
   userInput: {
-    borderColor: '#ffffe0',
+    borderColor: '#7ABAF2',
     borderBottomWidth: 1,
     height: 40,
     fontSize: 17,
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
     color: '#70B456'
   },
   forgotPassword: {
-    color: '#ffffe0',
+    color: '#7ABAF2',
     fontSize: 13,
     marginTop: 10,
     textAlign: 'right'
