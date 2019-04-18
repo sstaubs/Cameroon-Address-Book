@@ -34,7 +34,7 @@ class FriendProfile extends Component {
 
     pushEditButton = () => Navigation.push(this.props.componentId, {
         component: {
-            name: 'EditUser'
+            name: 'EditFriend'
         }
     });
 
@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         refpoint: state.reference.friendref,
+
     };
 };
 

@@ -16,6 +16,7 @@ import SearchUser from  './SearchUser';
 import ChangePassScreen from './ChangePassScreen';
 import ChangeEmailScreen from './ChangeEmailScreen';
 import RequestPage from './RequestPage';
+import EditFriend from './EditFriend';
 
 function registerScreens() {
   const reduxStore = configureStore();
@@ -99,6 +100,12 @@ function registerScreens() {
       <RequestPage {...props} />
     </Provider>
   ), () => RequestPage);
+
+  Navigation.registerComponent('EditFriend', () => (props) => (
+    <Provider store={reduxStore}>
+      <EditFriend {...props} />
+    </Provider>
+  ), () => EditFriend);
 }
 
 export default {

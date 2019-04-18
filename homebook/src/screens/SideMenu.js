@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -9,9 +9,11 @@ import Modal from "react-native-modal";
 
 
 class SideMenu extends Component {
-state = {
-    isModalVisible: false,
-};
+    state = {
+        currentPassword: '',
+        docId: '',
+        isModalVisible: false
+    };
 
     signout = () => {
         firebase.auth().signOut();
@@ -30,6 +32,43 @@ state = {
         }
     });
 
+    deleteAccount = () => {
+        var user = firebase.auth().currentUser;
+        var db = firebase.firestore();
+
+        const credential = firebase.auth.EmailAuthProvider.credential(
+            user.email,
+            this.state.currentPassword
+        );
+
+        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                db.collection("users").doc(doc.id).delete();
+            })
+        }).then(() => {
+            user.reauthenticateAndRetrieveDataWithCredential(credential).then(() => {
+                // User re-authenticated.
+                user.delete().then(() => {
+                    // User deleted.
+                    Navigation.popToRoot(this.props.componentId);
+                }).catch(() => {
+                    // An error happened.
+                });
+            }).catch(() => {
+                // An error happened.
+                alert("Was not authenticated");
+            });
+        }).catch(function (error) {
+            alert("Error getting documents: " + error);
+        });
+
+
+
+
+
+
+
+    };
 
     closeSideMenu = () => Navigation.mergeOptions(this.props.componentId, {
         sideMenu: {
@@ -37,9 +76,14 @@ state = {
         }
     });
 
+    passHandler = val => {
+        this.setState({
+            currentPassword: val,
+        });
+    };
 
-  _toggleModal = () =>
-  this.setState({ isModalVisible: !this.state.isModalVisible });
+    _toggleModal = () =>
+        this.setState({ isModalVisible: !this.state.isModalVisible });
 
 
     render() {
@@ -77,12 +121,22 @@ state = {
                             <Text style={styles.innerRedText}>Delete Account</Text>
                         </TouchableOpacity>
                         <Modal isVisible={this.state.isModalVisible}>
-                            <View style={{ flex: 1 }}>
-                                <Text style={styles.innerText}>Hello!</Text>
-                                <TouchableOpacity onPress={this._toggleModal}>
-                                    <Text style={styles.innerText}>Cancel</Text>
-                                </TouchableOpacity>
-                            </View>
+                            <Text style={styles.label}>Current Password</Text>
+                            <TextInput
+                                keyboardType="number-pad"
+                                style={styles.userInput}
+                                placeholder="Current Password"
+                                placeholderTextColor="gray"
+                                onChangeText={this.passHandler}
+                            />
+                            <TouchableOpacity
+                                onPress={this.deleteAccount}>
+                                <Text style={styles.innerText}>Confirm Delete Account</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={this._toggleModal}>
+                                <Text style={styles.innerText}>Cancel</Text>
+                            </TouchableOpacity>
                         </Modal>
                     </View>
                 </View>
@@ -110,6 +164,13 @@ const styles = StyleSheet.create({
     },
     textPadding: {
         paddingTop: 30
+    },
+    userInput: {
+        borderColor: '#ffffe0',
+        borderBottomWidth: 1,
+        height: 40,
+        fontSize: 17,
+        color: 'white'
     },
     innerRedText: {
         color: '#E24A4A',
