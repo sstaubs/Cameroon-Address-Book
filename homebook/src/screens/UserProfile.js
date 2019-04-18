@@ -4,6 +4,7 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
+import { OpenMapDirections } from 'react-native-navigation-directions';
 
 class UserProfile extends Component {
   state = {
@@ -41,6 +42,21 @@ class UserProfile extends Component {
       name: 'RequestPage'
     }
   });
+
+  showDirections = () => {
+    
+
+    const endPoint = {
+      longitude: this.state.focusedLocation.longitude,
+      latitude: this.state.focusedLocation.latitude,
+    }
+
+		const transportPlan = 'd';
+
+    OpenMapDirections(null,endPoint, transportPlan).then(res => {
+      console.log(res)
+    });
+  }
 
 
 
@@ -111,6 +127,13 @@ class UserProfile extends Component {
             >
               {marker}
             </MapView>
+            <TouchableOpacity
+              style={styles.locateButton}
+              onPress={this.showDirections}
+            >
+              <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
+            </TouchableOpacity>
+
           </ScrollView>
         </View>
       </View>
@@ -157,6 +180,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 300,
     marginTop: 20
+  },
+  locateButton: {
+    width: '100%',
+    marginTop: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    height: 40
   },
   confirmButton: {
     width: 300,
