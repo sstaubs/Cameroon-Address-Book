@@ -129,14 +129,14 @@ class CreateAccount extends Component {
           <Text style={styles.label}>First Name</Text>
           <TextInput
             style={styles.userInput}
-            placeholder='First Name'
+            placeholder='John'
             placeholderTextColor='gray'
             onChangeText={this.firstNameHandler}
           />
           <Text style={styles.label}>Last Name</Text>
           <TextInput
             style={styles.userInput}
-            placeholder='Last Name'
+            placeholder='Doe'
             placeholderTextColor='gray'
             onChangeText={this.lastNameHandler}
           />
@@ -144,7 +144,7 @@ class CreateAccount extends Component {
           <TextInput
             secureTextEntry={true}
             style={styles.userInput}
-            placeholder='Password'
+            placeholder='••••••••••'
             placeholderTextColor='gray'
             onChangeText={this.passwordHandler}
           />
@@ -152,7 +152,7 @@ class CreateAccount extends Component {
           <TextInput
             secureTextEntry={true}
             style={styles.userInput}
-            placeholder='Confirm Password'
+            placeholder='••••••••••'
             placeholderTextColor='gray'
             onChangeText={this.confirmPassHandler}
           />
@@ -160,7 +160,7 @@ class CreateAccount extends Component {
           <TextInput
             keyboardType='number-pad'
             style={styles.userInput}
-            placeholder='Phone Number'
+            placeholder='(123) 456-7890'
             placeholderTextColor='gray'
             onChangeText={this.phoneHandler}
           />
@@ -169,7 +169,7 @@ class CreateAccount extends Component {
             autoCapitalize='none'
             keyboardType='email-address'
             style={styles.userInput}
-            placeholder='Email'
+            placeholder='johndoe@gmail.com'
             placeholderTextColor='gray'
             onChangeText={this.emailHandler}
           />
@@ -215,12 +215,12 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   label: {
-    color: '#ffffe0',
+    color: '#7ABAF2',
     paddingTop: 25,
     fontSize: 13
   },
   userInput: {
-    borderColor: '#ffffe0',
+    borderColor: '#7ABAF2',
     borderBottomWidth: 1,
     height: 40,
     fontSize: 17,

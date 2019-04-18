@@ -34,7 +34,7 @@ class FriendProfile extends Component {
 
     pushEditButton = () => Navigation.push(this.props.componentId, {
         component: {
-            name: 'EditUser'
+            name: 'EditFriend'
         }
     });
 
