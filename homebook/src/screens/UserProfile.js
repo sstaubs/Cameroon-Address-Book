@@ -59,12 +59,15 @@ class UserProfile extends Component {
   }
 
 
-
-
-
-
-
   componentDidMount() {
+    this.navigationEventListener = Navigation.events().bindComponent(this);
+  }
+
+  componentDidDisappear() {
+    //no current function
+  }
+
+  componentDidAppear() {
     var db = firebase.firestore();
     db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
