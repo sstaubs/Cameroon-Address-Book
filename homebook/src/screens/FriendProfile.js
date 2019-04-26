@@ -14,7 +14,6 @@ class FriendProfile extends Component {
         phone: '',
         email: '',
         docId: '',
-
         focusedLocation: {
             longitude: 0,
             latitude: 0,
@@ -72,27 +71,28 @@ class FriendProfile extends Component {
                 //alert(doc.id, " => ", doc.data());
                 //alert(doc)
 
-
+                
                 this.setState({
 
 
                     docId: doc.id,
                 });
+                
 
 
             });
 
-
         }).then(() => {
             db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).get()
                 .then(doc => {
-
+                    
                     this.setState({
+                        
+                        
                         firstname: doc.data().firstN,
                         lastname: doc.data().lastN,
                         phone: doc.data().phoneNum,
                         email: doc.data().email,
-                        docId: doc.id,
                         focusedLocation: {
                             ...this.state.focusedLocation,
                             longitude: doc.data().longitude,
@@ -106,12 +106,25 @@ class FriendProfile extends Component {
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
+        
+    }
+
+   deleteUser = () => {
+        var db = firebase.firestore();
+
+        db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).delete().then(() => {
+            // Friend deleted.
+            Navigation.popToRoot(this.props.componentId);
+        }).catch(() => {
+            // An error happened.
+        });
+
     }
 
     render() {
         marker = <MapView.Marker coordinate={this.state.focusedLocation} />
         return (
-            <View style={styles.container}>
+            <View style={styles.container} >
                 <View style={styles.icons}>
                     <TouchableOpacity
                         style={styles.shareIcon}
@@ -139,8 +152,8 @@ class FriendProfile extends Component {
                         {marker}
                     </MapView>
                     <TouchableOpacity
-                    style={styles.deleteButton}
-                    onPress={this.deleteUser}
+                        style={styles.deleteButton}
+                        onPress={this.deleteUser}
                     >
                         <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>DELETE USER</Text>
                     </TouchableOpacity>

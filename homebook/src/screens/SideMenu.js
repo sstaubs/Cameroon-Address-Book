@@ -41,26 +41,28 @@ class SideMenu extends Component {
             this.state.currentPassword
         );
 
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                db.collection("users").doc(doc.id).delete();
-            })
-        }).then(() => {
-            user.reauthenticateAndRetrieveDataWithCredential(credential).then(() => {
-                // User re-authenticated.
+        user.reauthenticateAndRetrieveDataWithCredential(credential).then(() => {
+            // User re-authenticated.
+            db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    db.collection("users").doc(doc.id).delete();
+                })
+            }).then(() => {
                 user.delete().then(() => {
                     // User deleted.
                     Navigation.popToRoot(this.props.componentId);
                 }).catch(() => {
                     // An error happened.
                 });
-            }).catch(() => {
-                // An error happened.
-                alert("Was not authenticated");
+            }).catch(function (error) {
+                alert("Error getting documents: " + error);
             });
-        }).catch(function (error) {
-            alert("Error getting documents: " + error);
+        }).catch(() => {
+            // An error happened.
+            alert("Password Incorrect");
         });
+
+
 
 
 
