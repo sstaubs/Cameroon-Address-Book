@@ -32,6 +32,12 @@ class SearchUser extends Component {
         });
     };
     searchBySearchedEmail = () => {
+        this.setState({
+            referenceArray: [],
+            friendNameArray: [],
+
+        });
+        
         var db = firebase.firestore();
         db.collection("users").where("email", "==", this.state.searchedEmail).get()
             .then((querySnapshot) => {
