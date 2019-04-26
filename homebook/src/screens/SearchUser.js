@@ -32,6 +32,7 @@ class SearchUser extends Component {
         });
     };
     searchBySearchedEmail = () => {
+        
         this.setState({
             referenceArray: [],
             friendNameArray: [],
