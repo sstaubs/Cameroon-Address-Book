@@ -124,11 +124,11 @@ class FriendProfile extends Component {
                         <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
                     </TouchableOpacity>
                 </View>
-                <ScrollView style={styles.alignment}>
+                <View style={styles.alignment}>
                     <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-                    <Text style={styles.category}>Phone Number:</Text>
+                    <Text style={styles.category}>Phone Number</Text>
                     <Text style={styles.textInputStyle}>{this.state.phone}</Text>
-                    <Text style={styles.category}>Email:</Text>
+                    <Text style={styles.category}>Email</Text>
                     <Text style={styles.textInputStyle}>{this.state.email}</Text>
                     <Text style={styles.location}>Location</Text>
                     <MapView
@@ -144,7 +144,7 @@ class FriendProfile extends Component {
                     >
                         <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>DELETE USER</Text>
                     </TouchableOpacity>
-                </ScrollView>
+                </View>
             </View>
         );
     }
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: 35,
+        marginTop: 40,
         width: '85%'
     },
     alignment: {
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
         marginTop: 17,
         fontWeight: 'bold',
         fontSize: 17,
-        color: 'white',
+        color: '#7ABAF2',
     },
     location: {
         marginTop: 17,

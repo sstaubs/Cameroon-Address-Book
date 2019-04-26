@@ -164,27 +164,30 @@ class EditUser extends Component {
               style={styles.userInput}
               value={this.state.firstName}
               onChangeText={this.firstNameHandler}
+              returnKeyType = { "next" }
+              onSubmitEditing={() => { this.secondTextInput.focus(); }}
+              blurOnSubmit={false}
             />
             <Text style={styles.label}>Last Name</Text>
             <TextInput
               style={styles.userInput}
               value={this.state.lastName}
               onChangeText={this.lastNameHandler}
+              ref={(input) => { this.secondTextInput = input; }}
+              returnKeyType = { "next" }
+              onSubmitEditing={() => { this.thirdTextInput.focus(); }}
+              blurOnSubmit={false}
             />
             <Text style={styles.label}>Phone Number</Text>
             <TextInput
               style={styles.userInput}
+              keyboardType='number-pad'
               value={this.state.phone}
               onChangeText={this.phoneNumberHandler}
+              ref={(input) => { this.thirdTextInput = input; }}
+              returnKeyType = { "done" }
             />
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.userInput}
-              autoCapitalize='none'
-              value={this.state.email}
-              onChangeText={this.emailHandler}
-            />
-            <Text style={styles.editLocation}>Edit Location</Text>
+            <Text style={styles.editLocation}>Change Location</Text>
             <MapView
               initialRegion={this.state.focusedLocation}
               region={this.state.focusedLocation}
@@ -225,7 +228,7 @@ const styles = StyleSheet.create({
   icons: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 35,
+    marginTop: 40,
     width: '85%'
   },
   mainText: {
@@ -238,12 +241,12 @@ const styles = StyleSheet.create({
     width: '85%'
   },
   label: {
-    color: '#ffffe0',
+    color: '#7ABAF2',
     paddingTop: 30,
     fontSize: 13
   },
   userInput: {
-      borderColor: '#ffffe0',
+      borderColor: '#7ABAF2',
       borderBottomWidth: 1,
       height: 40,
       fontSize: 17,

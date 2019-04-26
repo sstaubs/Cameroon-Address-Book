@@ -48,6 +48,21 @@
 		A56052B07289498BA204F74B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 620E31F595624E6682983892 /* Entypo.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B8628A922255889400A92271 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8628A682255888800A92271 /* libAirMaps.a */; };
+		B87A43212272968B00B73025 /* IQTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42D32272968A00B73025 /* IQTextView.m */; };
+		B87A43222272968B00B73025 /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42D72272968A00B73025 /* IQToolbar.m */; };
+		B87A43232272968B00B73025 /* IQTitleBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42D92272968A00B73025 /* IQTitleBarButtonItem.m */; };
+		B87A43242272968B00B73025 /* IQBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42DA2272968A00B73025 /* IQBarButtonItem.m */; };
+		B87A43252272968B00B73025 /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42DB2272968A00B73025 /* IQUIView+IQKeyboardToolbar.m */; };
+		B87A43262272968B00B73025 /* IQPreviousNextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42DC2272968A00B73025 /* IQPreviousNextView.m */; };
+		B87A43272272968B00B73025 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B87A42E42272968A00B73025 /* IQKeyboardManager.bundle */; };
+		B87A43282272968B00B73025 /* IQKeyboardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42E72272968A00B73025 /* IQKeyboardManager.m */; };
+		B87A43292272968B00B73025 /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42E92272968A00B73025 /* IQNSArray+Sort.m */; };
+		B87A432A2272968B00B73025 /* IQUIWindow+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42EA2272968A00B73025 /* IQUIWindow+Hierarchy.m */; };
+		B87A432B2272968B00B73025 /* IQUITextFieldView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42EC2272968A00B73025 /* IQUITextFieldView+Additions.m */; };
+		B87A432C2272968B00B73025 /* IQUIScrollView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42ED2272968A00B73025 /* IQUIScrollView+Additions.m */; };
+		B87A432D2272968B00B73025 /* IQUIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42EE2272968A00B73025 /* IQUIView+Hierarchy.m */; };
+		B87A432E2272968B00B73025 /* IQUIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42F32272968A00B73025 /* IQUIViewController+Additions.m */; };
+		B87A432F2272968B00B73025 /* IQKeyboardReturnKeyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B87A42F52272968A00B73025 /* IQKeyboardReturnKeyHandler.m */; };
 		B88EF9B72254560A00AF062C /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B88EF9B4225455F300AF062C /* libRNVectorIcons.a */; };
 		B88EF9C9225456EB00AF062C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B88EF9BA225456EB00AF062C /* Octicons.ttf */; };
 		B88EF9CA225456EB00AF062C /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B88EF9BB225456EB00AF062C /* Feather.ttf */; };
@@ -71,6 +86,7 @@
 		DD33F23EDB6942E9B0807B7F /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E069176D04C049A1A2F80E53 /* MaterialCommunityIcons.ttf */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
+		F89712D126914A10BB2C0848 /* libReactNativeKeyboardManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 137029E99A324856888EC9C0 /* libReactNativeKeyboardManager.a */; };
 		FC35B995C18842359BCDF0CA /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F41616134FBC41BA9D65EFE8 /* Foundation.ttf */; };
 /* End PBXBuildFile section */
 
@@ -327,6 +343,13 @@
 			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
 			remoteInfo = AirMaps;
 		};
+		B87A42BF2272958D00B73025 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 779D220A85AE4922BA4FE553 /* ReactNativeKeyboardManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A51183591EFAC02F0077C68F;
+			remoteInfo = ReactNativeKeyboardManager;
+		};
 		B88EF9B3225455F300AF062C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B88EF9AE225455F300AF062C /* RNVectorIcons.xcodeproj */;
@@ -395,6 +418,7 @@
 		00E356EE1AD99517003FC87E /* homebookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = homebookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* homebookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = homebookTests.m; sourceTree = "<group>"; };
+		137029E99A324856888EC9C0 /* libReactNativeKeyboardManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeKeyboardManager.a; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* homebook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = homebook.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -415,12 +439,44 @@
 		701DF121D38448668DFED5B0 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		7064659D07834435819AD9EA /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		73B2D0FED828414491ABF6F6 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		779D220A85AE4922BA4FE553 /* ReactNativeKeyboardManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeKeyboardManager.xcodeproj; path = "../node_modules/react-native-keyboard-manager/ios/ReactNativeKeyboardManager.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8640390FEC9B43308EF9AFF1 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		9B9EEA3829E5405D9698718C /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B8628A632255888800A92271 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
+		B87A42D32272968A00B73025 /* IQTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQTextView.m; sourceTree = "<group>"; };
+		B87A42D42272968A00B73025 /* IQTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQTextView.h; sourceTree = "<group>"; };
+		B87A42D62272968A00B73025 /* IQUIView+IQKeyboardToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+IQKeyboardToolbar.h"; sourceTree = "<group>"; };
+		B87A42D72272968A00B73025 /* IQToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQToolbar.m; sourceTree = "<group>"; };
+		B87A42D82272968A00B73025 /* IQPreviousNextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQPreviousNextView.h; sourceTree = "<group>"; };
+		B87A42D92272968A00B73025 /* IQTitleBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQTitleBarButtonItem.m; sourceTree = "<group>"; };
+		B87A42DA2272968A00B73025 /* IQBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQBarButtonItem.m; sourceTree = "<group>"; };
+		B87A42DB2272968A00B73025 /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
+		B87A42DC2272968A00B73025 /* IQPreviousNextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQPreviousNextView.m; sourceTree = "<group>"; };
+		B87A42DD2272968A00B73025 /* IQToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQToolbar.h; sourceTree = "<group>"; };
+		B87A42DE2272968A00B73025 /* IQBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQBarButtonItem.h; sourceTree = "<group>"; };
+		B87A42DF2272968A00B73025 /* IQTitleBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQTitleBarButtonItem.h; sourceTree = "<group>"; };
+		B87A42E12272968A00B73025 /* IQKeyboardManagerConstantsInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQKeyboardManagerConstantsInternal.h; sourceTree = "<group>"; };
+		B87A42E22272968A00B73025 /* IQKeyboardManagerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQKeyboardManagerConstants.h; sourceTree = "<group>"; };
+		B87A42E42272968A00B73025 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
+		B87A42E52272968A00B73025 /* IQKeyboardReturnKeyHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQKeyboardReturnKeyHandler.h; sourceTree = "<group>"; };
+		B87A42E62272968A00B73025 /* IQKeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQKeyboardManager.h; sourceTree = "<group>"; };
+		B87A42E72272968A00B73025 /* IQKeyboardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQKeyboardManager.m; sourceTree = "<group>"; };
+		B87A42E92272968A00B73025 /* IQNSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQNSArray+Sort.m"; sourceTree = "<group>"; };
+		B87A42EA2272968A00B73025 /* IQUIWindow+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIWindow+Hierarchy.m"; sourceTree = "<group>"; };
+		B87A42EB2272968A00B73025 /* IQUIViewController+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIViewController+Additions.h"; sourceTree = "<group>"; };
+		B87A42EC2272968A00B73025 /* IQUITextFieldView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUITextFieldView+Additions.m"; sourceTree = "<group>"; };
+		B87A42ED2272968A00B73025 /* IQUIScrollView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIScrollView+Additions.m"; sourceTree = "<group>"; };
+		B87A42EE2272968A00B73025 /* IQUIView+Hierarchy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIView+Hierarchy.m"; sourceTree = "<group>"; };
+		B87A42EF2272968A00B73025 /* IQUIWindow+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIWindow+Hierarchy.h"; sourceTree = "<group>"; };
+		B87A42F02272968A00B73025 /* IQNSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQNSArray+Sort.h"; sourceTree = "<group>"; };
+		B87A42F12272968A00B73025 /* IQUIScrollView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIScrollView+Additions.h"; sourceTree = "<group>"; };
+		B87A42F22272968A00B73025 /* IQUITextFieldView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUITextFieldView+Additions.h"; sourceTree = "<group>"; };
+		B87A42F32272968A00B73025 /* IQUIViewController+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIViewController+Additions.m"; sourceTree = "<group>"; };
+		B87A42F42272968A00B73025 /* IQUIView+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+Hierarchy.h"; sourceTree = "<group>"; };
+		B87A42F52272968A00B73025 /* IQKeyboardReturnKeyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQKeyboardReturnKeyHandler.m; sourceTree = "<group>"; };
 		B88EF9AE225455F300AF062C /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		B88EF9BA225456EB00AF062C /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		B88EF9BB225456EB00AF062C /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -477,6 +533,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				F89712D126914A10BB2C0848 /* libReactNativeKeyboardManager.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,6 +726,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				779D220A85AE4922BA4FE553 /* ReactNativeKeyboardManager.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -685,6 +743,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B87A42D12272968A00B73025 /* IQKeyboardManager */,
 				B88EF9B9225456EB00AF062C /* Fonts */,
 				13B07FAE1A68108700A75B9A /* homebook */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -692,6 +751,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				DE0D0513C8204AD8956859F5 /* Resources */,
+				B87A42912272958A00B73025 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -724,6 +784,101 @@
 				B8628A682255888800A92271 /* libAirMaps.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B87A42912272958A00B73025 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				137029E99A324856888EC9C0 /* libReactNativeKeyboardManager.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		B87A42BC2272958D00B73025 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B87A42C02272958D00B73025 /* libReactNativeKeyboardManager.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B87A42D12272968A00B73025 /* IQKeyboardManager */ = {
+			isa = PBXGroup;
+			children = (
+				B87A42D22272968A00B73025 /* IQTextView */,
+				B87A42D52272968A00B73025 /* IQToolbar */,
+				B87A42E02272968A00B73025 /* Constants */,
+				B87A42E32272968A00B73025 /* Resources */,
+				B87A42E52272968A00B73025 /* IQKeyboardReturnKeyHandler.h */,
+				B87A42E62272968A00B73025 /* IQKeyboardManager.h */,
+				B87A42E72272968A00B73025 /* IQKeyboardManager.m */,
+				B87A42E82272968A00B73025 /* Categories */,
+				B87A42F52272968A00B73025 /* IQKeyboardReturnKeyHandler.m */,
+			);
+			name = IQKeyboardManager;
+			path = "../node_modules/react-native-keyboard-manager/ios/IQKeyboardManager";
+			sourceTree = "<group>";
+		};
+		B87A42D22272968A00B73025 /* IQTextView */ = {
+			isa = PBXGroup;
+			children = (
+				B87A42D32272968A00B73025 /* IQTextView.m */,
+				B87A42D42272968A00B73025 /* IQTextView.h */,
+			);
+			path = IQTextView;
+			sourceTree = "<group>";
+		};
+		B87A42D52272968A00B73025 /* IQToolbar */ = {
+			isa = PBXGroup;
+			children = (
+				B87A42D62272968A00B73025 /* IQUIView+IQKeyboardToolbar.h */,
+				B87A42D72272968A00B73025 /* IQToolbar.m */,
+				B87A42D82272968A00B73025 /* IQPreviousNextView.h */,
+				B87A42D92272968A00B73025 /* IQTitleBarButtonItem.m */,
+				B87A42DA2272968A00B73025 /* IQBarButtonItem.m */,
+				B87A42DB2272968A00B73025 /* IQUIView+IQKeyboardToolbar.m */,
+				B87A42DC2272968A00B73025 /* IQPreviousNextView.m */,
+				B87A42DD2272968A00B73025 /* IQToolbar.h */,
+				B87A42DE2272968A00B73025 /* IQBarButtonItem.h */,
+				B87A42DF2272968A00B73025 /* IQTitleBarButtonItem.h */,
+			);
+			path = IQToolbar;
+			sourceTree = "<group>";
+		};
+		B87A42E02272968A00B73025 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				B87A42E12272968A00B73025 /* IQKeyboardManagerConstantsInternal.h */,
+				B87A42E22272968A00B73025 /* IQKeyboardManagerConstants.h */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		B87A42E32272968A00B73025 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B87A42E42272968A00B73025 /* IQKeyboardManager.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B87A42E82272968A00B73025 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B87A42E92272968A00B73025 /* IQNSArray+Sort.m */,
+				B87A42EA2272968A00B73025 /* IQUIWindow+Hierarchy.m */,
+				B87A42EB2272968A00B73025 /* IQUIViewController+Additions.h */,
+				B87A42EC2272968A00B73025 /* IQUITextFieldView+Additions.m */,
+				B87A42ED2272968A00B73025 /* IQUIScrollView+Additions.m */,
+				B87A42EE2272968A00B73025 /* IQUIView+Hierarchy.m */,
+				B87A42EF2272968A00B73025 /* IQUIWindow+Hierarchy.h */,
+				B87A42F02272968A00B73025 /* IQNSArray+Sort.h */,
+				B87A42F12272968A00B73025 /* IQUIScrollView+Additions.h */,
+				B87A42F22272968A00B73025 /* IQUITextFieldView+Additions.h */,
+				B87A42F32272968A00B73025 /* IQUIViewController+Additions.m */,
+				B87A42F42272968A00B73025 /* IQUIView+Hierarchy.h */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		B88EF9AF225455F300AF062C /* Products */ = {
@@ -954,6 +1109,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = B87A42BC2272958D00B73025 /* Products */;
+					ProjectRef = 779D220A85AE4922BA4FE553 /* ReactNativeKeyboardManager.xcodeproj */;
 				},
 				{
 					ProductGroup = D4094B3E22323AEA00192D00 /* Products */;
@@ -1213,6 +1372,13 @@
 			remoteRef = B8628A672255888800A92271 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		B87A42C02272958D00B73025 /* libReactNativeKeyboardManager.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeKeyboardManager.a;
+			remoteRef = B87A42BF2272958D00B73025 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		B88EF9B4225455F300AF062C /* libRNVectorIcons.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1289,6 +1455,7 @@
 				B88EF9D2225456EB00AF062C /* FontAwesome5_Regular.ttf in Resources */,
 				B88EF9D0225456EB00AF062C /* Ionicons.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				B87A43272272968B00B73025 /* IQKeyboardManager.bundle in Resources */,
 				1574E9E723D745088258756E /* AntDesign.ttf in Resources */,
 				A56052B07289498BA204F74B /* Entypo.ttf in Resources */,
 				7DE5968984DA468C83F017D7 /* EvilIcons.ttf in Resources */,
@@ -1378,8 +1545,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B87A43282272968B00B73025 /* IQKeyboardManager.m in Sources */,
+				B87A432E2272968B00B73025 /* IQUIViewController+Additions.m in Sources */,
+				B87A43262272968B00B73025 /* IQPreviousNextView.m in Sources */,
+				B87A43232272968B00B73025 /* IQTitleBarButtonItem.m in Sources */,
+				B87A432A2272968B00B73025 /* IQUIWindow+Hierarchy.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				B87A43292272968B00B73025 /* IQNSArray+Sort.m in Sources */,
+				B87A432D2272968B00B73025 /* IQUIView+Hierarchy.m in Sources */,
+				B87A432B2272968B00B73025 /* IQUITextFieldView+Additions.m in Sources */,
+				B87A432F2272968B00B73025 /* IQKeyboardReturnKeyHandler.m in Sources */,
+				B87A432C2272968B00B73025 /* IQUIScrollView+Additions.m in Sources */,
+				B87A43242272968B00B73025 /* IQBarButtonItem.m in Sources */,
+				B87A43252272968B00B73025 /* IQUIView+IQKeyboardToolbar.m in Sources */,
+				B87A43212272968B00B73025 /* IQTextView.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				B87A43222272968B00B73025 /* IQToolbar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1436,9 +1617,17 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+				);
 				INFOPLIST_FILE = homebookTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1454,9 +1643,17 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+				);
 				INFOPLIST_FILE = homebookTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1474,6 +1671,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 555CGA3CF2;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+				);
 				INFOPLIST_FILE = homebook/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1493,6 +1694,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 555CGA3CF2;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+				);
 				INFOPLIST_FILE = homebook/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1518,8 +1723,16 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+				);
 				INFOPLIST_FILE = "homebook-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1544,8 +1757,16 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+				);
 				INFOPLIST_FILE = "homebook-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1569,8 +1790,16 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+				);
 				INFOPLIST_FILE = "homebook-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1594,8 +1823,16 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+				);
 				INFOPLIST_FILE = "homebook-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",

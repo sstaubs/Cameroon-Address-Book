@@ -92,7 +92,7 @@ class EditFriend extends Component {
                         lastName: doc.data().lastN,
                         phone: doc.data().phoneNum,
                         email: doc.data().email,
-                        
+
                         focusedLocation: {
                             ...this.state.focusedLocation,
                             longitude: doc.data().longitude,
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     icons: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 55,
+        marginTop: 40,
         width: '85%'
     },
     mainText: {
@@ -261,12 +261,12 @@ const styles = StyleSheet.create({
         width: '85%'
     },
     label: {
-        color: '#ffffe0',
+        color: '#7ABAF2',
         paddingTop: 30,
         fontSize: 13
     },
     userInput: {
-        borderColor: '#ffffe0',
+        borderColor: '#7ABAF2',
         borderBottomWidth: 1,
         height: 40,
         fontSize: 17,

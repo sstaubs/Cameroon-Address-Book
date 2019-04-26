@@ -32,7 +32,7 @@ class Login extends Component {
         }
 
       },
-      center:{
+      center: {
         component: {
           name: 'HomeScreen'
         }
@@ -72,23 +72,23 @@ class Login extends Component {
         alert("Email has not yet been verified");
       }
     }).catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        if (errorCode === 'auth/wrong-password') {
-          alert('Wrong password.');
-        } else {
-          alert(errorMessage);
-        }
-        console.log(error);
-      });
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/wrong-password') {
+        alert('Wrong password.');
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
+    });
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor="#5E8D48" barStyle="light-content" />
-        <ScrollView style={styles.alignment}>
+      <StatusBar barStyle='light-content' />
+        <View style={styles.alignment}>
           <Text style={styles.mainText}>HomeBook</Text>
           <Text style={styles.supportingText}>Addressing Your Home</Text>
           <KeyboardAvoidingView behavior='padding'>
@@ -100,6 +100,9 @@ class Login extends Component {
               placeholder="example@gmail.com"
               placeholderTextColor="gray"
               onChangeText={this.emailHandler}
+              returnKeyType = { "next" }
+              onSubmitEditing={() => { this.secondTextInput.focus(); }}
+              blurOnSubmit={false}
             />
             <Text style={styles.label}>Password</Text>
             <TextInput
@@ -108,19 +111,23 @@ class Login extends Component {
               placeholder="••••••••••"
               placeholderTextColor="gray"
               onChangeText={this.passwordHandler}
+              ref={(input) => { this.secondTextInput = input; }}
+              returnKeyType = { "done" }
             />
             <Text onPress={this.pushRecovery} style={styles.forgotPassword}>Forgot Password?</Text>
-            <TouchableOpacity
-              style={styles.loginButton}
-              onPress={this.EnterLogin}
-            >
-              <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>LOGIN</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.signupLine}>
-              <Text onPress={this.pushCreateAccount} style={styles.clickSignup}>Create Account</Text>
-            </TouchableOpacity>
           </KeyboardAvoidingView>
-        </ScrollView>
+        </View>
+        <View style={styles.bottom}>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={this.EnterLogin}
+          >
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>LOGIN</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.signupLine}>
+            <Text onPress={this.pushCreateAccount} style={styles.clickSignup}>Create Account</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -148,7 +155,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     paddingTop: 5,
-    paddingBottom: 15
+    paddingBottom: '30%'
   },
   label: {
     color: '#7ABAF2',
@@ -162,30 +169,34 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: 'white'
   },
-  loginButton: {
-    width: '100%',
-    marginTop: 35,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#3F7F40',
-    borderRadius: 20,
-    height: 40
-  },
-  signupLine: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 25,
-    fontSize: 18,
-  },
-  clickSignup: {
-    color: '#70B456'
-  },
   forgotPassword: {
     color: '#7ABAF2',
     fontSize: 13,
     marginTop: 10,
     textAlign: 'right'
+  },
+  bottom: {
+    width: '100%',
+    position: 'absolute',
+    bottom: '5%',
+    alignItems: 'center'
+  },
+  loginButton: {
+    width: '85%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#3F7F40',
+    borderRadius: 20,
+    height: 40
+  },
+  signupLine: {
+    marginTop: 25,
+    fontSize: 18,
+    alignItems: 'center'
+  },
+  clickSignup: {
+    color: '#70B456'
   }
 });
 

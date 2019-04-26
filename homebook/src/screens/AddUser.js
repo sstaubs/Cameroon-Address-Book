@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#222222',
   },
   closeIcon: {
-    marginTop: 35,
+    marginTop: 40,
     width: '85%',
     flexDirection: 'row',
     justifyContent: 'flex-start'
@@ -252,12 +252,12 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   label: {
-    color: '#ffffe0',
+    color: '#7ABAF2',
     paddingTop: 30,
     fontSize: 13
   },
   userInput: {
-    borderColor: '#ffffe0',
+    borderColor: '#7ABAF2',
     borderBottomWidth: 1,
     height: 40,
     fontSize: 17,
