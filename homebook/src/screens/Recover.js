@@ -91,22 +91,23 @@ const styles = StyleSheet.create({
     backIcon: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        marginTop: 35
+        marginTop: 40
     },
     mainText: {
         color: 'white',
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: 24
+        marginTop: 24,
+        marginBottom: '10%'
     },
     label: {
-        color: '#ffffe0',
+        color: '#7ABAF2',
         paddingTop: 30,
         fontSize: 13
     },
     userInput: {
-        borderColor: '#ffffe0',
+        borderColor: '#7ABAF2',
         borderBottomWidth: 1,
         height: 40,
         fontSize: 17,
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     },
     sendButton: {
         width: '100%',
-        marginTop: 35,
+        marginTop: 50,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'white',

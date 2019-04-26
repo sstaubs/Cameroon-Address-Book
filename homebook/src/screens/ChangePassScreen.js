@@ -113,7 +113,7 @@ class ChangePassScreen extends Component {
                         style={styles.sendButton}
                         onPress={this.changePassword}
                     >
-                        <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>UPDATE PASSWORD</Text>
+                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>UPDATE PASSWORD</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     backIcon: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        marginTop: 35
+        marginTop: 40
     },
     mainText: {
         color: 'white',
@@ -146,12 +146,12 @@ const styles = StyleSheet.create({
         marginBottom: 30
     },
     label: {
-        color: '#ffffe0',
+        color: '#7ABAF2',
         paddingTop: 30,
         fontSize: 13
     },
     userInput: {
-        borderColor: '#ffffe0',
+        borderColor: '#7ABAF2',
         borderBottomWidth: 1,
         height: 40,
         fontSize: 17,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         marginTop: 35,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#3F7F40',
         borderRadius: 20,
         height: 40
     }

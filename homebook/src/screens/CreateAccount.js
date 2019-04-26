@@ -133,15 +133,18 @@ class CreateAccount extends Component {
             <Icon size={25} name='ios-arrow-back' color='white' />
           </TouchableOpacity>
         </View>
-        <Text style={styles.mainText}>Create Account</Text>
-        <ScrollView style={styles.alignment}>
-          <KeyboardAvoidingView behavior='padding'>
+        <KeyboardAvoidingView style={styles.alignment} behavior='padding'>
+          <Text style={styles.mainText}>Create Account</Text>
+          <ScrollView>
             <Text style={styles.label}>First Name</Text>
             <TextInput
               style={styles.userInput}
               placeholder='John'
               placeholderTextColor='gray'
               onChangeText={this.firstNameHandler}
+              returnKeyType = { "next" }
+              onSubmitEditing={() => { this.secondTextInput.focus(); }}
+              blurOnSubmit={false}
             />
             <Text style={styles.label}>Last Name</Text>
             <TextInput
@@ -149,6 +152,10 @@ class CreateAccount extends Component {
               placeholder='Doe'
               placeholderTextColor='gray'
               onChangeText={this.lastNameHandler}
+              ref={(input) => { this.secondTextInput = input; }}
+              returnKeyType = { "next" }
+              onSubmitEditing={() => { this.thirdTextInput.focus(); }}
+              blurOnSubmit={false}
             />
             <Text style={styles.label}>Password</Text>
             <TextInput
@@ -157,6 +164,10 @@ class CreateAccount extends Component {
               placeholder='••••••••••'
               placeholderTextColor='gray'
               onChangeText={this.passwordHandler}
+              ref={(input) => { this.thirdTextInput = input; }}
+              returnKeyType = { "next" }
+              onSubmitEditing={() => { this.fourthTextInput.focus(); }}
+              blurOnSubmit={false}
             />
             <Text style={styles.label}>Confirm Password</Text>
             <TextInput
@@ -165,14 +176,10 @@ class CreateAccount extends Component {
               placeholder='••••••••••'
               placeholderTextColor='gray'
               onChangeText={this.confirmPassHandler}
-            />
-            <Text style={styles.label}>Phone Number</Text>
-            <TextInput
-              keyboardType='number-pad'
-              style={styles.userInput}
-              placeholder='(123) 456-7890'
-              placeholderTextColor='gray'
-              onChangeText={this.phoneHandler}
+              ref={(input) => { this.fourthTextInput = input; }}
+              returnKeyType = { "next" }
+              onSubmitEditing={() => { this.fifthTextInput.focus(); }}
+              blurOnSubmit={false}
             />
             <Text style={styles.label}>Email</Text>
             <TextInput
@@ -183,15 +190,32 @@ class CreateAccount extends Component {
               placeholder='example@gmail.com'
               placeholderTextColor='gray'
               onChangeText={this.emailHandler}
+              ref={(input) => { this.fifthTextInput = input; }}
+              returnKeyType = { "next" }
+              onSubmitEditing={() => { this.sixthTextInput.focus(); }}
+              blurOnSubmit={false}
             />
-            <TouchableOpacity
-              style={styles.confirmButton}
-              onPress={this.confirmHandler}
-            >
-              <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONTINUE</Text>
-            </TouchableOpacity>
-          </KeyboardAvoidingView>
+            <Text style={styles.label}>Phone Number</Text>
+            <TextInput
+              keyboardType='number-pad'
+              style={styles.userInput}
+              placeholder='(123) 456-7890'
+              placeholderTextColor='gray'
+              onChangeText={this.phoneHandler}
+              ref={(input) => { this.sixthTextInput = input; }}
+              returnKeyType = { "done" }
+              blurOnSubmit={true}
+            />
         </ScrollView>
+        </KeyboardAvoidingView>
+        <View style={styles.bottom}>
+          <TouchableOpacity
+            style={styles.confirmButton}
+            onPress={this.confirmHandler}
+          >
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONTINUE</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -214,7 +238,7 @@ const styles = StyleSheet.create({
   backIcon: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginTop: 35
+    marginTop: 40
   },
   mainText: {
     color: 'white',
@@ -240,9 +264,14 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: 'white'
   },
+  bottom: {
+    width: '100%',
+    position: 'absolute',
+    bottom: '5%',
+    alignItems: 'center'
+  },
   confirmButton: {
-    marginTop: 35,
-    marginBottom: 30,
+    width: '85%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#3F7F40',

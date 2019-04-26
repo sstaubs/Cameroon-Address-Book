@@ -99,18 +99,15 @@ class UserProfile extends Component {
       <View style={styles.container}>
         <View style={styles.icons}>
           <TouchableOpacity
-            style={styles.closeIcon}
             onPress={this.pushCloseButton}>
-            <Icon size={35} name='ios-close' color='white' />
+            <Icon size={25} name='ios-arrow-back' color='white' />
           </TouchableOpacity>
-
           <TouchableOpacity
-            style={styles.edit}
             onPress={this.pushEditButton}>
             <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
           </TouchableOpacity>
         </View>
-        <ScrollView style={styles.alignment}>
+        <View style={styles.alignment}>
           <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
           <TouchableOpacity
             style={styles.closeIcon}
@@ -121,7 +118,7 @@ class UserProfile extends Component {
           <Text style={styles.textInputStyle}>{this.state.phone}</Text>
           <Text style={styles.category}>Email</Text>
           <Text style={styles.textInputStyle}>{this.state.email}</Text>
-          <Text style={styles.category}>Location</Text>
+          <Text style={styles.location}>Location</Text>
           <MapView
             region={this.state.focusedLocation}
             style={styles.map}
@@ -135,7 +132,7 @@ class UserProfile extends Component {
           >
             <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
           </TouchableOpacity>
-        </ScrollView>
+        </View>
       </View>
     );
   }
@@ -153,7 +150,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 35,
+    marginTop: 40,
     width: '85%'
   },
   alignment: {
@@ -169,7 +166,14 @@ const styles = StyleSheet.create({
     marginTop: 17,
     fontWeight: 'bold',
     fontSize: 17,
-    color: 'white'
+    color: '#7ABAF2'
+  },
+  location: {
+    marginTop: 17,
+    fontWeight: 'bold',
+    fontSize: 17,
+    color: 'white',
+    textAlign: 'center'
   },
   textInputStyle: {
     marginTop: 5,

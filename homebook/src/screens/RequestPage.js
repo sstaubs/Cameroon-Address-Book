@@ -18,6 +18,13 @@ class RequestPage extends Component {
         referenceArray: [],
         docArray: [],
     };
+
+    backArrow = () => Navigation.pop(this.props.componentId, {
+        component: {
+          name: 'UserProfile'
+        }
+      });
+
     componentDidMount() {
 
         var db = firebase.firestore();
@@ -104,14 +111,14 @@ class RequestPage extends Component {
 
     render() {
         return (
-
             <View style={styles.container}>
                 <View style={styles.alignment}>
                     <View style={styles.icons}>
                         <TouchableOpacity
-                            style={styles.signoutIcon}
-                            onPress={this.openSideMenu}>
-                            <Icon size={25} name='ios-menu' color='white' />
+                            style={styles.icons}
+                            onPress={this.backArrow}
+                        >
+                            <Icon size={25} name='ios-arrow-back' color='white' />
                         </TouchableOpacity>
 
                     </View>
@@ -165,10 +172,10 @@ const styles = StyleSheet.create({
     icons: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: 35
+        marginTop: 40
     },
     mainText: {
+        alignItems: 'center',
         fontWeight: 'bold',
         fontSize: 30,
         marginTop: 25,

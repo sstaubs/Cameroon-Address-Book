@@ -102,7 +102,10 @@ class HomeScreen extends Component {
                 <ScrollView style={styles.alignment}>
                     <TouchableOpacity
                         onPress={this.pushUserProfile}>
-                        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+                            <Icon size={35} name='ios-contact' color='white' />
+                            <Text style={styles.mainText}>   {this.state.firstname} {this.state.lastname}</Text>
+                        </View>
                     </TouchableOpacity>
 
                     <FlatList
@@ -139,7 +142,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '85%',
-        marginTop: 35
+        marginTop: 40
     },
     mainText: {
         fontWeight: 'bold',

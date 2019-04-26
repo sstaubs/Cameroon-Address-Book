@@ -158,25 +158,18 @@ const styles = StyleSheet.create({
         left: '3.5%'
     },
     closeIcon: {
-        marginTop: 35
+        marginTop: 40
     },
     innerText: {
         color: 'white',
-        fontSize: 25
+        fontSize: 20
     },
     textPadding: {
         paddingTop: 30
     },
-    userInput: {
-        borderColor: '#ffffe0',
-        borderBottomWidth: 1,
-        height: 40,
-        fontSize: 17,
-        color: 'white'
-    },
     innerRedText: {
         color: '#E24A4A',
-        fontSize: 25
+        fontSize: 20
     }
 });
 
