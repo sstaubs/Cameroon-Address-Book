@@ -25,11 +25,7 @@ class FriendProfile extends Component {
         }
     };
 
-    pushCloseButton = () => Navigation.pop(this.props.componentId, {
-        component: {
-            name: 'UserProfile'
-        }
-    });
+    pushCloseButton = () => Navigation.pop(this.props.componentId);
 
     pushEditButton = () => Navigation.push(this.props.componentId, {
         component: {
@@ -61,7 +57,27 @@ class FriendProfile extends Component {
         });
     };
 
+    deleteUser = () => {
+        var db = firebase.firestore();
+
+        db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).delete().then(() => {
+            // Friend deleted.
+            Navigation.pop(this.props.componentId);
+        }).catch(() => {
+            // An error happened.
+        });
+
+    }
+
     componentDidMount() {
+        this.navigationEventListener = Navigation.events().bindComponent(this);
+    }
+
+    componentDidDisappear() {
+        //no current function
+    }
+
+    componentDidAppear() {
         var db = firebase.firestore();
 
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
@@ -71,13 +87,13 @@ class FriendProfile extends Component {
                 //alert(doc.id, " => ", doc.data());
                 //alert(doc)
 
-                
+
                 this.setState({
 
 
                     docId: doc.id,
                 });
-                
+
 
 
             });
@@ -85,10 +101,10 @@ class FriendProfile extends Component {
         }).then(() => {
             db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).get()
                 .then(doc => {
-                    
+
                     this.setState({
-                        
-                        
+
+
                         firstname: doc.data().firstN,
                         lastname: doc.data().lastN,
                         phone: doc.data().phoneNum,
@@ -106,19 +122,6 @@ class FriendProfile extends Component {
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
-        
-    }
-
-   deleteUser = () => {
-        var db = firebase.firestore();
-
-        db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).delete().then(() => {
-            // Friend deleted.
-            Navigation.popToRoot(this.props.componentId);
-        }).catch(() => {
-            // An error happened.
-        });
-
     }
 
     render() {
