@@ -96,35 +96,48 @@ class ChangeEmailScreen extends Component {
                     <Text style={styles.mainText}>Change Email</Text>
                     <Text style={styles.label}>Current Email</Text>
                     <TextInput
-                        keyboardType="number-pad"
+                        keyboardType='email-address'
                         style={styles.userInput}
-                        placeholder="Current Email"
+                        placeholder="johndoe@example.com"
+                        autoCapitalize='none'
                         placeholderTextColor="gray"
                         onChangeText={this.emailHandler}
+                        returnKeyType = { "next" }
+                        onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                        blurOnSubmit={false}
                     />
                     <Text style={styles.label}>Current Password</Text>
                     <TextInput
-                        keyboardType="number-pad"
+                        secureTextEntry={true}
                         style={styles.userInput}
-                        placeholder="Current Password"
+                        placeholder="••••••••••"
                         placeholderTextColor="gray"
                         onChangeText={this.passHandler}
+                        returnKeyType = { "next" }
+                        ref={(input) => { this.secondTextInput = input; }}
+                        onSubmitEditing={() => { this.thirdTextInput.focus(); }}
+                        blurOnSubmit={false}
                     />
                     <Text style={styles.label}>New Email</Text>
                     <TextInput
-                        keyboardType="number-pad"
+                        keyboardType='email-address'
                         style={styles.userInput}
-                        placeholder="New Email"
+                        placeholder="johndoe@example.com"
+                        autoCapitalize='none'
+                        autoCorrect={false}
                         placeholderTextColor="gray"
                         onChangeText={this.newEmailHandler}
+                        ref={(input) => { this.thirdTextInput = input; }}
+                        returnKeyType = { "done" }
+                        blurOnSubmit={true}
                     />
-                    <TouchableOpacity
-                        style={styles.sendButton}
-                        onPress={this.changeEmail}
-                    >
-                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>UPDATE EMAIL</Text>
-                    </TouchableOpacity>
                 </View>
+                <TouchableOpacity
+                    style={styles.bottomButton}
+                    onPress={this.changeEmail}
+                >
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>UPDATE EMAIL</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -172,14 +185,14 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: 'white'
     },
-    sendButton: {
+    bottomButton: {
         width: '100%',
-        marginTop: 35,
+        position: 'absolute',
+        height: 55,
+        bottom: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#3F7F40',
-        borderRadius: 20,
-        height: 40
+        backgroundColor: '#3F7F40'
     }
 });
 

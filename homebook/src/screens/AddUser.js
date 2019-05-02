@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
@@ -13,8 +13,8 @@ class AddUser extends Component {
     email: '',
     docId: '',
     focusedLocation: {
-      longitude: 0,
-      latitude: 0,
+      longitude: 37.7900352,
+      latitude: -122.4013726,
       latitudeDelta: 0.0122,
       longitudeDelta:
         Dimensions.get("window").width /
@@ -161,67 +161,83 @@ class AddUser extends Component {
           onPress={this.pushCloseButton}>
           <Icon size={35} name='ios-close' color='white' />
         </TouchableOpacity>
-        <TouchableOpacity
-            style={styles.addIcon}
-            onPress={this.pushSearchUser}
-          >
-            <Icon size={35} name='ios-search' color='white' />
-          </TouchableOpacity>
         <Text style={styles.mainText}>Add Contact</Text>
-        <ScrollView style={styles.alignment}>
-          <Text style={styles.label}>First Name</Text>
-          <TextInput
-            style={styles.userInput}
-            placeholder="First Name"
-            placeholderTextColor="gray"
-            onChangeText={this.firstNameHandler}
-          />
-          <Text style={styles.label}>Last Name</Text>
-          <TextInput
-            style={styles.userInput}
-            placeholder="Last Name"
-            placeholderTextColor="gray"
-            onChangeText={this.lastNameHandler}
-          />
-          <Text style={styles.label}>Phone Number</Text>
-          <TextInput
-            style={styles.userInput}
-            placeholder="Phone Number"
-            placeholderTextColor="gray"
-            onChangeText={this.phoneNumberHandler}
-          />
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            style={styles.userInput}
-            autoCapitalize='none'
-            placeholder="Email"
-            placeholderTextColor="gray"
-            onChangeText={this.emailHandler}
-          />
-
-          <Text style={styles.mapText}>Set Location</Text>
-
-          <MapView
-            region={this.state.focusedLocation}
-            style={styles.map}
-            ref={ref => this.map = ref}
-          >
-            {marker}
-          </MapView>
-          <TouchableOpacity
-            style={styles.locateButton}
-            onPress={this.getLocationHandler}
-          >
-            <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>LOCATE ME!</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.confirmButton}
-            onPress={this.confirmHandler}
-          >
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>ADD CONTACT</Text>
-          </TouchableOpacity>
+          <ScrollView style={{ width: '100%' }}>
+            <View style={{ width: '85%', left: '7.5%' }}>
+              <Text style={styles.label}>First Name</Text>
+              <TextInput
+                style={styles.userInput}
+                placeholder="First Name"
+                placeholderTextColor="gray"
+                onChangeText={this.firstNameHandler}
+                returnKeyType = { "next" }
+                onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                blurOnSubmit={false}
+              />
+              <Text style={styles.label}>Last Name</Text>
+              <TextInput
+                style={styles.userInput}
+                placeholder="Last Name"
+                placeholderTextColor="gray"
+                onChangeText={this.lastNameHandler}
+                ref={(input) => { this.secondTextInput = input; }}
+                returnKeyType = { "next" }
+                onSubmitEditing={() => { this.thirdTextInput.focus(); }}
+                blurOnSubmit={false}
+              />
+              <Text style={styles.label}>Email</Text>
+              <TextInput
+                style={styles.userInput}
+                autoCapitalize='none'
+                autoCorrect={false}
+                placeholder='Email'
+                keyboardType='email-address'
+                placeholderTextColor="gray"
+                onChangeText={this.emailHandler}
+                ref={(input) => { this.thirdTextInput = input; }}
+                returnKeyType = { "next" }
+                onSubmitEditing={() => { this.fourthTextInput.focus(); }}
+                blurOnSubmit={false}
+              />
+              <Text style={styles.label}>Phone Number</Text>
+              <TextInput
+                style={styles.userInput}
+                keyboardType='number-pad'
+                placeholder="Phone Number"
+                placeholderTextColor="gray"
+                onChangeText={this.phoneNumberHandler}
+                ref={(input) => { this.fourthTextInput = input; }}
+                returnKeyType = { "done" }
+                blurOnSubmit={true}
+              />
+              <Text style={styles.locationText}>Set Location</Text>
+              <TouchableOpacity
+                onPress={this.getLocationHandler}
+                style={styles.touchableLocation}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Icon size={25} name='ios-navigate' color='#7ABAF2' />
+                    <Text style={styles.currentLocation}>  Current Location</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <MapView
+              initialRegion={this.state.focusedLocation}
+              region={this.state.focusedLocation}
+              style={styles.map}
+              showsUserLocation={true}
+              onPress={this.pickLocationHandler}
+              ref={ref => this.map = ref}
+            >
+              {marker}
+            </MapView>
         </ScrollView>
+        <TouchableOpacity
+          style={styles.bottomButton}
+          onPress={this.confirmHandler}
+        >
+          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>ADD CONTACT</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -263,34 +279,35 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: 'white'
   },
-  mapText: {
-    color: 'white',
-    alignItems: 'center',
-    marginTop: 20,
+  locationText: {
+    marginTop: 17,
+    fontWeight: 'bold',
     fontSize: 17,
-    fontWeight: 'bold'
+    color: 'white',
+    textAlign: 'center'
+  },
+  touchableLocation: {
+    marginTop: 10,
+    alignItems: 'center'
+  },
+  currentLocation: {
+      fontSize: 17,
+      color: '#7ABAF2'
   },
   map: {
+    width: '100%',
     height: 300,
-    marginTop: 20
+    marginTop: 10,
+    marginBottom: 60
   },
-  locateButton: {
+  bottomButton: {
     width: '100%',
-    marginTop: 30,
+    position: 'absolute',
+    height: 55,
+    bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
-    borderRadius: 20,
-    height: 40
-  },
-  confirmButton: {
-    width: '100%',
-    marginTop: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#3F7F40',
-    borderRadius: 20,
-    height: 40
+    backgroundColor: '#3F7F40'
   }
 });
 

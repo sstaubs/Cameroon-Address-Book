@@ -14,7 +14,6 @@ class FriendProfile extends Component {
         phone: '',
         email: '',
         docId: '',
-
         focusedLocation: {
             longitude: 0,
             latitude: 0,
@@ -131,18 +130,20 @@ class FriendProfile extends Component {
                     <Text style={styles.category}>Email</Text>
                     <Text style={styles.textInputStyle}>{this.state.email}</Text>
                     <Text style={styles.location}>Location</Text>
-                    <MapView
-                        region={this.state.focusedLocation}
-                        style={styles.map}
-                        ref={ref => this.map = ref}
-                    >
-                        {marker}
-                    </MapView>
+                </View>
+                <MapView
+                    region={this.state.focusedLocation}
+                    style={styles.map}
+                    ref={ref => this.map = ref}
+                >
+                    {marker}
+                </MapView>
+                <View style={styles.alignment}>
                     <TouchableOpacity
-                    style={styles.deleteButton}
-                    onPress={this.deleteUser}
+                        style={styles.pressRedText}
+                        onPress={this.deleteUser}
                     >
-                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>DELETE USER</Text>
+                        <Text style={styles.redText}>DELETE USER</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
         marginTop: 17,
         fontWeight: 'bold',
         fontSize: 17,
-        color: 'white',
+        color: '#7ABAF2',
         textAlign: 'center'
     },
     textInputStyle: {
@@ -197,15 +198,13 @@ const styles = StyleSheet.create({
         height: 300,
         marginTop: 20
     },
-    deleteButton: {
-        width: '100%',
-        height: 40,
-        marginTop: 30,
-        marginBottom: 30,
-        borderRadius: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#BF1736'
+    pressRedText: {
+        marginTop: 40,
+    },
+    redText: {
+        color: '#E24A4A',
+        fontSize: 20,
+        fontWeight: '500'
     }
 });
 

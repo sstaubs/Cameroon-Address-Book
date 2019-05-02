@@ -133,89 +133,85 @@ class CreateAccount extends Component {
             <Icon size={25} name='ios-arrow-back' color='white' />
           </TouchableOpacity>
         </View>
-        <KeyboardAvoidingView style={styles.alignment} behavior='padding'>
-          <Text style={styles.mainText}>Create Account</Text>
-          <ScrollView>
-            <Text style={styles.label}>First Name</Text>
-            <TextInput
-              style={styles.userInput}
-              placeholder='John'
-              placeholderTextColor='gray'
-              onChangeText={this.firstNameHandler}
-              returnKeyType = { "next" }
-              onSubmitEditing={() => { this.secondTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Last Name</Text>
-            <TextInput
-              style={styles.userInput}
-              placeholder='Doe'
-              placeholderTextColor='gray'
-              onChangeText={this.lastNameHandler}
-              ref={(input) => { this.secondTextInput = input; }}
-              returnKeyType = { "next" }
-              onSubmitEditing={() => { this.thirdTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              secureTextEntry={true}
-              style={styles.userInput}
-              placeholder='••••••••••'
-              placeholderTextColor='gray'
-              onChangeText={this.passwordHandler}
-              ref={(input) => { this.thirdTextInput = input; }}
-              returnKeyType = { "next" }
-              onSubmitEditing={() => { this.fourthTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Confirm Password</Text>
-            <TextInput
-              secureTextEntry={true}
-              style={styles.userInput}
-              placeholder='••••••••••'
-              placeholderTextColor='gray'
-              onChangeText={this.confirmPassHandler}
-              ref={(input) => { this.fourthTextInput = input; }}
-              returnKeyType = { "next" }
-              onSubmitEditing={() => { this.fifthTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              autoCapitalize='none'
-              autoCorrect={false}
-              keyboardType='email-address'
-              style={styles.userInput}
-              placeholder='example@gmail.com'
-              placeholderTextColor='gray'
-              onChangeText={this.emailHandler}
-              ref={(input) => { this.fifthTextInput = input; }}
-              returnKeyType = { "next" }
-              onSubmitEditing={() => { this.sixthTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Phone Number</Text>
-            <TextInput
-              keyboardType='number-pad'
-              style={styles.userInput}
-              placeholder='(123) 456-7890'
-              placeholderTextColor='gray'
-              onChangeText={this.phoneHandler}
-              ref={(input) => { this.sixthTextInput = input; }}
-              returnKeyType = { "done" }
-              blurOnSubmit={true}
-            />
-        </ScrollView>
+        <Text style={styles.mainText}>Create Account</Text>
+        <KeyboardAvoidingView style={styles.alignment} behavior='position' enabled>
+          <Text style={styles.label}>First Name</Text>
+          <TextInput
+            style={styles.userInput}
+            placeholder='John'
+            placeholderTextColor='gray'
+            onChangeText={this.firstNameHandler}
+            returnKeyType = { "next" }
+            onSubmitEditing={() => { this.secondTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+          <Text style={styles.label}>Last Name</Text>
+          <TextInput
+            style={styles.userInput}
+            placeholder='Doe'
+            placeholderTextColor='gray'
+            onChangeText={this.lastNameHandler}
+            ref={(input) => { this.secondTextInput = input; }}
+            returnKeyType = { "next" }
+            onSubmitEditing={() => { this.thirdTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+          <Text style={styles.label}>Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.userInput}
+            placeholder='••••••••••'
+            placeholderTextColor='gray'
+            onChangeText={this.passwordHandler}
+            ref={(input) => { this.thirdTextInput = input; }}
+            returnKeyType = { "next" }
+            onSubmitEditing={() => { this.fourthTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+          <Text style={styles.label}>Confirm Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.userInput}
+            placeholder='••••••••••'
+            placeholderTextColor='gray'
+            onChangeText={this.confirmPassHandler}
+            ref={(input) => { this.fourthTextInput = input; }}
+            returnKeyType = { "next" }
+            onSubmitEditing={() => { this.fifthTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            autoCapitalize='none'
+            autoCorrect={false}
+            keyboardType='email-address'
+            style={styles.userInput}
+            placeholder='johndoe@example.com'
+            placeholderTextColor='gray'
+            onChangeText={this.emailHandler}
+            ref={(input) => { this.fifthTextInput = input; }}
+            returnKeyType = { "next" }
+            onSubmitEditing={() => { this.sixthTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+          <Text style={styles.label}>Phone Number</Text>
+          <TextInput
+            keyboardType='number-pad'
+            style={styles.userInput}
+            placeholder='(123) 456-7890'
+            placeholderTextColor='gray'
+            onChangeText={this.phoneHandler}
+            ref={(input) => { this.sixthTextInput = input; }}
+            returnKeyType = { "done" }
+            blurOnSubmit={true}
+          />
         </KeyboardAvoidingView>
-        <View style={styles.bottom}>
-          <TouchableOpacity
-            style={styles.confirmButton}
-            onPress={this.confirmHandler}
-          >
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONTINUE</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.bottomButton}
+          onPress={this.confirmHandler}
+        >
+          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONTINUE</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -245,16 +241,12 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 24
-  },
-  subText: {
-    color: 'white',
-    fontSize: 17,
-    marginTop: 20
+    marginTop: 24,
+    marginBottom: 15
   },
   label: {
     color: '#7ABAF2',
-    paddingTop: 25,
+    marginTop: 25,
     fontSize: 13
   },
   userInput: {
@@ -264,19 +256,14 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: 'white'
   },
-  bottom: {
+  bottomButton: {
     width: '100%',
     position: 'absolute',
-    bottom: '5%',
-    alignItems: 'center'
-  },
-  confirmButton: {
-    width: '85%',
+    height: 55,
+    bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#3F7F40',
-    borderRadius: 20,
-    height: 40
+    backgroundColor: '#3F7F40'
   }
 });
 

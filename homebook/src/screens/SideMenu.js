@@ -5,9 +5,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 import Modal from "react-native-modal";
 
-
-
-
 class SideMenu extends Component {
     state = {
         currentPassword: '',
@@ -61,13 +58,6 @@ class SideMenu extends Component {
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
-
-
-
-
-
-
-
     };
 
     closeSideMenu = () => Navigation.mergeOptions(this.props.componentId, {
@@ -123,15 +113,14 @@ class SideMenu extends Component {
                         <Modal isVisible={this.state.isModalVisible}>
                             <Text style={styles.label}>Current Password</Text>
                             <TextInput
-                                keyboardType="number-pad"
                                 style={styles.userInput}
-                                placeholder="Current Password"
+                                placeholder="Enter Password"
                                 placeholderTextColor="gray"
                                 onChangeText={this.passHandler}
                             />
                             <TouchableOpacity
                                 onPress={this.deleteAccount}>
-                                <Text style={styles.innerText}>Confirm Delete Account</Text>
+                                <Text style={styles.innerRedText}>Confirm Delete Account</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={this._toggleModal}>
@@ -168,7 +157,20 @@ const styles = StyleSheet.create({
     innerRedText: {
         color: '#E24A4A',
         fontSize: 20
-    }
+    },
+    label: {
+        color: '#7ABAF2',
+        paddingTop: 30,
+        fontSize: 13
+      },
+      userInput: {
+        borderColor: '#7ABAF2',
+        borderBottomWidth: 1,
+        height: 40,
+        fontSize: 17,
+        color: 'white',
+        marginBottom: 10
+      }
 });
 
 

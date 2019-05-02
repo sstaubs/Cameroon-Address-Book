@@ -115,7 +115,6 @@ class RequestPage extends Component {
                 <View style={styles.alignment}>
                     <View style={styles.icons}>
                         <TouchableOpacity
-                            style={styles.icons}
                             onPress={this.backArrow}
                         >
                             <Icon size={25} name='ios-arrow-back' color='white' />

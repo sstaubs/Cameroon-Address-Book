@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
@@ -119,6 +119,7 @@ class UserProfile extends Component {
           <Text style={styles.category}>Email</Text>
           <Text style={styles.textInputStyle}>{this.state.email}</Text>
           <Text style={styles.location}>Location</Text>
+        </View>
           <MapView
             region={this.state.focusedLocation}
             style={styles.map}
@@ -127,12 +128,11 @@ class UserProfile extends Component {
             {marker}
           </MapView>
           <TouchableOpacity
-            style={styles.locateButton}
+            style={styles.bottomButton}
             onPress={this.showDirections}
           >
-            <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
           </TouchableOpacity>
-        </View>
       </View>
     );
   }
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     marginTop: 17,
     fontWeight: 'bold',
     fontSize: 17,
-    color: 'white',
+    color: '#7ABAF2',
     textAlign: 'center'
   },
   textInputStyle: {
@@ -182,18 +182,17 @@ const styles = StyleSheet.create({
   },
   map: {
     width: '100%',
-    height: 300,
-    marginTop: 20
+    height: 350,
+    marginTop: 10
   },
-  locateButton: {
+  bottomButton: {
     width: '100%',
-    height: 40,
-    marginTop: 30,
-    marginBottom: 30,
-    borderRadius: 20,
+    position: 'absolute',
+    height: 55,
+    bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white'
+    backgroundColor: '#3F7F40'
   }
 });
 

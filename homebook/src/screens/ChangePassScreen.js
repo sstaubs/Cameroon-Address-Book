@@ -95,28 +95,34 @@ class ChangePassScreen extends Component {
                     <Text style={styles.mainText}>Change Password</Text>
                     <Text style={styles.label}>New Password</Text>
                     <TextInput
-                        keyboardType="number-pad"
+                        secureTextEntry={true}
                         style={styles.userInput}
-                        placeholder="New Password"
+                        placeholder="••••••••••"
                         placeholderTextColor="gray"
                         onChangeText={this.passHandler}
+                        returnKeyType = { "next" }
+                        onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                        blurOnSubmit={false}
                     />
                     <Text style={styles.label}>Confirm New Password</Text>
                     <TextInput
-                        keyboardType="number-pad"
+                        secureTextEntry={true}
                         style={styles.userInput}
-                        placeholder="Confirm New Password"
+                        placeholder="••••••••••"
                         placeholderTextColor="gray"
                         onChangeText={this.confirmPassHandler}
+                        ref={(input) => { this.secondTextInput = input; }}
+                        returnKeyType = { "done" }
+                        blurOnSubmit={true}
                     />
-                    <TouchableOpacity
-                        style={styles.sendButton}
-                        onPress={this.changePassword}
-                    >
-                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>UPDATE PASSWORD</Text>
-                    </TouchableOpacity>
                 </View>
-            </View>
+                <TouchableOpacity
+                    style={styles.bottomButton}
+                    onPress={this.changePassword}
+                >
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>UPDATE PASSWORD</Text>
+                </TouchableOpacity>
+        </View>
         );
     }
 }
@@ -157,14 +163,14 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: 'white'
     },
-    sendButton: {
+    bottomButton: {
         width: '100%',
-        marginTop: 35,
+        position: 'absolute',
+        height: 55,
+        bottom: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#3F7F40',
-        borderRadius: 20,
-        height: 40
+        backgroundColor: '#3F7F40'
     }
 });
 

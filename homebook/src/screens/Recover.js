@@ -59,19 +59,21 @@ class Recover extends Component {
                     <Text style={styles.mainText}>Change Password</Text>
                     <Text style={styles.label}>Email</Text>
                     <TextInput
-                        keyboardType="number-pad"
+                        keyboardType='email-address'
                         style={styles.userInput}
-                        placeholder="Email"
+                        placeholder="johndoe@example.com"
+                        autoCapitalize='none'
                         placeholderTextColor="gray"
                         onChangeText={this.emailHandler}
+                        returnKeyType = { "done" }
                     />
-                    <TouchableOpacity
-                        style={styles.sendButton}
-                        onPress={this.sendEmailRecover}
-                    >
-                        <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>SEND</Text>
-                    </TouchableOpacity>
                 </View>
+                <TouchableOpacity
+                    style={styles.bottomButton}
+                    onPress={this.sendEmailRecover}
+                >
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SEND</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -113,15 +115,15 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: 'white'
     },
-    sendButton: {
+    bottomButton: {
         width: '100%',
-        marginTop: 50,
+        position: 'absolute',
+        height: 55,
+        bottom: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
-        borderRadius: 20,
-        height: 40
-    }
+        backgroundColor: '#3F7F40'
+      }
 });
 
 export default Recover;

@@ -157,8 +157,8 @@ class EditUser extends Component {
           </TouchableOpacity>
         </View>
         <Text style={styles.mainText}>Edit Contact</Text>
-
-          <ScrollView style={styles.alignment}>
+        <ScrollView style={{ width: '100%' }}>
+          <View style={styles.alignment}>
             <Text style={styles.label}>First Name</Text>
             <TextInput
               style={styles.userInput}
@@ -188,8 +188,17 @@ class EditUser extends Component {
               returnKeyType = { "done" }
             />
             <Text style={styles.editLocation}>Change Location</Text>
+            <TouchableOpacity
+              onPress={this.getLocationHandler}
+              style={styles.touchableLocation}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon size={25} name='ios-navigate' color='#7ABAF2' />
+                <Text style={styles.currentLocation}>  Current Location</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
             <MapView
-              initialRegion={this.state.focusedLocation}
               region={this.state.focusedLocation}
               style={styles.map}
               showsUserLocation={true}
@@ -198,20 +207,13 @@ class EditUser extends Component {
             >
               {marker}
             </MapView>
-            <TouchableOpacity
-              style={styles.locateButton}
-              onPress={this.getLocationHandler}
-            >
-              <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>LOCATE ME!</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.confirmButton}
-              onPress={this.confirmHandler}
-            >
-              <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SUBMIT</Text>
-            </TouchableOpacity>
           </ScrollView>
-
+          <TouchableOpacity
+            style={styles.bottomButton}
+            onPress={this.confirmHandler}
+          >
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SUBMIT</Text>
+          </TouchableOpacity>
       </View>
     );
   }
@@ -238,7 +240,8 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   alignment: {
-    width: '85%'
+    width: '85%',
+    left: '7.5%'
   },
   label: {
     color: '#7ABAF2',
@@ -246,11 +249,11 @@ const styles = StyleSheet.create({
     fontSize: 13
   },
   userInput: {
-      borderColor: '#7ABAF2',
-      borderBottomWidth: 1,
-      height: 40,
-      fontSize: 17,
-      color: 'lightgray'
+    borderColor: '#7ABAF2',
+    borderBottomWidth: 1,
+    height: 40,
+    fontSize: 17,
+    color: 'lightgray'
   },
   editLocation: {
     marginTop: 20,
@@ -259,29 +262,28 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center'
   },
+  touchableLocation: {
+    marginTop: 10,
+    alignItems: 'center'
+  },
+  currentLocation: {
+    fontSize: 17,
+    color: '#7ABAF2'
+  },
   map: {
     width: '100%',
     height: 300,
-    marginTop: 20
+    marginTop: 10,
+    marginBottom: 60
   },
-  locateButton: {
+  bottomButton: {
     width: '100%',
-    marginTop: 30,
+    position: 'absolute',
+    height: 55,
+    bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
-    borderRadius: 20,
-    height: 40
-  },
-  confirmButton: {
-    width: '100%',
-    marginTop: 20,
-    marginBottom: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#3F7F40',
-    borderRadius: 20,
-    height: 40
+    backgroundColor: '#3F7F40'
   }
 });
 

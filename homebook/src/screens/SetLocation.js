@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
+import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 
@@ -18,6 +19,12 @@ class SetLocation extends Component {
     locationChosen: false,
     docId: '',
   };
+
+  backArrow = () => Navigation.pop(this.props.componentId, {
+    component: {
+      name: 'CreateAccount'
+    }
+  });
 
   pickLocationHandler = event => {
     const coords = event.nativeEvent.coordinate;
@@ -104,12 +111,21 @@ class SetLocation extends Component {
 
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.alignment}>
+        <View style={styles.alignment}>
           <Text style={styles.mainText}>Set Location</Text>
           <Text style={styles.subText}>Tap to drop pin on location</Text>
+          <TouchableOpacity
+              onPress={this.getLocationHandler}
+              style={styles.touchableLocation}
+          >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Icon size={25} name='ios-navigate' color='#7ABAF2' />
+                  <Text style={styles.currentLocation}>  Current Location</Text>
+              </View>
+          </TouchableOpacity>
+          </View>
           <MapView
             initialRegion={this.state.focusedLocation}
-            region={this.state.focusedLocation}
             style={styles.map}
             showsUserLocation={true}
             onPress={this.pickLocationHandler}
@@ -118,18 +134,11 @@ class SetLocation extends Component {
             {marker}
           </MapView>
           <TouchableOpacity
-            style={styles.locateButton}
-            onPress={this.getLocationHandler}
-          >
-            <Text style={{ color: '#3F7F40', fontSize: 16, fontWeight: '700' }}>LOCATE ME!</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.confirmButton}
+            style={styles.bottomButton}
             onPress={this.SetLocationAndPush}
           >
             <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONFIRM COORDINATES</Text>
           </TouchableOpacity>
-        </ScrollView>
       </View>
     );
   }
@@ -151,37 +160,35 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 40
+    marginTop: 90
   },
   subText: {
     color: 'white',
     fontSize: 17,
-    marginTop: 20,
+    marginTop: 10,
     textAlign: 'center'
   },
+  touchableLocation: {
+    marginTop: 40,
+    alignItems: 'center'
+  },
+  currentLocation: {
+      fontSize: 17,
+      color: '#7ABAF2'
+  },
   map: {
-    width: '100%',
-    height: 300,
-    marginTop: 20
+      width: '100%',
+      height: 400,
+      marginTop: 10
   },
-  locateButton: {
+  bottomButton: {
     width: '100%',
-    marginTop: 30,
+    position: 'absolute',
+    height: 55,
+    bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
-    borderRadius: 20,
-    height: 40
-  },
-  confirmButton: {
-    width: '100%',
-    marginTop: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#3F7F40',
-    borderRadius: 20,
-    height: 40,
-    marginBottom: 100
+    backgroundColor: '#3F7F40'
   }
 });
 
