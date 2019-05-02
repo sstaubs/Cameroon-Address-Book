@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Dialog, { DialogContent } from 'react-native-popup-dialog';
+import Dialog, { DialogContent,DialogFooter, DialogButton } from 'react-native-popup-dialog';
 import { StyleSheet, Text, TextInput, ScrollView, View, TouchableOpacity, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import * as firebase from 'firebase';
@@ -87,6 +87,14 @@ class Login extends Component {
     });
   };
 
+  ReverifyEmail =() => {
+    //In here just create an authenticator where we resend verification email
+  }
+
+  RecreateAccount = () => {
+    // First delete the existing account since its unverified and push user to create account
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -121,12 +129,24 @@ class Login extends Component {
           </KeyboardAvoidingView>
           <Dialog
             visible={this.state.visible}
+            footer={
+              <DialogFooter>
+                <DialogButton
+                  text="Resend Verification"
+                  onPress={() => this.ReverifyEmail()}
+                />
+                <DialogButton
+                  text="Recreate Account"
+                  onPress={() => this.RecreateAccount()}
+                />
+              </DialogFooter>
+            }
             onTouchOutside={() => {
               this.setState({ visible: false });
             }}
           >
             <DialogContent>
-              <Text>Hello</Text>
+              <Text>Email is already created but is not Verified. If you did have not used this email, recreate account. If you created this account, please click resend verification so we can verify your email.</Text>
             </DialogContent>
           </Dialog>
 

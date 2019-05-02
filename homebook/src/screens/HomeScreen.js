@@ -26,16 +26,20 @@ class HomeScreen extends Component {
     });
 
     componentDidMount() {
-        this.navigationEventListener = Navigation.events().bindComponent(this);
-    }
-
-    componentDidDisappear() {
-        //no current function
-    }
-
-    componentDidAppear() {
-
+        //this.navigationEventListener = Navigation.events().bindComponent(this);
         var db = firebase.firestore();
+        /* this.setState({
+             referenceArray: [],
+             friendNameArray: [],
+ 
+         });
+         */
+
+
+
+       
+
+        
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
@@ -64,6 +68,77 @@ class HomeScreen extends Component {
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
+        
+        /*
+        db.collection("users").doc("4DwmcpbF6Q2mgZxpzRHq").collection("friends").orderBy("lastN").onSnapshot((snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === "added") {
+                    this.setState({
+                        referenceArray: this.state.referenceArray.concat([change.doc.id]),
+                        friendNameArray: this.state.friendNameArray.concat([change.doc.data().firstN + " " + change.doc.data().lastN]),
+    
+                    });
+                }
+                if (change.type === "modified") {
+                    alert("Modified city: " + change.doc.data());
+                }
+                if (change.type === "removed") {
+                    alert("Removed city: " + change.doc.data());
+                }
+            });
+        });
+        */
+        
+    }
+
+    componentDidDisappear() {
+        //no current function
+    }
+
+    componentDidAppear() {
+        /* this.setState({
+             referenceArray: [],
+             friendNameArray: [],
+ 
+         });
+         */
+
+
+
+       
+
+        /*
+
+        
+        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                //alert(doc.data().email);
+                //alert(doc.id, " => ", doc.data());
+                //alert(doc)
+                db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+
+
+                        this.setState({
+                            referenceArray: this.state.referenceArray.concat([doc.id]),
+                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
+
+                        });
+                    });
+                }).catch(function (error) {
+                    alert("Error getting documents: " + error);
+                });
+                this.setState({
+                    firstname: doc.data().firstN,
+                    lastname: doc.data().lastN,
+                    docId: doc.id,
+                });
+            });
+        }).catch(function (error) {
+            alert("Error getting documents: " + error);
+        });
+        */
     }
 
     pushUserProfile = () => Navigation.push(this.props.componentId, {
