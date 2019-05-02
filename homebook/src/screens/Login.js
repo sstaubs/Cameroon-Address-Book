@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Dialog, { DialogContent,DialogFooter, DialogButton } from 'react-native-popup-dialog';
+import Dialog, { DialogContent, DialogFooter, DialogButton } from 'react-native-popup-dialog';
 import { StyleSheet, Text, TextInput, ScrollView, View, TouchableOpacity, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import * as firebase from 'firebase';
@@ -87,12 +87,48 @@ class Login extends Component {
     });
   };
 
-  ReverifyEmail =() => {
+  ReverifyEmail = () => {
     //In here just create an authenticator where we resend verification email
+
+    var user = firebase.auth().currentUser;
+
+    user.sendEmailVerification().then(function () {
+      // Email sent.
+    }).then(() => {
+      this.setState({ visible: false });
+    }).catch(function (error) {
+      // An error happened.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode == 'auth/too-many-requests') {
+        alert('Please wait before requesting another email to be sent');
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
+    });
   }
 
   RecreateAccount = () => {
     // First delete the existing account since its unverified and push user to create account
+
+    var user = firebase.auth().currentUser;
+    var db = firebase.firestore();
+
+    db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          db.collection("users").doc(doc.id).delete();
+      })
+  }).then(() => {
+      user.delete().then(() => {
+          // User deleted.
+          this.pushCreateAccount();
+      }).catch(() => {
+          // An error happened.
+      });
+  }).catch(function (error) {
+      alert("Error getting documents: " + error);
+  });
   }
 
   render() {
@@ -146,7 +182,7 @@ class Login extends Component {
             }}
           >
             <DialogContent>
-              <Text>Email is already created but is not Verified. If you did have not used this email, recreate account. If you created this account, please click resend verification so we can verify your email.</Text>
+              <Text>This email is already in use but is not verified. Please click Resend Verification to send another verification email. If you have not created an account with this email, please click Recreate Account to make a new account.</Text>
             </DialogContent>
           </Dialog>
 
