@@ -29,6 +29,14 @@ class SideMenu extends Component {
         }
     });
 
+    confirmInput = () => {
+        if (this.state.currentPassword == '') {
+            alert("Please input the current password");
+            return false;
+        }
+        return true;
+    };
+
     deleteAccount = () => {
         var user = firebase.auth().currentUser;
         var db = firebase.firestore();
@@ -38,26 +46,28 @@ class SideMenu extends Component {
             this.state.currentPassword
         );
 
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                db.collection("users").doc(doc.id).delete();
-            })
-        }).then(() => {
+        if (this.confirmInput()) {
             user.reauthenticateAndRetrieveDataWithCredential(credential).then(() => {
                 // User re-authenticated.
-                user.delete().then(() => {
-                    // User deleted.
-                    Navigation.popToRoot(this.props.componentId);
-                }).catch(() => {
-                    // An error happened.
+                db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        db.collection("users").doc(doc.id).delete();
+                    })
+                }).then(() => {
+                    user.delete().then(() => {
+                        // User deleted.
+                        Navigation.popToRoot(this.props.componentId);
+                    }).catch(() => {
+                        // An error happened.
+                    });
+                }).catch(function (error) {
+                    alert("Error getting documents: " + error);
                 });
             }).catch(() => {
                 // An error happened.
-                alert("Was not authenticated");
+                alert("Password Incorrect");
             });
-        }).catch(function (error) {
-            alert("Error getting documents: " + error);
-        });
+        }
     };
 
     closeSideMenu = () => Navigation.mergeOptions(this.props.componentId, {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Dialog, { DialogContent, DialogFooter, DialogButton } from 'react-native-popup-dialog';
 import { StyleSheet, Text, TextInput, ScrollView, View, TouchableOpacity, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import * as firebase from 'firebase';
@@ -7,7 +8,8 @@ class Login extends Component {
   state = {
     email: '',
     password: '',
-    firstLoading: true
+    firstLoading: true,
+    visible: false,
   };
 
   pushRecovery = () => Navigation.push(this.props.componentId, {
@@ -69,7 +71,8 @@ class Login extends Component {
       if (user.emailVerified) {
         this.pushHomeScreen();
       } else {
-        alert("Email has not yet been verified");
+        this.setState({ visible: true });
+
       }
     }).catch(function (error) {
       // Handle Errors here.
@@ -84,10 +87,54 @@ class Login extends Component {
     });
   };
 
+  ReverifyEmail = () => {
+    //In here just create an authenticator where we resend verification email
+
+    var user = firebase.auth().currentUser;
+
+    user.sendEmailVerification().then(function () {
+      // Email sent.
+    }).then(() => {
+      this.setState({ visible: false });
+    }).catch(function (error) {
+      // An error happened.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode == 'auth/too-many-requests') {
+        alert('Please wait before requesting another email to be sent');
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
+    });
+  }
+
+  RecreateAccount = () => {
+    // First delete the existing account since its unverified and push user to create account
+
+    var user = firebase.auth().currentUser;
+    var db = firebase.firestore();
+
+    db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          db.collection("users").doc(doc.id).delete();
+      })
+  }).then(() => {
+      user.delete().then(() => {
+          // User deleted.
+          this.pushCreateAccount();
+      }).catch(() => {
+          // An error happened.
+      });
+  }).catch(function (error) {
+      alert("Error getting documents: " + error);
+  });
+  }
+
   render() {
     return (
       <View style={styles.container}>
-      <StatusBar barStyle='light-content' />
+        <StatusBar barStyle='light-content' />
         <View style={styles.alignment}>
           <Text style={styles.mainText}>HomeBook</Text>
           <Text style={styles.supportingText}>Addressing Your Home</Text>
@@ -100,7 +147,7 @@ class Login extends Component {
               placeholder="example@gmail.com"
               placeholderTextColor="gray"
               onChangeText={this.emailHandler}
-              returnKeyType = { "next" }
+              returnKeyType={"next"}
               onSubmitEditing={() => { this.secondTextInput.focus(); }}
               blurOnSubmit={false}
             />
@@ -112,10 +159,33 @@ class Login extends Component {
               placeholderTextColor="gray"
               onChangeText={this.passwordHandler}
               ref={(input) => { this.secondTextInput = input; }}
-              returnKeyType = { "done" }
+              returnKeyType={"done"}
             />
             <Text onPress={this.pushRecovery} style={styles.forgotPassword}>Forgot Password?</Text>
           </KeyboardAvoidingView>
+          <Dialog
+            visible={this.state.visible}
+            footer={
+              <DialogFooter>
+                <DialogButton
+                  text="Resend Verification"
+                  onPress={() => this.ReverifyEmail()}
+                />
+                <DialogButton
+                  text="Recreate Account"
+                  onPress={() => this.RecreateAccount()}
+                />
+              </DialogFooter>
+            }
+            onTouchOutside={() => {
+              this.setState({ visible: false });
+            }}
+          >
+            <DialogContent>
+              <Text>This email is already in use but is not verified. Please click Resend Verification to send another verification email. If you have not created an account with this email, please click Recreate Account to make a new account.</Text>
+            </DialogContent>
+          </Dialog>
+
         </View>
         <View style={styles.bottom}>
           <TouchableOpacity

@@ -25,11 +25,7 @@ class FriendProfile extends Component {
         }
     };
 
-    pushCloseButton = () => Navigation.pop(this.props.componentId, {
-        component: {
-            name: 'UserProfile'
-        }
-    });
+    pushCloseButton = () => Navigation.pop(this.props.componentId);
 
     pushEditButton = () => Navigation.push(this.props.componentId, {
         component: {
@@ -61,7 +57,27 @@ class FriendProfile extends Component {
         });
     };
 
+    deleteUser = () => {
+        var db = firebase.firestore();
+
+        db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).delete().then(() => {
+            // Friend deleted.
+            Navigation.pop(this.props.componentId);
+        }).catch(() => {
+            // An error happened.
+        });
+
+    }
+
     componentDidMount() {
+        this.navigationEventListener = Navigation.events().bindComponent(this);
+    }
+
+    componentDidDisappear() {
+        //no current function
+    }
+
+    componentDidAppear() {
         var db = firebase.firestore();
 
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
@@ -79,19 +95,20 @@ class FriendProfile extends Component {
                 });
 
 
-            });
 
+            });
 
         }).then(() => {
             db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).get()
                 .then(doc => {
 
                     this.setState({
+
+
                         firstname: doc.data().firstN,
                         lastname: doc.data().lastN,
                         phone: doc.data().phoneNum,
                         email: doc.data().email,
-                        docId: doc.id,
                         focusedLocation: {
                             ...this.state.focusedLocation,
                             longitude: doc.data().longitude,
@@ -110,7 +127,7 @@ class FriendProfile extends Component {
     render() {
         marker = <MapView.Marker coordinate={this.state.focusedLocation} />
         return (
-            <View style={styles.container}>
+            <View style={styles.container} >
                 <View style={styles.icons}>
                     <TouchableOpacity
                         style={styles.shareIcon}
