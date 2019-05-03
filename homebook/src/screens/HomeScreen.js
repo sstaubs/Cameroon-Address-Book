@@ -4,7 +4,7 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
-import { getReference } from "../store/actions/index";
+import { getReference, getUser} from "../store/actions/index";
 
 class HomeScreen extends Component {
     state = {
@@ -26,14 +26,15 @@ class HomeScreen extends Component {
     });
 
     componentDidMount() {
-        //this.navigationEventListener = Navigation.events().bindComponent(this);
-        var db = firebase.firestore();
+        this.navigationEventListener = Navigation.events().bindComponent(this);
+        this.props.onGetUser();
+        /*var db = firebase.firestore();
         /* this.setState({
              referenceArray: [],
              friendNameArray: [],
  
          });
-         */
+         
 
 
 
@@ -88,7 +89,7 @@ class HomeScreen extends Component {
             });
         });
         */
-        
+    
     }
 
     componentDidDisappear() {
@@ -96,18 +97,18 @@ class HomeScreen extends Component {
     }
 
     componentDidAppear() {
-        /* this.setState({
+        this.setState({
              referenceArray: [],
              friendNameArray: [],
  
          });
-         */
+         
 
 
 
-       
+        db = firebase.firestore();
 
-        /*
+        
 
         
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
@@ -138,7 +139,7 @@ class HomeScreen extends Component {
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
-        */
+        
     }
 
     pushUserProfile = () => Navigation.push(this.props.componentId, {
@@ -187,7 +188,7 @@ class HomeScreen extends Component {
                         onPress={this.pushUserProfile}>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                             <Icon size={35} name='ios-contact' color='white' />
-                            <Text style={styles.mainText}>   {this.state.firstname} {this.state.lastname}</Text>
+                            <Text style={styles.mainText}>   {this.props.user.firstN} {this.state.lastname}</Text>
                         </View>
                     </TouchableOpacity>
 
@@ -244,7 +245,7 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => {
     return {
-        firstName: state.user.firstName,
+        user: state.reference.user,
 
     };
 };
@@ -253,7 +254,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetReference: name => dispatch(getReference(name)),
-
+        onGetUser: () => dispatch(getUser()),
 
     };
 };

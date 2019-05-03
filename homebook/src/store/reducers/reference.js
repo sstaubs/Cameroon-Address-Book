@@ -1,6 +1,14 @@
-import { GET_REF } from '../actions/actionTypes';
+import { GET_REF, SET_USER} from '../actions/actionTypes';
 const initialState = {
     friendref: '',
+    user: {
+        firstN: '',
+        lastN: '',
+        docId: '',
+        friendNameArray: [],
+        referenceArray: [],
+
+    },
 
 }
 
@@ -10,6 +18,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 friendref: action.refpoint
+            };
+        case SET_USER:
+            return {
+                ...state,
+                user: action.user
             };
         default:
             return state;
