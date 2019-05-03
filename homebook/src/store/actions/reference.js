@@ -1,5 +1,6 @@
-import { GET_REF, SET_USER} from './actionTypes'
+import { GET_REF, SET_USER } from './actionTypes'
 import * as firebase from 'firebase';
+
 
 
 
@@ -10,39 +11,52 @@ export const getUser = () => {
             firstN: '',
             lastN: '',
             docId: '',
+            phone: '',
+            email: '',
             friendNameArray: [],
             referenceArray: [],
+            longitude: 0,
+            latitude: 0,
         };
         var db = firebase.firestore();
 
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        user.referenceArray.concat([doc.id]);
-                        user.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]);
+        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get()
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+
+                                user.referenceArray.push(doc.id);
+                                user.friendNameArray.push(doc.data().firstN + " " + doc.data().lastN);
 
 
-                    });
-                }).catch(function (error) {
-                    alert("Error getting documents: " + error);
+                            });
+
+                        }).catch(function (error) {
+                            alert("Error getting documents: " + error);
+                        });
+
+                    user.firstN = doc.data().firstN;
+                    user.lastN = doc.data().lastN;
+                    user.phone = doc.data().phoneNum;
+                    user.email = doc.data().email;
+                    user.latitude = doc.data().latitude;
+                    user.longitude = doc.data().longitude;
+                    user.docId = doc.id;
+
                 });
+            }).then(() => {
+                //alert(user.friendNameArray[0])
+                dispatch(setUser(user));
 
-                user.firstN = doc.data().firstN;
-                user.lastN = doc.data().lastN;
-                user.docId = doc.id;
-
+            }).catch(function (error) {
+                alert("Error getting documents: " + error);
             });
-        }).then(()=> {
-           dispatch(setUser(user));
-           
-        }).catch(function (error) {
-            alert("Error getting documents: " + error);
-        });
 
 
 
-        
+
     };
 };
 

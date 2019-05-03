@@ -1,12 +1,16 @@
-import { GET_REF, SET_USER} from '../actions/actionTypes';
+import { GET_REF, SET_USER } from '../actions/actionTypes';
 const initialState = {
     friendref: '',
     user: {
         firstN: '',
         lastN: '',
         docId: '',
+        phone: '',
+        email: '',
         friendNameArray: [],
         referenceArray: [],
+        longitude: 0,
+        latitude: 0,
 
     },
 

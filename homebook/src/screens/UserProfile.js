@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 import { OpenMapDirections } from 'react-native-navigation-directions';
+import { connect } from 'react-redux';
 
 class UserProfile extends Component {
   state = {
@@ -108,16 +109,16 @@ class UserProfile extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.alignment}>
-          <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+          <Text style={styles.mainText}>{this.props.user.firstN} {this.props.user.lastN}</Text>
           <TouchableOpacity
             style={styles.closeIcon}
             onPress={this.pushRequestPage}>
             <Icon size={35} name='ios-alert' color='white' />
           </TouchableOpacity>
           <Text style={styles.category}>Phone Number</Text>
-          <Text style={styles.textInputStyle}>{this.state.phone}</Text>
+          <Text style={styles.textInputStyle}>{this.props.user.phone}</Text>
           <Text style={styles.category}>Email</Text>
-          <Text style={styles.textInputStyle}>{this.state.email}</Text>
+          <Text style={styles.textInputStyle}>{this.props.user.email}</Text>
           <Text style={styles.location}>Location</Text>
         </View>
           <MapView
@@ -196,4 +197,19 @@ const styles = StyleSheet.create({
   }
 });
 
-export default UserProfile;
+const mapStateToProps = state => {
+  return {
+      user: state.reference.user,
+
+  };
+};
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+      
+
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile); 

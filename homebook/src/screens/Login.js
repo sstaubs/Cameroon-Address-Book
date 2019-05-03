@@ -3,6 +3,8 @@ import Dialog, { DialogContent, DialogFooter, DialogButton } from 'react-native-
 import { StyleSheet, Text, TextInput, ScrollView, View, TouchableOpacity, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import * as firebase from 'firebase';
+import { connect } from 'react-redux';
+import { getUser} from "../store/actions/index";
 
 class Login extends Component {
   state = {
@@ -57,7 +59,10 @@ class Login extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user && this.state.firstLoading && user.emailVerified) {
+        this.props.onGetUser();
         this.pushHomeScreen();
+        
+        
       } else {
         this.setState({ firstLoading: false });
       }
@@ -69,7 +74,10 @@ class Login extends Component {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
       var user = firebase.auth().currentUser;
       if (user.emailVerified) {
+        this.props.onGetUser();
+        
         this.pushHomeScreen();
+        
       } else {
         this.setState({ visible: true });
 
@@ -269,5 +277,17 @@ const styles = StyleSheet.create({
     color: '#70B456'
   }
 });
+const mapStateToProps = state => {
+  return {
+      user: state.reference.user,
 
-module.exports = Login;
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onGetUser: () => dispatch(getUser()),
+
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -4,15 +4,11 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
-import { getReference, getUser} from "../store/actions/index";
+import { getReference, getUser } from "../store/actions/index";
 
 class HomeScreen extends Component {
     state = {
-        firstname: '',
-        lastname: '',
-        docId: '',
-        friendNameArray: [],
-        referenceArray: [],
+        refresh: true,
     };
 
     ReferenceHandler = placeName => {
@@ -25,122 +21,7 @@ class HomeScreen extends Component {
         }
     });
 
-    componentDidMount() {
-        this.navigationEventListener = Navigation.events().bindComponent(this);
-        this.props.onGetUser();
-        /*var db = firebase.firestore();
-        /* this.setState({
-             referenceArray: [],
-             friendNameArray: [],
- 
-         });
-         
-
-
-
-       
-
-        
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                //alert(doc.data().email);
-                //alert(doc.id, " => ", doc.data());
-                //alert(doc)
-                db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-
-
-                        this.setState({
-                            referenceArray: this.state.referenceArray.concat([doc.id]),
-                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
-
-                        });
-                    });
-                }).catch(function (error) {
-                    alert("Error getting documents: " + error);
-                });
-                this.setState({
-                    firstname: doc.data().firstN,
-                    lastname: doc.data().lastN,
-                    docId: doc.id,
-                });
-            });
-        }).catch(function (error) {
-            alert("Error getting documents: " + error);
-        });
-        
-        /*
-        db.collection("users").doc("4DwmcpbF6Q2mgZxpzRHq").collection("friends").orderBy("lastN").onSnapshot((snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === "added") {
-                    this.setState({
-                        referenceArray: this.state.referenceArray.concat([change.doc.id]),
-                        friendNameArray: this.state.friendNameArray.concat([change.doc.data().firstN + " " + change.doc.data().lastN]),
     
-                    });
-                }
-                if (change.type === "modified") {
-                    alert("Modified city: " + change.doc.data());
-                }
-                if (change.type === "removed") {
-                    alert("Removed city: " + change.doc.data());
-                }
-            });
-        });
-        */
-    
-    }
-
-    componentDidDisappear() {
-        //no current function
-    }
-
-    componentDidAppear() {
-        this.setState({
-             referenceArray: [],
-             friendNameArray: [],
- 
-         });
-         
-
-
-
-        db = firebase.firestore();
-
-        
-
-        
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                //alert(doc.data().email);
-                //alert(doc.id, " => ", doc.data());
-                //alert(doc)
-                db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-
-
-                        this.setState({
-                            referenceArray: this.state.referenceArray.concat([doc.id]),
-                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
-
-                        });
-                    });
-                }).catch(function (error) {
-                    alert("Error getting documents: " + error);
-                });
-                this.setState({
-                    firstname: doc.data().firstN,
-                    lastname: doc.data().lastN,
-                    docId: doc.id,
-                });
-            });
-        }).catch(function (error) {
-            alert("Error getting documents: " + error);
-        });
-        
-    }
 
     pushUserProfile = () => Navigation.push(this.props.componentId, {
         component: {
@@ -159,15 +40,20 @@ class HomeScreen extends Component {
             name: 'AddUser'
         }
     });
+    
 
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
-        this.ReferenceHandler(this.state.referenceArray[val])
+        this.ReferenceHandler(this.props.user.referenceArray[val])
         //alert(this.props.refpoint);
         this.pushFriendProfile();
     };
+    
 
     render() {
+        
+        
+
         return (
             <View style={styles.container}>
                 <View style={styles.icons}>
@@ -188,13 +74,16 @@ class HomeScreen extends Component {
                         onPress={this.pushUserProfile}>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                             <Icon size={35} name='ios-contact' color='white' />
-                            <Text style={styles.mainText}>   {this.props.user.firstN} {this.state.lastname}</Text>
+                            <Text style={styles.mainText}>   {this.props.user.firstN} {this.props.user.lastN}</Text>
+
                         </View>
                     </TouchableOpacity>
 
                     <FlatList
                         style={styles.list}
-                        data={this.state.friendNameArray}
+                        data={this.props.user.friendNameArray}
+                        getData = {this.state}
+                        
                         renderItem={({ item, index }) =>
                             <TouchableOpacity
                                 onPress={() => this.friendHandler(index)}
