@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Dialog, { DialogContent, DialogFooter, DialogButton } from 'react-native-popup-dialog';
 import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -80,13 +79,13 @@ class CreateAccount extends Component {
   };
 
   isEmailVerified = () => {
-    var user = firebase.auth().currentUser;
+    //var user = firebase.auth().currentUser;
 
-    alert("WE MADE IT BOIS");
+    alert("An account has been created using this email that has not been verified. Please go to 'Forgot Password' on the login screen to send an email that will enable you to change your password.");
 
-    if (user.emailVerified) {
+   /* if (user.emailVerified) {
       alert("This email is already in use. Please select a different email.")
-      return false;
+      //pop
     } else {
       var db = firebase.firestore();
 
@@ -98,17 +97,18 @@ class CreateAccount extends Component {
         user.delete().then(() => {
           // User deleted.
           alert("made it here");
-          return true;
+
         }).catch(() => {
           // An error happened.
         });
       }).catch(function (error) {
         alert("Error getting documents: " + error);
       });
-    }
+    }*/
   }
 
   confirmHandler = val => {
+    var that = this;
     if (this.passwordConfirm()) {
       //if (this.isEmailUsed()) {
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
@@ -147,9 +147,9 @@ class CreateAccount extends Component {
             var errorMessage = error.message;
             if (errorCode == 'auth/weak-password') {
               alert('The password is too weak.');
-            } else if (errorCode == 'auth/email-already-in-use') {
+            } else if (errorCode == 'auth/email-already-in-use'){
               //alert(this);
-              pushSetLocation()
+              that.isEmailVerified();
             } else {
               alert(errorMessage);
             }
