@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Dialog, { DialogContent, DialogFooter, DialogButton } from 'react-native-popup-dialog';
 import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -13,7 +14,9 @@ class CreateAccount extends Component {
     email: '',
     password: '',
     confirmpassword: '',
-    phone: ''
+    phone: '',
+    docId: '',
+    visible: false
   };
 
   passwordConfirm = () => {
@@ -74,53 +77,91 @@ class CreateAccount extends Component {
 
   GetHandler = user => {
     this.props.onGetUser(user);
-};
+  };
+
+  isEmailVerified = () => {
+    var user = firebase.auth().currentUser;
+
+    alert("WE MADE IT BOIS");
+
+    if (user.emailVerified) {
+      alert("This email is already in use. Please select a different email.")
+      return false;
+    } else {
+      var db = firebase.firestore();
+
+      db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          db.collection("users").doc(doc.id).delete();
+        })
+      }).then(() => {
+        user.delete().then(() => {
+          // User deleted.
+          alert("made it here");
+          return true;
+        }).catch(() => {
+          // An error happened.
+        });
+      }).catch(function (error) {
+        alert("Error getting documents: " + error);
+      });
+    }
+  }
 
   confirmHandler = val => {
     if (this.passwordConfirm()) {
-      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then(() => {
-          var user = firebase.auth().currentUser;
+      //if (this.isEmailUsed()) {
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+          .then(() => {
+            var user = firebase.auth().currentUser;
 
-          user.sendEmailVerification().then(function() {
-            // Email sent.
-          }).catch(function(error) {
-            // An error happened.
+            user.sendEmailVerification().then(function () {
+              // Email sent.
+            }).catch(function (error) {
+              // An error happened.
+            });
+
+            if (user) {
+              const accountInfo = {
+                firstN: this.state.firstName,
+                lastN: this.state.lastName,
+                email: this.state.email,
+                phoneNum: this.state.phone,
+                uid: user.uid
+              };
+              this.GetHandler(user)
+              var db = firebase.firestore();
+              db.collection("users").add(accountInfo)
+                .then(function (docRef) {
+                  //alert("Document written with ID: " + docRef.id);
+                })
+                .catch(function (error) {
+                  console.error("Error adding document: ", error);
+                });
+              this.pushSetLocation()
+            }
+          })
+          .catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode == 'auth/weak-password') {
+              alert('The password is too weak.');
+            } else if (errorCode == 'auth/email-already-in-use') {
+              //alert(this);
+              pushSetLocation()
+            } else {
+              alert(errorMessage);
+            }
+            console.log(error);
           });
-
-          if (user) {
-            const accountInfo = {
-              firstN: this.state.firstName,
-              lastN: this.state.lastName,
-              email: this.state.email,
-              phoneNum: this.state.phone,
-              uid: user.uid
-            };
-            this.GetHandler(user)
-            var db = firebase.firestore();
-            db.collection("users").add(accountInfo)
-              .then(function (docRef) {
-                //alert("Document written with ID: " + docRef.id);
-              })
-              .catch(function (error) {
-                console.error("Error adding document: ", error);
-              });
-            this.pushSetLocation()
-          }
-        })
-        .catch(function (error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          if (errorCode == 'auth/weak-password') {
-            alert('The password is too weak.');
-          } else {
-            alert(errorMessage);
-          }
-          console.log(error);
-        });
+     // }
     }
   };
+
+  
+
+
 
   render() {
     return (
@@ -141,7 +182,7 @@ class CreateAccount extends Component {
             placeholder='John'
             placeholderTextColor='gray'
             onChangeText={this.firstNameHandler}
-            returnKeyType = { "next" }
+            returnKeyType={"next"}
             onSubmitEditing={() => { this.secondTextInput.focus(); }}
             blurOnSubmit={false}
           />
@@ -152,7 +193,7 @@ class CreateAccount extends Component {
             placeholderTextColor='gray'
             onChangeText={this.lastNameHandler}
             ref={(input) => { this.secondTextInput = input; }}
-            returnKeyType = { "next" }
+            returnKeyType={"next"}
             onSubmitEditing={() => { this.thirdTextInput.focus(); }}
             blurOnSubmit={false}
           />
@@ -164,7 +205,7 @@ class CreateAccount extends Component {
             placeholderTextColor='gray'
             onChangeText={this.passwordHandler}
             ref={(input) => { this.thirdTextInput = input; }}
-            returnKeyType = { "next" }
+            returnKeyType={"next"}
             onSubmitEditing={() => { this.fourthTextInput.focus(); }}
             blurOnSubmit={false}
           />
@@ -176,7 +217,7 @@ class CreateAccount extends Component {
             placeholderTextColor='gray'
             onChangeText={this.confirmPassHandler}
             ref={(input) => { this.fourthTextInput = input; }}
-            returnKeyType = { "next" }
+            returnKeyType={"next"}
             onSubmitEditing={() => { this.fifthTextInput.focus(); }}
             blurOnSubmit={false}
           />
@@ -190,7 +231,7 @@ class CreateAccount extends Component {
             placeholderTextColor='gray'
             onChangeText={this.emailHandler}
             ref={(input) => { this.fifthTextInput = input; }}
-            returnKeyType = { "next" }
+            returnKeyType={"next"}
             onSubmitEditing={() => { this.sixthTextInput.focus(); }}
             blurOnSubmit={false}
           />
@@ -202,7 +243,7 @@ class CreateAccount extends Component {
             placeholderTextColor='gray'
             onChangeText={this.phoneHandler}
             ref={(input) => { this.sixthTextInput = input; }}
-            returnKeyType = { "done" }
+            returnKeyType={"done"}
             blurOnSubmit={true}
           />
         </KeyboardAvoidingView>
@@ -269,7 +310,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-      onGetUser: user => dispatch(getUser(user)),
+    onGetUser: user => dispatch(getUser(user)),
 
 
   };

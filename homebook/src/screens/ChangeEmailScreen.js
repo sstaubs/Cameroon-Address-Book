@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 
 class ChangeEmailScreen extends Component {
     state = {
+        docId: '',
         currentPassword: '',
         email: '',
         newEmail: ''
@@ -35,26 +36,35 @@ class ChangeEmailScreen extends Component {
         });
     };
 
+    componentDidMount() {
+        var db = firebase.firestore();
+        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
 
-    passwordConfirm = () => {
-        if (this.state.password != this.state.confirmpassword) {
-            alert("Password does not match");
-            return false;
-        }
-        return true;
-    };
+            this.setState({
+              email: doc.data().email,
+              docId: doc.id
+            });
 
-    //Below will be used in the settings page when created to change an existing password
+          });
+        }).catch(function (error) {
+          alert("Error getting documents: " + error);
+        });
+      }
 
     changeEmail = val => {
 
         var user = firebase.auth().currentUser;
+        var db = firebase.firestore();
 
         const credential = firebase.auth.EmailAuthProvider.credential(
             user.email,
             this.state.currentPassword
         );
 
+        const accountInfo = {
+            email: this.state.newEmail
+        };
 
         user.reauthenticateAndRetrieveDataWithCredential(credential).then(() => {
             // User re-authenticated.
@@ -70,6 +80,14 @@ class ChangeEmailScreen extends Component {
             }).catch((error) => {
                 alert(error.message);
             })
+        }).then(() => {
+            db.collection("users").doc(this.state.docId).update(accountInfo)
+            .then(() => {
+              console.log("Document successfully updated!");
+            }).catch((error) => {
+              // The document probably doesn't exist.
+              alert("Error updating document: " + error);
+            });
         }).catch(() => {
             // An error happened.
             alert("Was not authenticated");
@@ -79,9 +97,6 @@ class ChangeEmailScreen extends Component {
         this.backArrow();
 
     }
-
-
-    popToLogin = () => Navigation.pop(this.props.componentId);
 
     render() {
         return (

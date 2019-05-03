@@ -117,18 +117,18 @@ class Login extends Component {
 
     db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-          db.collection("users").doc(doc.id).delete();
+        db.collection("users").doc(doc.id).delete();
       })
-  }).then(() => {
+    }).then(() => {
       user.delete().then(() => {
-          // User deleted.
-          this.pushCreateAccount();
+        // User deleted.
+        this.pushCreateAccount();
       }).catch(() => {
-          // An error happened.
+        // An error happened.
       });
-  }).catch(function (error) {
+    }).catch(function (error) {
       alert("Error getting documents: " + error);
-  });
+    });
   }
 
   render() {
