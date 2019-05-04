@@ -11,8 +11,10 @@ const initialState = {
         referenceArray: [],
         longitude: 0,
         latitude: 0,
+        loginVerify: false,
 
     },
+    
 
 }
 

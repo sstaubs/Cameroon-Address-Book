@@ -17,6 +17,7 @@ export const getUser = () => {
             referenceArray: [],
             longitude: 0,
             latitude: 0,
+            loginVerify: true,
         };
         var db = firebase.firestore();
 
@@ -49,15 +50,17 @@ export const getUser = () => {
             }).then(() => {
                 //alert(user.friendNameArray[0])
                 dispatch(setUser(user));
+                
 
             }).catch(function (error) {
                 alert("Error getting documents: " + error);
             });
 
 
-
+           
 
     };
+    
 };
 
 export const setUser = (user) => {

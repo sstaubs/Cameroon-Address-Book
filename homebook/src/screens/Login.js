@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, ScrollView, View, TouchableOpacity, Status
 import { Navigation } from 'react-native-navigation';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
-import { getUser} from "../store/actions/index";
+import { getUser } from "../store/actions/index";
 
 class Login extends Component {
   state = {
@@ -59,10 +59,8 @@ class Login extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user && this.state.firstLoading && user.emailVerified) {
-        this.props.onGetUser();
-        this.pushHomeScreen();
-        
-        
+        this.props.onGetUser()
+       
       } else {
         this.setState({ firstLoading: false });
       }
@@ -71,17 +69,18 @@ class Login extends Component {
 
   EnterLogin = val => {
 
+
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
       var user = firebase.auth().currentUser;
       if (user.emailVerified) {
         this.props.onGetUser();
-        
-        this.pushHomeScreen();
-        
+
       } else {
         this.setState({ visible: true });
 
       }
+    }).then(() => {
+      this.pushHomeScreen();
     }).catch(function (error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -93,6 +92,7 @@ class Login extends Component {
       }
       console.log(error);
     });
+
   };
 
   ReverifyEmail = () => {
@@ -138,6 +138,11 @@ class Login extends Component {
       alert("Error getting documents: " + error);
     });
   }
+
+  componentDidUpdate(){
+    
+    if(this.props.user.loginVerify == true){ this.pushHomeScreen();}
+ }
 
   render() {
     return (
@@ -279,14 +284,14 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => {
   return {
-      user: state.reference.user,
+    user: state.reference.user,
 
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-      onGetUser: () => dispatch(getUser()),
+    onGetUser: () => dispatch(getUser()),
 
   };
 };

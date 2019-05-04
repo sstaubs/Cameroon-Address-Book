@@ -8,7 +8,7 @@ import { getReference, getUser } from "../store/actions/index";
 
 class HomeScreen extends Component {
     state = {
-        refresh: true,
+        refresh: false,
     };
 
     ReferenceHandler = placeName => {
@@ -21,13 +21,15 @@ class HomeScreen extends Component {
         }
     });
 
-    
 
-    pushUserProfile = () => Navigation.push(this.props.componentId, {
-        component: {
-            name: 'UserProfile'
-        }
-    });
+
+    pushUserProfile = () => {
+        Navigation.push(this.props.componentId, {
+            component: {
+                name: 'UserProfile'
+            }
+        });
+    }
 
     pushFriendProfile = () => Navigation.push(this.props.componentId, {
         component: {
@@ -40,6 +42,19 @@ class HomeScreen extends Component {
             name: 'AddUser'
         }
     });
+
+    componentDidMount() {
+        this.navigationEventListener = Navigation.events().bindComponent(this);
+    }
+    
+
+   /* componentDidAppear() {
+        this.setState({
+            refresh: !this.state.refresh
+        });
+    }
+    */
+
     
 
     friendHandler = val => {
@@ -48,11 +63,11 @@ class HomeScreen extends Component {
         //alert(this.props.refpoint);
         this.pushFriendProfile();
     };
-    
+
 
     render() {
-        
-        
+
+
 
         return (
             <View style={styles.container}>
@@ -82,8 +97,8 @@ class HomeScreen extends Component {
                     <FlatList
                         style={styles.list}
                         data={this.props.user.friendNameArray}
-                        getData = {this.state}
-                        
+                        getData={this.state}
+
                         renderItem={({ item, index }) =>
                             <TouchableOpacity
                                 onPress={() => this.friendHandler(index)}
