@@ -100,7 +100,7 @@ class UserProfile extends Component {
         <View style={styles.icons}>
           <TouchableOpacity
             onPress={this.pushCloseButton}>
-            <Icon size={25} name='ios-arrow-back' color='white' />
+            <Icon size={35} name='ios-arrow-round-back' color='white' />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={this.pushEditButton}>

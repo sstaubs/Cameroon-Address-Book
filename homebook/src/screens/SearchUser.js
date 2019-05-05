@@ -32,13 +32,13 @@ class SearchUser extends Component {
         });
     };
     searchBySearchedEmail = () => {
-        
+
         this.setState({
             referenceArray: [],
             friendNameArray: [],
 
         });
-        
+
         var db = firebase.firestore();
         db.collection("users").where("email", "==", this.state.searchedEmail).get()
             .then((querySnapshot) => {
@@ -60,7 +60,7 @@ class SearchUser extends Component {
     };
 
     SendRequest = val => {
-        
+
         var db = firebase.firestore();
         const requesterInfo = {
             firstN: this.state.firstname,
@@ -76,13 +76,13 @@ class SearchUser extends Component {
           //alert("error here")
           //alert("Error adding document: " + error);
         });
-            
+
     };
 
-   
 
-        
-    
+
+
+
 
     render() {
         var db = firebase.firestore();
@@ -92,7 +92,7 @@ class SearchUser extends Component {
                 //alert(doc.data().email);
                 //alert(doc.id, " => ", doc.data());
                 //alert(doc)
-                 
+
 
                 this.setState({
                     firstname: doc.data().firstN,
@@ -104,14 +104,14 @@ class SearchUser extends Component {
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
-        
+
         return (
             <View style={styles.container}>
                 <TouchableOpacity
                     style={styles.backIcon}
                     onPress={this.backArrow}
                 >
-                    <Icon size={25} name='ios-arrow-back' color='white' />
+                    <Icon size={35} name='ios-arrow-round-back' color='white' />
                 </TouchableOpacity>
                 <Text style={styles.mainText}>Find User</Text>
                 <Text style={styles.subText}>Email</Text>

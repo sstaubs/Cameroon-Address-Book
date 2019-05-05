@@ -31,15 +31,15 @@ class HomeScreen extends Component {
         /* this.setState({
              referenceArray: [],
              friendNameArray: [],
- 
+
          });
          */
 
 
 
-       
 
-        
+
+
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
@@ -68,7 +68,7 @@ class HomeScreen extends Component {
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
-        
+
         /*
         db.collection("users").doc("4DwmcpbF6Q2mgZxpzRHq").collection("friends").orderBy("lastN").onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
@@ -76,7 +76,7 @@ class HomeScreen extends Component {
                     this.setState({
                         referenceArray: this.state.referenceArray.concat([change.doc.id]),
                         friendNameArray: this.state.friendNameArray.concat([change.doc.data().firstN + " " + change.doc.data().lastN]),
-    
+
                     });
                 }
                 if (change.type === "modified") {
@@ -88,7 +88,7 @@ class HomeScreen extends Component {
             });
         });
         */
-        
+
     }
 
     componentDidDisappear() {
@@ -99,17 +99,17 @@ class HomeScreen extends Component {
         /* this.setState({
              referenceArray: [],
              friendNameArray: [],
- 
+
          });
          */
 
 
 
-       
+
 
         /*
 
-        
+
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
@@ -171,14 +171,12 @@ class HomeScreen extends Component {
             <View style={styles.container}>
                 <View style={styles.icons}>
                     <TouchableOpacity
-                        style={styles.signoutIcon}
                         onPress={this.openSideMenu}>
-                        <Icon size={25} name='ios-menu' color='white' />
+                        <Icon size={30} name='ios-menu' color='white' />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={styles.addIcon}
-                        onPress={this.pushAddUser}>
-                        <Icon size={35} name='ios-add' color='white' />
+                        onPress={this.pushSharePage}>
+                        <Icon size={30} name='ios-send' color='white' />
                     </TouchableOpacity>
                 </View>
 
@@ -204,6 +202,12 @@ class HomeScreen extends Component {
                         keyExtractor={(index) => index.toString()}
                     />
                 </ScrollView>
+                <View style={{ position: 'absolute', bottom: 20, right: '7.5%' }}>
+                    <TouchableOpacity
+                        onPress={this.pushAddUser}>
+                        <Icon size={70} name='ios-add-circle' color='white'/>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -217,15 +221,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#222222'
     },
-    alignment: {
-        width: '85%'
-    },
     icons: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        width: '85%',
-        marginTop: 40
+        marginTop: 40,
+        width: '85%'
+    },
+    alignment: {
+        width: '85%'
     },
     mainText: {
         fontWeight: 'bold',

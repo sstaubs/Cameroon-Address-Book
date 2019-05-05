@@ -4,8 +4,6 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 
-
-
 class RequestPage extends Component {
     state = {
         firstname: '',
@@ -23,10 +21,9 @@ class RequestPage extends Component {
         component: {
           name: 'UserProfile'
         }
-      });
+    });
 
     componentDidMount() {
-
         var db = firebase.firestore();
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -36,8 +33,6 @@ class RequestPage extends Component {
                 //alert(doc)
                 db.collection("users").doc(doc.id).collection("requests").orderBy("lastN").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
-
-
                         this.setState({
                             referenceArray: this.state.referenceArray.concat([doc.data().refpoint]),
                             docArray: this.state.docArray.concat([doc.id]),
@@ -64,16 +59,12 @@ class RequestPage extends Component {
     }
 
     removeRequest = val => {
-
         var db = firebase.firestore();
-
         db.collection("users").doc(this.state.docId).collection("requests").doc(this.state.docArray[val]).delete().then(() => {
             //console.log("Document successfully deleted!");
         }).catch((error) => {
             //console.error("Error removing document: ", error);
         });
-
-
     }
 
     acceptHandler = val => {
@@ -96,18 +87,11 @@ class RequestPage extends Component {
                 //alert("error here")
                 //alert("Error adding document: " + error);
             });
-
-
-
     }
 
     declineHandler = val => {
         this.removeRequest(val);
-
     }
-
-
-
 
     render() {
         return (
@@ -117,14 +101,10 @@ class RequestPage extends Component {
                         <TouchableOpacity
                             onPress={this.backArrow}
                         >
-                            <Icon size={25} name='ios-arrow-back' color='white' />
+                            <Icon size={35} name='ios-arrow-round-back' color='white' />
                         </TouchableOpacity>
-
                     </View>
                     <Text style={styles.mainText}>Requests</Text>
-
-
-
                     <FlatList
                         style={styles.list}
                         data={this.state.friendNameArray}
@@ -144,7 +124,6 @@ class RequestPage extends Component {
                                     <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Decline</Text>
                                 </TouchableOpacity>
                             </View>
-
                         }
                         keyExtractor={(index) => index.toString()}
                     />
@@ -207,6 +186,5 @@ const styles = StyleSheet.create({
         height: 40
     }
 });
-
 
 export default RequestPage;

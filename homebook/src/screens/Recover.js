@@ -54,7 +54,7 @@ class Recover extends Component {
                         style={styles.backIcon}
                         onPress={this.backArrow}
                     >
-                        <Icon size={25} name='ios-arrow-back' color='white' />
+                        <Icon size={35} name='ios-arrow-round-back' color='white' />
                     </TouchableOpacity>
                     <Text style={styles.mainText}>Change Password</Text>
                     <Text style={styles.label}>Email</Text>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -121,21 +121,26 @@ class SideMenu extends Component {
                             <Text style={styles.innerRedText}>Delete Account</Text>
                         </TouchableOpacity>
                         <Modal isVisible={this.state.isModalVisible}>
+                            <Text style={styles.mainText}>Enter Password To Delete Account</Text>
                             <Text style={styles.label}>Current Password</Text>
                             <TextInput
                                 style={styles.userInput}
-                                placeholder="Enter Password"
+                                secureTextEntry={true}
+                                placeholder='••••••••••'
                                 placeholderTextColor="gray"
                                 onChangeText={this.passHandler}
+                                returnKeyType={"done"}
                             />
-                            <TouchableOpacity
-                                onPress={this.deleteAccount}>
-                                <Text style={styles.innerRedText}>Confirm Delete Account</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={this._toggleModal}>
-                                <Text style={styles.innerText}>Cancel</Text>
-                            </TouchableOpacity>
+                            <View style={styles.modalText}>
+                                <TouchableOpacity
+                                    onPress={this._toggleModal}>
+                                    <Text style={styles.cancelText}>Cancel</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={this.deleteAccount}>
+                                    <Text style={styles.deleteText}>Delete</Text>
+                                </TouchableOpacity>
+                            </View>
                         </Modal>
                     </View>
                 </View>
@@ -168,19 +173,38 @@ const styles = StyleSheet.create({
         color: '#E24A4A',
         fontSize: 20
     },
+    mainText: {
+        color: 'white',
+        fontSize: 30
+    },
     label: {
         color: '#7ABAF2',
         paddingTop: 30,
         fontSize: 13
-      },
-      userInput: {
+    },
+    userInput: {
         borderColor: '#7ABAF2',
         borderBottomWidth: 1,
         height: 40,
         fontSize: 17,
         color: 'white',
         marginBottom: 10
-      }
+    },
+    modalText: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        textAlign: 'center',
+        width: '70%',
+        marginTop: 30
+    },
+    cancelText: {
+        color: 'white',
+        fontSize: 20
+    },
+    deleteText: {
+        color: '#E24A4A',
+        fontSize: 20
+    }
 });
 
 
