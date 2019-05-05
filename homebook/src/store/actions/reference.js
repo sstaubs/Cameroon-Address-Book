@@ -1,7 +1,29 @@
-import { GET_REF, SET_USER,GET_LOGIN } from './actionTypes'
+import { GET_REF, SET_USER, GET_LOGIN } from './actionTypes'
 import * as firebase from 'firebase';
 
+export const editUser = (accountInfo) => {
+    return dispatch => {
+        var db = firebase.firestore();
+        db.collection("users").doc(accountInfo.docId).update({
+            firstN: accountInfo.firstN,
+            lastN: accountInfo.lastN,
+            latiude: accountInfo.latitude,
+            longitude:accountInfo.longitude,
+            phoneNum:accountInfo.phone,
 
+        })
+            .then(() => {
+                console.log("Document successfully updated!");
+            }).then(() => {
+                dispatch(setUser(accountInfo));
+
+            })
+            .catch((error) => {
+                // The document probably doesn't exist.
+                alert("Error updating document: " + error);
+            });
+    }
+}
 
 
 export const getUser = () => {
@@ -47,27 +69,25 @@ export const getUser = () => {
 
                 });
             }).then(() => {
-                
+
                 dispatch(setUser(user));
-                
-                
+
 
             }).then(() => {
-                    dispatch(getLogin());
-                  
+                dispatch(getLogin());
 
-                
 
-            }).catch( (error) => {
+
+
+            }).catch((error) => {
                 alert("Error getting documents: " + error);
             });
 
 
-           
-
     };
-    
+
 };
+//export const editProfile = () =>
 
 export const setUser = (user) => {
     return {

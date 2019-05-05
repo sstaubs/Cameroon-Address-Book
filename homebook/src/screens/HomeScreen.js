@@ -48,7 +48,8 @@ class HomeScreen extends Component {
       });
 
     componentDidMount() {
-        this.navigationEventListener = Navigation.events().bindComponent(this);
+       
+        
     }
 
 

@@ -22,13 +22,7 @@ class SearchUser extends Component {
 
     backArrow = () => Navigation.pop(this.props.componentId);
 
-    pushToHome = () => {
-        Navigation.push(this.props.componentId, {
-            component: {
-                name: 'HomeScreen'
-            }
-        });
-    }
+    pushToHome = () =>  Navigation.pop(this.props.componentId);
 
     searchedEmailHandler = val => {
         this.setState({
