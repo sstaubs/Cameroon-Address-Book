@@ -60,7 +60,7 @@ class Login extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user && this.state.firstLoading && user.emailVerified) {
         this.props.onGetUser()
-       
+
       } else {
         this.setState({ firstLoading: false });
       }
@@ -79,8 +79,6 @@ class Login extends Component {
         this.setState({ visible: true });
 
       }
-    }).then(() => {
-      this.pushHomeScreen();
     }).catch(function (error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -139,10 +137,10 @@ class Login extends Component {
     });
   }
 
-  componentDidUpdate(){
-    
-    if(this.props.user.loginVerify == true){ this.pushHomeScreen();}
- }
+  componentDidUpdate(prevProps) {
+    // alert(prevProps.loginVerify +  " and " + this.props.loginVerify)
+    if (prevProps.loginVerify != this.props.loginVerify) { this.pushHomeScreen(); }
+  }
 
   render() {
     return (
@@ -285,6 +283,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     user: state.reference.user,
+    loginVerify: state.reference.loginVerify,
 
   };
 };

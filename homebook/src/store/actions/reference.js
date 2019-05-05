@@ -1,4 +1,4 @@
-import { GET_REF, SET_USER } from './actionTypes'
+import { GET_REF, SET_USER,GET_LOGIN } from './actionTypes'
 import * as firebase from 'firebase';
 
 
@@ -17,7 +17,6 @@ export const getUser = () => {
             referenceArray: [],
             longitude: 0,
             latitude: 0,
-            loginVerify: true,
         };
         var db = firebase.firestore();
 
@@ -48,11 +47,19 @@ export const getUser = () => {
 
                 });
             }).then(() => {
-                //alert(user.friendNameArray[0])
+                
                 dispatch(setUser(user));
                 
+                
 
-            }).catch(function (error) {
+            }).then(() => {
+                setTimeout(() => {  
+                    dispatch(getLogin());
+                  }, 200);
+
+                
+
+            }).catch( (error) => {
                 alert("Error getting documents: " + error);
             });
 
@@ -67,6 +74,11 @@ export const setUser = (user) => {
     return {
         type: SET_USER,
         user: user,
+    };
+};
+export const getLogin = () => {
+    return {
+        type: GET_LOGIN,
     };
 };
 
