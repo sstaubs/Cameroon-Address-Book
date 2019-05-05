@@ -11,6 +11,7 @@ class RequestPage extends Component {
         friendNameArray: [],
         referenceArray: [],
         docArray: [],
+        refresh: false
     };
 
     backArrow = () => Navigation.pop(this.props.componentId, {
@@ -24,23 +25,11 @@ class RequestPage extends Component {
 
         db.collection("users").doc(this.props.user.docId).collection("requests").orderBy("lastN").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-<<<<<<< HEAD
 
 
                 this.setState({
                     docArray: this.state.docArray.concat([doc.id]),
                     friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
-=======
-                // doc.data() is never undefined for query doc snapshots
-                //alert(doc.data().email);
-                //alert(doc.id, " => ", doc.data());
-                //alert(doc)
-                db.collection("users").doc(doc.id).collection("requests").orderBy("lastN").get().then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        this.setState({
-                            docArray: this.state.docArray.concat([doc.id]),
-                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
->>>>>>> d8525063db18e14074ddfc0d01cf9f4021db83f4
 
                 });
             });
@@ -52,13 +41,11 @@ class RequestPage extends Component {
 
     removeRequest = val => {
         var db = firebase.firestore();
-<<<<<<< HEAD
 
         db.collection("users").doc(this.props.user.docId).collection("requests").doc(this.state.docArray[val]).delete().then(() => {
-=======
-        db.collection("users").doc(this.state.docId).collection("requests").doc(this.state.docArray[val]).delete().then(() => {
->>>>>>> d8525063db18e14074ddfc0d01cf9f4021db83f4
             //console.log("Document successfully deleted!");
+           
+
         }).catch((error) => {
             //console.error("Error removing document: ", error);
         });
@@ -120,6 +107,7 @@ class RequestPage extends Component {
                     <FlatList
                         style={styles.list}
                         data={this.state.friendNameArray}
+                        getData={this.state}
                         renderItem={({ item, index }) =>
                             <View>
                                 <Text style={styles.bodyText}>{item}</Text>
@@ -199,7 +187,6 @@ const styles = StyleSheet.create({
     }
 });
 
-<<<<<<< HEAD
 
 const mapStateToProps = state => {
     return {
@@ -217,6 +204,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequestPage);
-=======
-export default RequestPage;
->>>>>>> d8525063db18e14074ddfc0d01cf9f4021db83f4

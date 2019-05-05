@@ -92,31 +92,8 @@ class SearchUser extends Component {
 
 
     render() {
-<<<<<<< HEAD
        
         
-=======
-        var db = firebase.firestore();
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                //alert(doc.data().email);
-                //alert(doc.id, " => ", doc.data());
-                //alert(doc)
-
-
-                this.setState({
-                    firstname: doc.data().firstN,
-                    lastname: doc.data().lastN,
-                    docId: doc.id,
-                    email: doc.data().email,
-                });
-            });
-        }).catch(function (error) {
-            alert("Error getting documents: " + error);
-        });
-
->>>>>>> d8525063db18e14074ddfc0d01cf9f4021db83f4
         return (
             <View style={styles.container}>
                 <TouchableOpacity

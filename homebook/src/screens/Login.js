@@ -68,6 +68,7 @@ class Login extends Component {
   }
 
   EnterLogin = val => {
+    
 
 
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
@@ -138,8 +139,15 @@ class Login extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    //alert("THat")
     // alert(prevProps.loginVerify +  " and " + this.props.loginVerify)
-    if (prevProps.loginVerify != this.props.loginVerify) { this.pushHomeScreen(); }
+    if (prevProps.loginVerify != this.props.loginVerify) { 
+
+      setTimeout(() => {  
+        this.pushHomeScreen();
+      }, 400);
+      
+    }
   }
 
   render() {

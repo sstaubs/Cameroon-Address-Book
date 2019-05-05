@@ -53,9 +53,8 @@ export const getUser = () => {
                 
 
             }).then(() => {
-                setTimeout(() => {  
                     dispatch(getLogin());
-                  }, 200);
+                  
 
                 
 

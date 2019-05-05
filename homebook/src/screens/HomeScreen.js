@@ -81,7 +81,7 @@ class HomeScreen extends Component {
                         <Icon size={30} name='ios-menu' color='white' />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={this.pushSharePage}>
+                        onPress={this.pushSearchUserPage}>
                         <Icon size={30} name='ios-send' color='white' />
                     </TouchableOpacity>
                 </View>
@@ -95,11 +95,7 @@ class HomeScreen extends Component {
 
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.closeIcon}
-                        onPress={this.pushSearchUserPage}>
-                        <Icon size={35} name='ios-alert' color='white' />
-                    </TouchableOpacity>
+                    
 
                     <FlatList
                         style={styles.list}

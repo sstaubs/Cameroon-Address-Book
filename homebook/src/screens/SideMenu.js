@@ -14,7 +14,11 @@ class SideMenu extends Component {
 
     signout = () => {
         firebase.auth().signOut();
-        Navigation.popToRoot(this.props.componentId);
+        Navigation.push(this.props.componentId, {
+            component: {
+                name: 'LoginScreen'
+            }
+        });
     };
 
     changePassword = () => Navigation.push(this.props.componentId, {
