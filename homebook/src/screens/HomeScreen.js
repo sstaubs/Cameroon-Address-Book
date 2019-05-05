@@ -43,19 +43,25 @@ class HomeScreen extends Component {
         }
     });
 
+    pushSearchUserPage = () => Navigation.push(this.props.componentId, {
+        component: {
+          name: 'SearchUser'
+        }
+      });
+
     componentDidMount() {
         this.navigationEventListener = Navigation.events().bindComponent(this);
     }
-    
 
-   /* componentDidAppear() {
-        this.setState({
-            refresh: !this.state.refresh
-        });
-    }
-    */
 
-    
+    /* componentDidAppear() {
+         this.setState({
+             refresh: !this.state.refresh
+         });
+     }
+     */
+
+
 
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
@@ -92,6 +98,11 @@ class HomeScreen extends Component {
                             <Text style={styles.mainText}>   {this.props.user.firstN} {this.props.user.lastN}</Text>
 
                         </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.closeIcon}
+                        onPress={this.pushSearchUserPage}>
+                        <Icon size={35} name='ios-alert' color='white' />
                     </TouchableOpacity>
 
                     <FlatList
