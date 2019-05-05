@@ -3,6 +3,8 @@ import Dialog, { DialogContent, DialogFooter, DialogButton } from 'react-native-
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import * as firebase from 'firebase';
+import { connect } from 'react-redux';
+import { getUser } from "../store/actions/index";
 
 class Login extends Component {
   state = {
@@ -57,7 +59,8 @@ class Login extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user && this.state.firstLoading && user.emailVerified) {
-        this.pushHomeScreen();
+        this.props.onGetUser()
+
       } else {
         this.setState({ firstLoading: false });
       }
@@ -66,10 +69,12 @@ class Login extends Component {
 
   EnterLogin = val => {
 
+
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
       var user = firebase.auth().currentUser;
       if (user.emailVerified) {
-        this.pushHomeScreen();
+        this.props.onGetUser();
+
       } else {
         this.setState({ visible: true });
 
@@ -85,6 +90,7 @@ class Login extends Component {
       }
       console.log(error);
     });
+
   };
 
   ReverifyEmail = () => {
@@ -117,18 +123,23 @@ class Login extends Component {
 
     db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-          db.collection("users").doc(doc.id).delete();
+        db.collection("users").doc(doc.id).delete();
       })
-  }).then(() => {
+    }).then(() => {
       user.delete().then(() => {
-          // User deleted.
-          this.pushCreateAccount();
+        // User deleted.
+        this.pushCreateAccount();
       }).catch(() => {
-          // An error happened.
+        // An error happened.
       });
-  }).catch(function (error) {
+    }).catch(function (error) {
       alert("Error getting documents: " + error);
-  });
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    // alert(prevProps.loginVerify +  " and " + this.props.loginVerify)
+    if (prevProps.loginVerify != this.props.loginVerify) { this.pushHomeScreen(); }
   }
 
   render() {
@@ -269,5 +280,18 @@ const styles = StyleSheet.create({
     color: '#70B456'
   }
 });
+const mapStateToProps = state => {
+  return {
+    user: state.reference.user,
+    loginVerify: state.reference.loginVerify,
 
-module.exports = Login;
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onGetUser: () => dispatch(getUser()),
+
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

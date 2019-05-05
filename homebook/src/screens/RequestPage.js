@@ -34,7 +34,6 @@ class RequestPage extends Component {
                 db.collection("users").doc(doc.id).collection("requests").orderBy("lastN").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
                         this.setState({
-                            referenceArray: this.state.referenceArray.concat([doc.data().refpoint]),
                             docArray: this.state.docArray.concat([doc.id]),
                             friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
 
@@ -42,15 +41,6 @@ class RequestPage extends Component {
                     });
                 }).catch(function (error) {
                     alert("Error getting documents: " + error);
-                });
-                this.setState({
-                    firstname: doc.data().firstN,
-                    lastname: doc.data().lastN,
-                    email: doc.data().email,
-                    phoneNum: doc.data().phoneNum,
-                    latitude: doc.data().latitude,
-                    longitude: doc.data().longitude,
-                    docId: doc.id,
                 });
             });
         }).catch(function (error) {
@@ -69,23 +59,30 @@ class RequestPage extends Component {
 
     acceptHandler = val => {
 
-        const UserInfo = {
-            firstN: this.state.firstname,
-            lastN: this.state.lastname,
-            phoneNum: this.state.phoneNum,
-            email: this.state.email,
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
-
-        };
         var db = firebase.firestore();
-        db.collection("users").doc(this.state.referenceArray[val]).collection("friends").add(UserInfo)
-            .then((docRef) => {
-                //alert("Document written with ID: " + docRef.id);
-                this.removeRequest(val);
+
+        db.collection("users").doc(this.state.docId).collection("requests").doc(this.state.docArray[val]).get()
+            .then(doc => {
+                const info = {
+                    email: doc.data().email,
+                    firstN: doc.data().firstN,
+                    lastN: doc.data().lastN,
+                    latitude: doc.data().latitude,
+                    longitude: doc.data().longitude,
+                    phoneNum: doc.data().phoneNum
+                }
             }).catch((error) => {
                 //alert("error here")
                 //alert("Error adding document: " + error);
+            }).then (() => {
+                db.collection("users").doc(this.state.docId).collection("friends").add(info)
+                .then((docRef) => {
+                    //alert("Document written with ID: " + docRef.id);
+                    this.removeRequest(val);
+                }).catch((error) => {
+                    //alert("error here")
+                    //alert("Error adding document: " + error);
+                });
             });
     }
 

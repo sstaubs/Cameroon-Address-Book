@@ -9,6 +9,9 @@ class SearchUser extends Component {
         email: '',
         firstname: '',
         lastname: '',
+        phone:'',
+        latitude: '',
+        longitude: '',
         docId: '',
         friendNameArray: [],
         referenceArray: [],
@@ -65,8 +68,10 @@ class SearchUser extends Component {
         const requesterInfo = {
             firstN: this.state.firstname,
             lastN: this.state.lastname,
+            phoneNum: this.state.phone,
             email: this.state.email,
-            refpoint: this.state.docId,
+            latitude: this.state.latitude,
+            longitude: this.state.longitude
         };
 
         db.collection("users").doc(val).collection("requests").add(requesterInfo)
