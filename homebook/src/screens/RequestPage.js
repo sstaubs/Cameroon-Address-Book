@@ -3,17 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
+import { connect } from 'react-redux';
 
 
 
 class RequestPage extends Component {
     state = {
-        firstname: '',
-        lastname: '',
-        latitude: '',
-        longitude: '',
-        phoneNum: '',
-        docId: '',
+        
         friendNameArray: [],
         referenceArray: [],
         docArray: [],
@@ -21,43 +17,35 @@ class RequestPage extends Component {
 
     backArrow = () => Navigation.pop(this.props.componentId, {
         component: {
-          name: 'UserProfile'
+            name: 'UserProfile'
         }
-      });
+    });
 
     componentDidMount() {
 
         var db = firebase.firestore();
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+
+        db.collection("users").doc(this.props.user.docId).collection("requests").orderBy("lastN").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                //alert(doc.data().email);
-                //alert(doc.id, " => ", doc.data());
-                //alert(doc)
-                db.collection("users").doc(doc.id).collection("requests").orderBy("lastN").get().then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
 
 
-                        this.setState({
-                            docArray: this.state.docArray.concat([doc.id]),
-                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
+                this.setState({
+                    docArray: this.state.docArray.concat([doc.id]),
+                    friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
 
-                        });
-                    });
-                }).catch(function (error) {
-                    alert("Error getting documents: " + error);
                 });
             });
         }).catch(function (error) {
             alert("Error getting documents: " + error);
         });
+
     }
 
     removeRequest = val => {
 
         var db = firebase.firestore();
 
-        db.collection("users").doc(this.state.docId).collection("requests").doc(this.state.docArray[val]).delete().then(() => {
+        db.collection("users").doc(this.props.user.docId).collection("requests").doc(this.state.docArray[val]).delete().then(() => {
             //console.log("Document successfully deleted!");
         }).catch((error) => {
             //console.error("Error removing document: ", error);
@@ -69,29 +57,37 @@ class RequestPage extends Component {
     acceptHandler = val => {
 
         var db = firebase.firestore();
+        const info = {
+            email: '',
+            firstN: '',
+            lastN: '',
+            latitude: '',
+            longitude: '',
+            phoneNum: ''
+        }
 
-        db.collection("users").doc(this.state.docId).collection("requests").doc(this.state.docArray[val]).get()
+        db.collection("users").doc(this.props.user.docId).collection("requests").doc(this.state.docArray[val]).get()
             .then(doc => {
-                const info = {
-                    email: doc.data().email,
-                    firstN: doc.data().firstN,
-                    lastN: doc.data().lastN,
-                    latitude: doc.data().latitude,
-                    longitude: doc.data().longitude,
-                    phoneNum: doc.data().phoneNum
-                }
+                 
+                    info.email = doc.data().email,
+                    info.firstN = doc.data().firstN,
+                    info.lastN = doc.data().lastN,
+                    info.latitude = doc.data().latitude,
+                    info.longitude = doc.data().longitude,
+                    info.phoneNum = doc.data().phoneNum
+        
             }).catch((error) => {
                 //alert("error here")
                 //alert("Error adding document: " + error);
-            }).then (() => {
-                db.collection("users").doc(this.state.docId).collection("friends").add(info)
-                .then((docRef) => {
-                    //alert("Document written with ID: " + docRef.id);
-                    this.removeRequest(val);
-                }).catch((error) => {
-                    //alert("error here")
-                    //alert("Error adding document: " + error);
-                });
+            }).then(() => {
+                db.collection("users").doc(this.props.user.docId).collection("friends").add(info)
+                    .then((docRef) => {
+                        //alert("Document written with ID: " + docRef.id);
+                        this.removeRequest(val);
+                    }).catch((error) => {
+                        //alert("error here")
+                        //alert("Error adding document: " + error);
+                    });
             });
 
 
@@ -208,4 +204,19 @@ const styles = StyleSheet.create({
 });
 
 
-export default RequestPage;
+const mapStateToProps = state => {
+    return {
+        user: state.reference.user,
+
+    };
+};
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+
+
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RequestPage);

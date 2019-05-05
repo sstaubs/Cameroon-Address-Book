@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'r
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
+import { connect } from 'react-redux';
 
 class SearchUser extends Component {
     state = {
@@ -65,13 +66,14 @@ class SearchUser extends Component {
     SendRequest = val => {
         
         var db = firebase.firestore();
+     
         const requesterInfo = {
-            firstN: this.state.firstname,
-            lastN: this.state.lastname,
-            phoneNum: this.state.phone,
-            email: this.state.email,
-            latitude: this.state.latitude,
-            longitude: this.state.longitude
+            firstN: this.props.user.firstN,
+            lastN: this.props.user.lastN,
+            phoneNum: this.props.user.phone,
+            email: this.props.user.email,
+            latitude: this.props.user.latitude,
+            longitude: this.props.user.longitude
         };
 
         db.collection("users").doc(val).collection("requests").add(requesterInfo)
@@ -90,25 +92,7 @@ class SearchUser extends Component {
     
 
     render() {
-        var db = firebase.firestore();
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                //alert(doc.data().email);
-                //alert(doc.id, " => ", doc.data());
-                //alert(doc)
-                 
-
-                this.setState({
-                    firstname: doc.data().firstN,
-                    lastname: doc.data().lastN,
-                    docId: doc.id,
-                    email: doc.data().email,
-                });
-            });
-        }).catch(function (error) {
-            alert("Error getting documents: " + error);
-        });
+       
         
         return (
             <View style={styles.container}>
@@ -209,4 +193,19 @@ const styles = StyleSheet.create({
     }
 });
 
-export default SearchUser;
+const mapStateToProps = state => {
+    return {
+        user: state.reference.user,
+
+    };
+};
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+       
+
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchUser);
