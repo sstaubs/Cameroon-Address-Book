@@ -6,7 +6,6 @@ import * as firebase from 'firebase';
 
 class ChangePassScreen extends Component {
     state = {
-        email: '',
         currentPassword: '',
         newPassword: '',
         confirmPassword: ''
@@ -17,12 +16,6 @@ class ChangePassScreen extends Component {
             name: 'LoginScreen'
         }
     });
-
-    emailHandler = val => {
-        this.setState({
-            email: val,
-        });
-    };
 
     passHandler = val => {
         this.setState({
@@ -90,9 +83,20 @@ class ChangePassScreen extends Component {
                         style={styles.backIcon}
                         onPress={this.backArrow}
                     >
-                        <Icon size={25} name='ios-arrow-back' color='white' />
+                        <Icon size={35} name='ios-arrow-round-back' color='white' />
                     </TouchableOpacity>
                     <Text style={styles.mainText}>Change Password</Text>
+                    <Text style={styles.label}>Current Password</Text>
+                    <TextInput
+                        secureTextEntry={true}
+                        style={styles.userInput}
+                        placeholder="••••••••••"
+                        placeholderTextColor="gray"
+                        onChangeText={this.currentPassHandler}
+                        returnKeyType = { "next" }
+                        onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                        blurOnSubmit={false}
+                    />
                     <Text style={styles.label}>New Password</Text>
                     <TextInput
                         secureTextEntry={true}
@@ -100,8 +104,9 @@ class ChangePassScreen extends Component {
                         placeholder="••••••••••"
                         placeholderTextColor="gray"
                         onChangeText={this.passHandler}
+                        ref={(input) => { this.secondTextInput = input; }}
                         returnKeyType = { "next" }
-                        onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                        onSubmitEditing={() => { this.thirdTextInput.focus(); }}
                         blurOnSubmit={false}
                     />
                     <Text style={styles.label}>Confirm New Password</Text>
@@ -111,7 +116,7 @@ class ChangePassScreen extends Component {
                         placeholder="••••••••••"
                         placeholderTextColor="gray"
                         onChangeText={this.confirmPassHandler}
-                        ref={(input) => { this.secondTextInput = input; }}
+                        ref={(input) => { this.thirdTextInput = input; }}
                         returnKeyType = { "done" }
                         blurOnSubmit={true}
                     />

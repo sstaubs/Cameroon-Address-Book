@@ -106,7 +106,7 @@ class ChangeEmailScreen extends Component {
                         style={styles.backIcon}
                         onPress={this.backArrow}
                     >
-                        <Icon size={25} name='ios-arrow-back' color='white' />
+                        <Icon size={35} name='ios-arrow-round-back' color='white' />
                     </TouchableOpacity>
                     <Text style={styles.mainText}>Change Email</Text>
                     <Text style={styles.label}>Current Email</Text>

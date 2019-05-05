@@ -171,7 +171,7 @@ class CreateAccount extends Component {
             style={styles.backIcon}
             onPress={this.backArrow}
           >
-            <Icon size={25} name='ios-arrow-back' color='white' />
+            <Icon size={35} name='ios-arrow-round-back' color='white' />
           </TouchableOpacity>
         </View>
         <Text style={styles.mainText}>Create Account</Text>

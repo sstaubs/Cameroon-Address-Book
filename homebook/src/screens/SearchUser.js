@@ -36,13 +36,13 @@ class SearchUser extends Component {
         });
     };
     searchBySearchedEmail = () => {
-        
+
         this.setState({
             referenceArray: [],
             friendNameArray: [],
 
         });
-        
+
         var db = firebase.firestore();
         db.collection("users").where("email", "==", this.state.searchedEmail).get()
             .then((querySnapshot) => {
@@ -64,7 +64,7 @@ class SearchUser extends Component {
     };
 
     SendRequest = val => {
-        
+
         var db = firebase.firestore();
      
         const requesterInfo = {
@@ -83,24 +83,47 @@ class SearchUser extends Component {
           //alert("error here")
           //alert("Error adding document: " + error);
         });
-            
+
     };
 
-   
 
-        
-    
+
+
+
 
     render() {
+<<<<<<< HEAD
        
         
+=======
+        var db = firebase.firestore();
+        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                //alert(doc.data().email);
+                //alert(doc.id, " => ", doc.data());
+                //alert(doc)
+
+
+                this.setState({
+                    firstname: doc.data().firstN,
+                    lastname: doc.data().lastN,
+                    docId: doc.id,
+                    email: doc.data().email,
+                });
+            });
+        }).catch(function (error) {
+            alert("Error getting documents: " + error);
+        });
+
+>>>>>>> d8525063db18e14074ddfc0d01cf9f4021db83f4
         return (
             <View style={styles.container}>
                 <TouchableOpacity
                     style={styles.backIcon}
                     onPress={this.backArrow}
                 >
-                    <Icon size={25} name='ios-arrow-back' color='white' />
+                    <Icon size={35} name='ios-arrow-round-back' color='white' />
                 </TouchableOpacity>
                 <Text style={styles.mainText}>Find User</Text>
                 <Text style={styles.subText}>Email</Text>

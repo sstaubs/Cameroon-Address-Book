@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Dialog, { DialogContent, DialogFooter, DialogButton } from 'react-native-popup-dialog';
-import { StyleSheet, Text, TextInput, ScrollView, View, TouchableOpacity, StatusBar, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';

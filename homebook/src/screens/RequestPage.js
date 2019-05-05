@@ -5,8 +5,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 
-
-
 class RequestPage extends Component {
     state = {
         
@@ -22,16 +20,27 @@ class RequestPage extends Component {
     });
 
     componentDidMount() {
-
         var db = firebase.firestore();
 
         db.collection("users").doc(this.props.user.docId).collection("requests").orderBy("lastN").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
+<<<<<<< HEAD
 
 
                 this.setState({
                     docArray: this.state.docArray.concat([doc.id]),
                     friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
+=======
+                // doc.data() is never undefined for query doc snapshots
+                //alert(doc.data().email);
+                //alert(doc.id, " => ", doc.data());
+                //alert(doc)
+                db.collection("users").doc(doc.id).collection("requests").orderBy("lastN").get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        this.setState({
+                            docArray: this.state.docArray.concat([doc.id]),
+                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
+>>>>>>> d8525063db18e14074ddfc0d01cf9f4021db83f4
 
                 });
             });
@@ -42,16 +51,17 @@ class RequestPage extends Component {
     }
 
     removeRequest = val => {
-
         var db = firebase.firestore();
+<<<<<<< HEAD
 
         db.collection("users").doc(this.props.user.docId).collection("requests").doc(this.state.docArray[val]).delete().then(() => {
+=======
+        db.collection("users").doc(this.state.docId).collection("requests").doc(this.state.docArray[val]).delete().then(() => {
+>>>>>>> d8525063db18e14074ddfc0d01cf9f4021db83f4
             //console.log("Document successfully deleted!");
         }).catch((error) => {
             //console.error("Error removing document: ", error);
         });
-
-
     }
 
     acceptHandler = val => {
@@ -89,20 +99,11 @@ class RequestPage extends Component {
                         //alert("Error adding document: " + error);
                     });
             });
-
-
-
-
-
     }
 
     declineHandler = val => {
         this.removeRequest(val);
-
     }
-
-
-
 
     render() {
         return (
@@ -112,14 +113,10 @@ class RequestPage extends Component {
                         <TouchableOpacity
                             onPress={this.backArrow}
                         >
-                            <Icon size={25} name='ios-arrow-back' color='white' />
+                            <Icon size={35} name='ios-arrow-round-back' color='white' />
                         </TouchableOpacity>
-
                     </View>
                     <Text style={styles.mainText}>Requests</Text>
-
-
-
                     <FlatList
                         style={styles.list}
                         data={this.state.friendNameArray}
@@ -139,7 +136,6 @@ class RequestPage extends Component {
                                     <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Decline</Text>
                                 </TouchableOpacity>
                             </View>
-
                         }
                         keyExtractor={(index) => index.toString()}
                     />
@@ -203,6 +199,7 @@ const styles = StyleSheet.create({
     }
 });
 
+<<<<<<< HEAD
 
 const mapStateToProps = state => {
     return {
@@ -220,3 +217,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequestPage);
+=======
+export default RequestPage;
+>>>>>>> d8525063db18e14074ddfc0d01cf9f4021db83f4
