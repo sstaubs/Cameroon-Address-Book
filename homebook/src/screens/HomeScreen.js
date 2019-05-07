@@ -55,23 +55,13 @@ class HomeScreen extends Component {
         });
 
     }
-    
+
     componentDidAppear() {
         this.setState({
             refresh: !this.state.refresh,
             friendNameArray: this.props.user.friendNameArray
         });
     }
-
-<<<<<<< HEAD
-    
-    
-    
-     
-=======
-
-
->>>>>>> 94908899327587f8a1a5f24cac5943f889519c7e
 
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
