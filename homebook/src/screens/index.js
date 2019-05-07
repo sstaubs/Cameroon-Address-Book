@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigation } from 'react-native-navigation';
 import { Provider } from "react-redux";
 import configureStore from "../store/configureStore.js";
+import 'babel-polyfill';
 import Login from './Login';
 import Recover from './Recover';
 import CreateAccount from './CreateAccount';
@@ -17,6 +18,8 @@ import ChangePassScreen from './ChangePassScreen';
 import ChangeEmailScreen from './ChangeEmailScreen';
 import RequestPage from './RequestPage';
 import EditFriend from './EditFriend';
+
+
 
 function registerScreens() {
   const reduxStore = configureStore();

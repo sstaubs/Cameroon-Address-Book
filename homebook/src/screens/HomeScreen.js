@@ -55,7 +55,7 @@ class HomeScreen extends Component {
         });
 
     }
-    
+
     componentDidAppear() {
         this.setState({
             refresh: !this.state.refresh,
@@ -63,11 +63,14 @@ class HomeScreen extends Component {
         });
     }
 
+<<<<<<< HEAD
     
     
     
      
 
+=======
+>>>>>>> ba589f8c14bff99e50a471c87dcd2b68aebf4bbd
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
         this.props.onGetFriend(this.props.user.docId, this.props.user.referenceArray[val])
@@ -169,7 +172,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 18,
         backgroundColor: '#303030',
-        padding: 5
+        padding: 10
     }
 });
 const mapStateToProps = state => {
