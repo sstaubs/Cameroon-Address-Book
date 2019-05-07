@@ -1,4 +1,4 @@
-import { GET_REF, SET_USER, SET_FRIEND } from './actionTypes'
+import { GET_REF, SET_USER, SET_FRIEND, SET_LOADED } from './actionTypes'
 import * as firebase from 'firebase';
 
 export const editUser = (accountInfo) => {
@@ -93,8 +93,8 @@ export const getUser = () => {
         };
         var db = firebase.firestore();
 
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get()
-            .then((querySnapshot) => {
+         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get()
+            .then( (querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get()
                         .then((querySnapshot) => {
@@ -105,6 +105,10 @@ export const getUser = () => {
 
 
                             });
+                            //this code is poorly formatted because it makes it seem like set loaded comes before setUsers which is not the case
+                            //however it does work but this code needs to be reset up
+                            dispatch(setLoaded());
+                            
 
                         }).catch(function (error) {
                             alert("Error getting documents: " + error);
@@ -117,19 +121,29 @@ export const getUser = () => {
                     user.latitude = doc.data().latitude;
                     user.longitude = doc.data().longitude;
                     user.docId = doc.id;
+                    //alert(user.friendNameArray[0])
+                    dispatch(setUser(user));
+                    
 
                 });
             }).then(() => {
+                
+                
 
-                dispatch(setUser(user));
+                
+                
 
 
             }).catch((error) => {
                 alert("Error getting documents: " + error);
             });
 
+        
 
+
+            
     };
+    
 
 };
 
@@ -161,12 +175,13 @@ export const getFriend = (userId, ref) => {
                 alert("Error getting documents: " + error);
             });
 
+
     }
 }
 
 
 export const setUser = (user) => {
-    return {
+     return  {
         type: SET_USER,
         user: user,
     };
@@ -185,5 +200,13 @@ export const getReference = (refpoint) => {
     return {
         type: GET_REF,
         refpoint: refpoint,
+    };
+};
+
+export const setLoaded = () => {
+    return {
+        
+        type: SET_LOADED,
+
     };
 };

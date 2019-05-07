@@ -57,10 +57,19 @@ class Login extends Component {
   };
 
   componentDidMount() {
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user && this.state.firstLoading && user.emailVerified) {
+
         this.props.onGetUser();
         this.pushHomeScreen();
+          
+     
+        
+        
+
+
+
 
       } else {
         this.setState({ firstLoading: false });
@@ -70,18 +79,21 @@ class Login extends Component {
 
   EnterLogin = val => {
 
-
-
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
       var user = firebase.auth().currentUser;
       if (user.emailVerified) {
         this.props.onGetUser();
-        this.pushHomeScreen();
 
       } else {
         this.setState({ visible: true });
 
       }
+    }).then(() => {
+      var user = firebase.auth().currentUser;
+      if (user.emailVerified) {
+        this.pushHomeScreen();
+      }
+
     }).catch(function (error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -287,7 +299,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetUser: () => dispatch(getUser()),
+     onGetUser: (cb) => dispatch(getUser(cb)),
 
   };
 };

@@ -49,19 +49,20 @@ class HomeScreen extends Component {
     });
 
     componentDidMount() {
-        this.navigationEventListener = Navigation.events().bindComponent(this);
         this.setState({
             friendNameArray: this.props.user.friendNameArray
         });
-
+    }
+    componentWillReceiveProps(prevProps) {
+        if (prevProps.loaded != this.props.loaded) {
+            this.setState({
+                refresh: !this.state.refresh,
+                friendNameArray: this.props.user.friendNameArray
+            });
+        }
     }
 
-    componentDidAppear() {
-        this.setState({
-            refresh: !this.state.refresh,
-            friendNameArray: this.props.user.friendNameArray
-        });
-    }
+
 
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
@@ -168,13 +169,14 @@ const styles = StyleSheet.create({
         color: 'white',
         marginTop: 10,
         fontSize: 18,
-        
+
         padding: 10
     }
 });
 const mapStateToProps = state => {
     return {
         user: state.reference.user,
+        loaded: state.reference.loaded
 
     };
 };
