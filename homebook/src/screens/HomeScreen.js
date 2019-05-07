@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 18,
         backgroundColor: '#303030',
-        padding: 5
+        padding: 10
     }
 });
 const mapStateToProps = state => {
