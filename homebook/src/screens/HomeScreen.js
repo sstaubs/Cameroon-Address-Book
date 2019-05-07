@@ -4,7 +4,7 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
-import { getReference, getUser } from "../store/actions/index";
+import { getReference, getUser, getFriend } from "../store/actions/index";
 
 class HomeScreen extends Component {
     state = {
@@ -43,13 +43,13 @@ class HomeScreen extends Component {
 
     pushSearchUserPage = () => Navigation.push(this.props.componentId, {
         component: {
-          name: 'SearchUser'
+            name: 'SearchUser'
         }
-      });
+    });
 
     componentDidMount() {
-       
-        
+
+
     }
 
 
@@ -64,7 +64,7 @@ class HomeScreen extends Component {
 
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
-        this.ReferenceHandler(this.props.user.referenceArray[val])
+        this.props.onGetFriend(this.props.user.docId, this.props.user.referenceArray[val])
         //alert(this.props.refpoint);
         this.pushFriendProfile();
     };
@@ -96,27 +96,28 @@ class HomeScreen extends Component {
 
                         </View>
                     </TouchableOpacity>
-                    
+
 
                     <FlatList
                         style={styles.list}
                         data={this.props.user.friendNameArray}
                         getData={this.state}
 
-                        renderItem={({ item, index }) =>
+                        renderItem={({ item, index }) => 
                             <TouchableOpacity
                                 onPress={() => this.friendHandler(index)}
                             >
                                 <Text style={styles.bodyText}>{item}</Text>
                             </TouchableOpacity>
                         }
+                        
                         keyExtractor={(index) => index.toString()}
                     />
                 </ScrollView>
                 <View style={{ position: 'absolute', bottom: 20, right: '7.5%' }}>
                     <TouchableOpacity
                         onPress={this.pushAddUser}>
-                        <Icon size={70} name='ios-add-circle' color='white'/>
+                        <Icon size={70} name='ios-add-circle' color='white' />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -169,6 +170,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onGetReference: name => dispatch(getReference(name)),
         onGetUser: () => dispatch(getUser()),
+        onGetFriend: (userId, ref) => dispatch(getFriend(userId, ref)),
 
     };
 };

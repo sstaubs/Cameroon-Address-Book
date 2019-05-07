@@ -142,7 +142,7 @@ class Login extends Component {
     //alert("THat")
     // alert(prevProps.loginVerify +  " and " + this.props.loginVerify)
     if (prevProps.loginVerify != this.props.loginVerify) { 
-
+      //this.pushHomeScreen();
       setTimeout(() => {  
         this.pushHomeScreen();
       }, 400);

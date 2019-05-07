@@ -103,7 +103,7 @@ class EditUser extends Component {
   }
 
   confirmHandler = val => {
-    //alert(this.state.phone);
+
     const accountInfo = {
       firstN: this.state.firstName,
       lastN: this.state.lastName,
@@ -119,18 +119,6 @@ class EditUser extends Component {
     this.props.onEditUser(accountInfo);
     this.pushUserProfile()
 
-    /*var db = firebase.firestore();
-    db.collection("users").doc(this.state.docId).update(accountInfo)
-      .then(() => {
-        console.log("Document successfully updated!");
-      }).then(() => {
-        this.pushUserProfile()
-      })
-      .catch((error) => {
-        // The document probably doesn't exist.
-        alert("Error updating document: " + error);
-      });
-      */
   };
 
   render() {

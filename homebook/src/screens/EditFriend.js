@@ -6,18 +6,21 @@ import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 
 import { connect } from 'react-redux';
+import {  editFriend } from "../store/actions/index";
 
 
 class EditFriend extends Component {
     state = {
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        docId: '',
+        firstName: this.props.friend.firstN,
+        lastName: this.props.friend.lastN,
+        phone: this.props.friend.phone,
+        email: this.props.friend.email,
+        docId: this.props.friend.docId,
+
+
         focusedLocation: {
-            longitude: 0,
-            latitude: 0,
+            longitude: this.props.friend.longitude,
+            latitude: this.props.friend.latitude,
             latitudeDelta: 0.0122,
             longitudeDelta:
                 Dimensions.get("window").width /
@@ -63,49 +66,7 @@ class EditFriend extends Component {
     };
 
     componentDidMount() {
-        var db = firebase.firestore();
-
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                //alert(doc.data().email);
-                //alert(doc.id, " => ", doc.data());
-                //alert(doc)
-
-
-                this.setState({
-
-
-                    docId: doc.id,
-                });
-
-
-            });
-
-
-        }).then(() => {
-            db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).get()
-                .then(doc => {
-
-                    this.setState({
-                        firstName: doc.data().firstN,
-                        lastName: doc.data().lastN,
-                        phone: doc.data().phoneNum,
-                        email: doc.data().email,
-
-                        focusedLocation: {
-                            ...this.state.focusedLocation,
-                            longitude: doc.data().longitude,
-                            latitude: doc.data().latitude,
-                        },
-                    })
-
-                }).catch(function (error) {
-                    alert("Error getting documents: " + error);
-                });
-        }).catch(function (error) {
-            alert("Error getting documents: " + error);
-        });
+        
     }
 
     pickLocationHandler = event => {
@@ -145,27 +106,21 @@ class EditFriend extends Component {
             })
     }
 
-    confirmHandler = val => {
-        //alert(this.state.phone);
+    confirmHandler = () => {
+      
         const accountInfo = {
             firstN: this.state.firstName,
             lastN: this.state.lastName,
-            phoneNum: this.state.phone,
+            docId: this.state.docId,
+            phone: this.state.phone,
             email: this.state.email,
-            latitude: this.state.focusedLocation.latitude,
             longitude: this.state.focusedLocation.longitude,
+            latitude: this.state.focusedLocation.latitude,
         };
-        var db = firebase.firestore();
-        db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).update(accountInfo)
-            .then(() => {
-                console.log("Document successfully updated!");
-            }).then(() => {
-                this.pushFriendProfile()
-            })
-            .catch((error) => {
-                // The document probably doesn't exist.
-                alert("Error updating document: " + error);
-            });
+        this.props.onEditFriend(this.props.user.docId, accountInfo.docId,accountInfo);
+        this.pushFriendProfile();
+        
+
     };
 
     render() {
@@ -229,12 +184,12 @@ class EditFriend extends Component {
                         {marker}
                     </MapView>
                 </ScrollView>
-                    <TouchableOpacity
-                        style={styles.bottomButton}
-                        onPress={this.confirmHandler}
-                    >
-                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SUBMIT</Text>
-                    </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.bottomButton}
+                    onPress={this.confirmHandler}
+                >
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SUBMIT</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -310,9 +265,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        refpoint: state.reference.friendref,
+        user: state.reference.user,
+        friend: state.reference.friend,
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        onEditFriend: (userId, ref, accountInfo) => dispatch(editFriend(userId, ref, accountInfo)),
+
     };
 };
 
-
-export default connect(mapStateToProps)(EditFriend);
+export default connect(mapStateToProps, mapDispatchToProps)(EditFriend);
