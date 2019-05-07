@@ -57,9 +57,7 @@ class SearchUser extends Component {
     };
 
     SendRequest = val => {
-        Alert.alert(
-            'Contact Shared'
-        )
+       
 
         var db = firebase.firestore();
 

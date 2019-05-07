@@ -49,12 +49,16 @@ class RequestPage extends Component {
         }).catch((error) => {
             //console.error("Error removing document: ", error);
         });
+        this.setState({
+            
+            docArray: this.state.docArray.slice(val,1),
+            friendNameArray: this.state.friendNameArray.slice(val,1),
+
+        });
     }
 
     acceptHandler = val => {
-        Alert.alert(
-            'User Added'
-        )
+        
         var db = firebase.firestore();
         const info = {
             email: '',
@@ -91,9 +95,7 @@ class RequestPage extends Component {
     }
 
     declineHandler = val => {
-        Alert.alert(
-            'User Removed'
-        )
+        
         this.removeRequest(val);
     }
 
@@ -112,7 +114,7 @@ class RequestPage extends Component {
                     <FlatList
                         style={styles.list}
                         data={this.state.friendNameArray}
-                        getData={this.state}
+                        extraData={this.state}
                         renderItem={({ item, index }) =>
                             <View style={{ marginBottom: 20, borderRadius: 10}}>
                                 <Text style={styles.bodyText}>{item}</Text>
@@ -132,7 +134,7 @@ class RequestPage extends Component {
                                 </View>
                             </View>
                         }
-                        keyExtractor={(index) => index.toString()}
+                        keyExtractor={(item, index) => index.toString()}
                     />
                 </View>
             </View>
