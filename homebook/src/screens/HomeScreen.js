@@ -63,14 +63,6 @@ class HomeScreen extends Component {
         });
     }
 
-<<<<<<< HEAD
-    
-    
-    
-     
-
-=======
->>>>>>> ba589f8c14bff99e50a471c87dcd2b68aebf4bbd
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
         this.props.onGetFriend(this.props.user.docId, this.props.user.referenceArray[val])

@@ -15,14 +15,22 @@ class CreateAccount extends Component {
     confirmpassword: '',
     phone: '',
     docId: '',
-    visible: false
+    visible: false,
+    pwInncorrect: false
   };
 
   passwordConfirm = () => {
     if (this.state.password != this.state.confirmpassword) {
-      alert("Password does not match");
+      this.setState({
+        pwInncorrect: true,
+      });
+      
+
       return false;
     }
+    this.setState({
+      pwInncorrect: false,
+    });
     return true;
   };
 
@@ -78,6 +86,7 @@ class CreateAccount extends Component {
     this.props.onGetUser(user);
   };
 
+
   isEmailVerified = () => {
     //var user = firebase.auth().currentUser;
 
@@ -105,6 +114,70 @@ class CreateAccount extends Component {
          alert("Error getting documents: " + error);
        });
      }*/
+  }
+
+  renderPassword = () => {
+    if (this.state.pwInncorrect) {
+      return (
+        <View>
+          <Text style={styles.labelIncorrect}>Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.incorrectPassword}
+            placeholder='••••••••••'
+            placeholderTextColor='gray'
+            onChangeText={this.passwordHandler}
+            ref={(input) => { this.thirdTextInput = input; }}
+            returnKeyType={"next"}
+            onSubmitEditing={() => { this.fourthTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+          <Text style={styles.labelIncorrect}>Confirm Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.incorrectPassword}
+            placeholder='••••••••••'
+            placeholderTextColor='gray'
+            onChangeText={this.confirmPassHandler}
+            ref={(input) => { this.fourthTextInput = input; }}
+            returnKeyType={"next"}
+            onSubmitEditing={() => { this.fifthTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+        </View>
+      );
+    }
+    else {
+      return (
+        <View>
+          <Text style={styles.label}>Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.userInput}
+            placeholder='••••••••••'
+            placeholderTextColor='gray'
+            onChangeText={this.passwordHandler}
+            ref={(input) => { this.thirdTextInput = input; }}
+            returnKeyType={"next"}
+            onSubmitEditing={() => { this.fourthTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+          <Text style={styles.label}>Confirm Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.userInput}
+            placeholder='••••••••••'
+            placeholderTextColor='gray'
+            onChangeText={this.confirmPassHandler}
+            ref={(input) => { this.fourthTextInput = input; }}
+            returnKeyType={"next"}
+            onSubmitEditing={() => { this.fifthTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+        </View>
+      );
+    }
+
   }
 
   confirmHandler = val => {
@@ -198,30 +271,8 @@ class CreateAccount extends Component {
               onSubmitEditing={() => { this.thirdTextInput.focus(); }}
               blurOnSubmit={false}
             />
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              secureTextEntry={true}
-              style={styles.userInput}
-              placeholder='••••••••••'
-              placeholderTextColor='gray'
-              onChangeText={this.passwordHandler}
-              ref={(input) => { this.thirdTextInput = input; }}
-              returnKeyType={"next"}
-              onSubmitEditing={() => { this.fourthTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Confirm Password</Text>
-            <TextInput
-              secureTextEntry={true}
-              style={styles.userInput}
-              placeholder='••••••••••'
-              placeholderTextColor='gray'
-              onChangeText={this.confirmPassHandler}
-              ref={(input) => { this.fourthTextInput = input; }}
-              returnKeyType={"next"}
-              onSubmitEditing={() => { this.fifthTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
+            {this.renderPassword()}
+
             <Text style={styles.label}>Email</Text>
             <TextInput
               autoCapitalize='none'
@@ -294,6 +345,18 @@ const styles = StyleSheet.create({
   },
   userInput: {
     borderColor: '#7ABAF2',
+    borderBottomWidth: 1,
+    height: 40,
+    fontSize: 17,
+    color: 'white'
+  },
+  labelIncorrect: {
+    color: 'red',
+    marginTop: 25,
+    fontSize: 13
+  },
+  incorrectPassword: {
+    borderColor: 'red',
     borderBottomWidth: 1,
     height: 40,
     fontSize: 17,
