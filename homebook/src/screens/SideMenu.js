@@ -98,7 +98,7 @@ class SideMenu extends Component {
                         <TouchableOpacity
                             style={styles.closeIcon}
                             onPress={this.closeSideMenu}>
-                            <Icon size={35} name='ios-close' color='white' />
+                            <Icon size={38} name='ios-close' color='white' />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.textPadding}>
@@ -161,10 +161,10 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     },
     alignment: {
-        left: '3.5%'
+        left: '4%'
     },
     closeIcon: {
-        marginTop: 40
+        marginTop: 35
     },
     innerText: {
         color: 'white',

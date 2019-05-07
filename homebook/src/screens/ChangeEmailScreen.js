@@ -39,18 +39,18 @@ class ChangeEmailScreen extends Component {
     componentDidMount() {
         var db = firebase.firestore();
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
+            querySnapshot.forEach((doc) => {
 
-            this.setState({
-              email: doc.data().email,
-              docId: doc.id
+                this.setState({
+                    email: doc.data().email,
+                    docId: doc.id
+                });
+
             });
-
-          });
         }).catch(function (error) {
-          alert("Error getting documents: " + error);
+            alert("Error getting documents: " + error);
         });
-      }
+    }
 
     changeEmail = val => {
 
@@ -82,12 +82,12 @@ class ChangeEmailScreen extends Component {
             })
         }).then(() => {
             db.collection("users").doc(this.state.docId).update(accountInfo)
-            .then(() => {
-              console.log("Document successfully updated!");
-            }).catch((error) => {
-              // The document probably doesn't exist.
-              alert("Error updating document: " + error);
-            });
+                .then(() => {
+                    console.log("Document successfully updated!");
+                }).catch((error) => {
+                    // The document probably doesn't exist.
+                    alert("Error updating document: " + error);
+                });
         }).catch(() => {
             // An error happened.
             alert("Was not authenticated");
@@ -117,7 +117,7 @@ class ChangeEmailScreen extends Component {
                         autoCapitalize='none'
                         placeholderTextColor="gray"
                         onChangeText={this.emailHandler}
-                        returnKeyType = { "next" }
+                        returnKeyType={"next"}
                         onSubmitEditing={() => { this.secondTextInput.focus(); }}
                         blurOnSubmit={false}
                     />
@@ -128,7 +128,7 @@ class ChangeEmailScreen extends Component {
                         placeholder="••••••••••"
                         placeholderTextColor="gray"
                         onChangeText={this.passHandler}
-                        returnKeyType = { "next" }
+                        returnKeyType={"next"}
                         ref={(input) => { this.secondTextInput = input; }}
                         onSubmitEditing={() => { this.thirdTextInput.focus(); }}
                         blurOnSubmit={false}
@@ -143,7 +143,7 @@ class ChangeEmailScreen extends Component {
                         placeholderTextColor="gray"
                         onChangeText={this.newEmailHandler}
                         ref={(input) => { this.thirdTextInput = input; }}
-                        returnKeyType = { "done" }
+                        returnKeyType={"done"}
                         blurOnSubmit={true}
                     />
                 </View>

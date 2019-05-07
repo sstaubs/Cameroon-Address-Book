@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { Alert, View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 class RequestPage extends Component {
     state = {
-        
+
         friendNameArray: [],
         referenceArray: [],
         docArray: [],
@@ -44,7 +44,7 @@ class RequestPage extends Component {
 
         db.collection("users").doc(this.props.user.docId).collection("requests").doc(this.state.docArray[val]).delete().then(() => {
             //console.log("Document successfully deleted!");
-           
+
 
         }).catch((error) => {
             //console.error("Error removing document: ", error);
@@ -52,7 +52,9 @@ class RequestPage extends Component {
     }
 
     acceptHandler = val => {
-
+        Alert.alert(
+            'User Added'
+        )
         var db = firebase.firestore();
         const info = {
             email: '',
@@ -65,14 +67,14 @@ class RequestPage extends Component {
 
         db.collection("users").doc(this.props.user.docId).collection("requests").doc(this.state.docArray[val]).get()
             .then(doc => {
-                 
-                    info.email = doc.data().email,
+
+                info.email = doc.data().email,
                     info.firstN = doc.data().firstN,
                     info.lastN = doc.data().lastN,
                     info.latitude = doc.data().latitude,
                     info.longitude = doc.data().longitude,
                     info.phoneNum = doc.data().phoneNum
-        
+
             }).catch((error) => {
                 //alert("error here")
                 //alert("Error adding document: " + error);
@@ -89,6 +91,9 @@ class RequestPage extends Component {
     }
 
     declineHandler = val => {
+        Alert.alert(
+            'User Removed'
+        )
         this.removeRequest(val);
     }
 
@@ -111,18 +116,20 @@ class RequestPage extends Component {
                         renderItem={({ item, index }) =>
                             <View>
                                 <Text style={styles.bodyText}>{item}</Text>
-                                <TouchableOpacity
-                                    style={styles.acceptButton}
-                                    onPress={() => this.acceptHandler(index)}
-                                >
-                                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Accept</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={styles.declineButton}
-                                    onPress={() => this.declineHandler(index)}
-                                >
-                                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Decline</Text>
-                                </TouchableOpacity>
+                                <View style={styles.buttons}>
+                                    <TouchableOpacity
+                                        style={styles.acceptButton}
+                                        onPress={() => this.acceptHandler(index)}
+                                    >
+                                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Accept</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={styles.declineButton}
+                                        onPress={() => this.declineHandler(index)}
+                                    >
+                                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Decline</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         }
                         keyExtractor={(index) => index.toString()}
@@ -154,6 +161,7 @@ const styles = StyleSheet.create({
     },
     mainText: {
         alignItems: 'center',
+        textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 30,
         marginTop: 25,
@@ -165,24 +173,28 @@ const styles = StyleSheet.create({
     bodyText: {
         color: 'white',
         marginTop: 10,
-        fontSize: 18
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    buttons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 20
     },
     acceptButton: {
-        width: '100%',
+        width: '49%',
         marginTop: 10,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#3F7F40',
-        borderRadius: 20,
         height: 40
     },
     declineButton: {
-        width: '100%',
+        width: '49%',
         marginTop: 10,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#E24A4A',
-        borderRadius: 20,
         height: 40
     }
 });
@@ -191,15 +203,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         user: state.reference.user,
-
     };
 };
 
 
 const mapDispatchToProps = dispatch => {
     return {
-
-
     };
 };
 

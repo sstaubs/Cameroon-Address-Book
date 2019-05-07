@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
+import { OpenMapDirections } from 'react-native-navigation-directions';
 import * as firebase from 'firebase';
 
 import { connect } from 'react-redux';
@@ -75,6 +76,17 @@ class FriendProfile extends Component {
 
     componentDidDisappear() {
         //no current function
+    }
+
+    showDirections = () => {
+        const endPoint = {
+            longitude: this.state.focusedLocation.longitude,
+            latitude: this.state.focusedLocation.latitude,
+        }
+        const transportPlan = 'd';
+        OpenMapDirections(null, endPoint, transportPlan).then(res => {
+            console.log(res)
+        });
     }
 
     componentDidAppear() {
@@ -155,12 +167,18 @@ class FriendProfile extends Component {
                 >
                     {marker}
                 </MapView>
+                <TouchableOpacity
+                    style={styles.bottomButton}
+                    onPress={this.showDirections}
+                >
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
+                </TouchableOpacity>
                 <View style={styles.alignment}>
                     <TouchableOpacity
                         style={styles.pressRedText}
                         onPress={this.deleteUser}
                     >
-                        <Text style={styles.redText}>DELETE USER</Text>
+                        <Text style={styles.redText}>Delete User</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -221,7 +239,16 @@ const styles = StyleSheet.create({
     redText: {
         color: '#E24A4A',
         fontSize: 20,
-        fontWeight: '500'
+        fontWeight: 'bold'
+    },
+    bottomButton: {
+        width: '100%',
+        position: 'absolute',
+        height: 55,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#3F7F40'
     }
 });
 

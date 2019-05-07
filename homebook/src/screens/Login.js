@@ -68,7 +68,7 @@ class Login extends Component {
   }
 
   EnterLogin = val => {
-    
+
 
 
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
@@ -141,12 +141,12 @@ class Login extends Component {
   componentDidUpdate(prevProps) {
     //alert("THat")
     // alert(prevProps.loginVerify +  " and " + this.props.loginVerify)
-    if (prevProps.loginVerify != this.props.loginVerify) { 
+    if (prevProps.loginVerify != this.props.loginVerify) {
 
-      setTimeout(() => {  
+      setTimeout(() => {
         this.pushHomeScreen();
       }, 400);
-      
+
     }
   }
 
@@ -163,7 +163,7 @@ class Login extends Component {
               autoCapitalize="none"
               keyboardType='email-address'
               style={styles.userInput}
-              placeholder="example@gmail.com"
+              placeholder="johndoe@example.com"
               placeholderTextColor="gray"
               onChangeText={this.emailHandler}
               returnKeyType={"next"}

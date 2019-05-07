@@ -65,7 +65,7 @@ class Recover extends Component {
                         autoCapitalize='none'
                         placeholderTextColor="gray"
                         onChangeText={this.emailHandler}
-                        returnKeyType = { "done" }
+                        returnKeyType={"done"}
                     />
                 </View>
                 <TouchableOpacity
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#3F7F40'
-      }
+    }
 });
 
 export default Recover;

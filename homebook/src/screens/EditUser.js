@@ -164,7 +164,7 @@ class EditUser extends Component {
               style={styles.userInput}
               value={this.state.firstName}
               onChangeText={this.firstNameHandler}
-              returnKeyType = { "next" }
+              returnKeyType={"next"}
               onSubmitEditing={() => { this.secondTextInput.focus(); }}
               blurOnSubmit={false}
             />
@@ -174,7 +174,7 @@ class EditUser extends Component {
               value={this.state.lastName}
               onChangeText={this.lastNameHandler}
               ref={(input) => { this.secondTextInput = input; }}
-              returnKeyType = { "next" }
+              returnKeyType={"next"}
               onSubmitEditing={() => { this.thirdTextInput.focus(); }}
               blurOnSubmit={false}
             />
@@ -185,7 +185,7 @@ class EditUser extends Component {
               value={this.state.phone}
               onChangeText={this.phoneNumberHandler}
               ref={(input) => { this.thirdTextInput = input; }}
-              returnKeyType = { "done" }
+              returnKeyType={"done"}
             />
             <Text style={styles.editLocation}>Change Location</Text>
             <TouchableOpacity
@@ -198,22 +198,22 @@ class EditUser extends Component {
               </View>
             </TouchableOpacity>
           </View>
-            <MapView
-              region={this.state.focusedLocation}
-              style={styles.map}
-              showsUserLocation={true}
-              onPress={this.pickLocationHandler}
-              ref={ref => this.map = ref}
-            >
-              {marker}
-            </MapView>
-          </ScrollView>
-          <TouchableOpacity
-            style={styles.bottomButton}
-            onPress={this.confirmHandler}
+          <MapView
+            region={this.state.focusedLocation}
+            style={styles.map}
+            showsUserLocation={true}
+            onPress={this.pickLocationHandler}
+            ref={ref => this.map = ref}
           >
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SUBMIT</Text>
-          </TouchableOpacity>
+            {marker}
+          </MapView>
+        </ScrollView>
+        <TouchableOpacity
+          style={styles.bottomButton}
+          onPress={this.confirmHandler}
+        >
+          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>UPDATE</Text>
+        </TouchableOpacity>
       </View>
     );
   }

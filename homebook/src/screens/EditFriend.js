@@ -229,12 +229,12 @@ class EditFriend extends Component {
                         {marker}
                     </MapView>
                 </ScrollView>
-                    <TouchableOpacity
-                        style={styles.bottomButton}
-                        onPress={this.confirmHandler}
-                    >
-                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SUBMIT</Text>
-                    </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.bottomButton}
+                    onPress={this.confirmHandler}
+                >
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>UPDATE</Text>
+                </TouchableOpacity>
             </View>
         );
     }

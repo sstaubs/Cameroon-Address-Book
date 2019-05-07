@@ -43,14 +43,13 @@ class HomeScreen extends Component {
 
     pushSearchUserPage = () => Navigation.push(this.props.componentId, {
         component: {
-          name: 'SearchUser'
+            name: 'SearchUser'
         }
-      });
+    });
 
     componentDidMount() {
         this.navigationEventListener = Navigation.events().bindComponent(this);
     }
-
 
     /* componentDidAppear() {
          this.setState({
@@ -59,8 +58,6 @@ class HomeScreen extends Component {
      }
      */
 
-
-
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
         this.ReferenceHandler(this.props.user.referenceArray[val])
@@ -68,11 +65,16 @@ class HomeScreen extends Component {
         this.pushFriendProfile();
     };
 
+    renderWhiteLine = val => {
+        <View
+            style={{
+                borderBottomColor: 'white',
+                borderBottomWidth: 2,
+            }}
+        />
+    }
 
     render() {
-
-
-
         return (
             <View style={styles.container}>
                 <View style={styles.icons}>
@@ -85,37 +87,38 @@ class HomeScreen extends Component {
                         <Icon size={30} name='ios-send' color='white' />
                     </TouchableOpacity>
                 </View>
-
-                <ScrollView style={styles.alignment}>
-                    <TouchableOpacity
-                        onPress={this.pushUserProfile}>
-                        <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-                            <Icon size={35} name='ios-contact' color='white' />
-                            <Text style={styles.mainText}>   {this.props.user.firstN} {this.props.user.lastN}</Text>
-
-                        </View>
-                    </TouchableOpacity>
-                    
-
+                <TouchableOpacity onPress={this.pushUserProfile} style={{width: '85%'}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+                        <Icon size={35} name='ios-contact' color='white' />
+                        <Text style={styles.mainText}>   {this.props.user.firstN} {this.props.user.lastN}</Text>
+                    </View>
+                </TouchableOpacity>
+                <ScrollView style={{width: '100%'}}>
+                    <View style={styles.alignment}>
                     <FlatList
                         style={styles.list}
                         data={this.props.user.friendNameArray}
                         getData={this.state}
 
                         renderItem={({ item, index }) =>
-                            <TouchableOpacity
-                                onPress={() => this.friendHandler(index)}
-                            >
-                                <Text style={styles.bodyText}>{item}</Text>
-                            </TouchableOpacity>
+                            <View>
+                                <View>{this.renderWhiteLine(index)}</View>
+
+                                <TouchableOpacity
+                                    onPress={() => this.friendHandler(index)}
+                                >
+                                    <Text style={styles.bodyText}>{item}</Text>
+                                </TouchableOpacity>
+                            </View>
                         }
                         keyExtractor={(index) => index.toString()}
                     />
+                </View>
                 </ScrollView>
                 <View style={{ position: 'absolute', bottom: 20, right: '7.5%' }}>
                     <TouchableOpacity
                         onPress={this.pushAddUser}>
-                        <Icon size={70} name='ios-add-circle' color='white'/>
+                        <Icon size={65} name='ios-add-circle' color='white' />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -133,13 +136,12 @@ const styles = StyleSheet.create({
     },
     icons: {
         flexDirection: 'row',
-        alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: 40,
         width: '85%'
     },
     alignment: {
-        width: '85%'
+        left: '7.5%'
     },
     mainText: {
         fontWeight: 'bold',

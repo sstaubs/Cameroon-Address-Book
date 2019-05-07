@@ -115,30 +115,30 @@ class SetLocation extends Component {
           <Text style={styles.mainText}>Set Location</Text>
           <Text style={styles.subText}>Tap to drop pin on location</Text>
           <TouchableOpacity
-              onPress={this.getLocationHandler}
-              style={styles.touchableLocation}
+            onPress={this.getLocationHandler}
+            style={styles.touchableLocation}
           >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Icon size={25} name='ios-navigate' color='#7ABAF2' />
-                  <Text style={styles.currentLocation}>  Current Location</Text>
-              </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon size={25} name='ios-navigate' color='#7ABAF2' />
+              <Text style={styles.currentLocation}>  Current Location</Text>
+            </View>
           </TouchableOpacity>
-          </View>
-          <MapView
-            initialRegion={this.state.focusedLocation}
-            style={styles.map}
-            showsUserLocation={true}
-            onPress={this.pickLocationHandler}
-            ref={ref => this.map = ref}
-          >
-            {marker}
-          </MapView>
-          <TouchableOpacity
-            style={styles.bottomButton}
-            onPress={this.SetLocationAndPush}
-          >
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONFIRM COORDINATES</Text>
-          </TouchableOpacity>
+        </View>
+        <MapView
+          initialRegion={this.state.focusedLocation}
+          style={styles.map}
+          showsUserLocation={true}
+          onPress={this.pickLocationHandler}
+          ref={ref => this.map = ref}
+        >
+          {marker}
+        </MapView>
+        <TouchableOpacity
+          style={styles.bottomButton}
+          onPress={this.SetLocationAndPush}
+        >
+          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONFIRM COORDINATES</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -173,13 +173,13 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   currentLocation: {
-      fontSize: 17,
-      color: '#7ABAF2'
+    fontSize: 17,
+    color: '#7ABAF2'
   },
   map: {
-      width: '100%',
-      height: 400,
-      marginTop: 10
+    width: '100%',
+    height: 400,
+    marginTop: 10
   },
   bottomButton: {
     width: '100%',

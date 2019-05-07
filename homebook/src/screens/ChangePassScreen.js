@@ -62,7 +62,7 @@ class ChangePassScreen extends Component {
                 }).catch((error) => {
                     alert(error.message);
                 })
-            }).catch( (error) => {
+            }).catch((error) => {
                 // An error happened.
                 alert("Was not authenticated");
             });
@@ -93,7 +93,7 @@ class ChangePassScreen extends Component {
                         placeholder="••••••••••"
                         placeholderTextColor="gray"
                         onChangeText={this.currentPassHandler}
-                        returnKeyType = { "next" }
+                        returnKeyType={"next"}
                         onSubmitEditing={() => { this.secondTextInput.focus(); }}
                         blurOnSubmit={false}
                     />
@@ -105,7 +105,7 @@ class ChangePassScreen extends Component {
                         placeholderTextColor="gray"
                         onChangeText={this.passHandler}
                         ref={(input) => { this.secondTextInput = input; }}
-                        returnKeyType = { "next" }
+                        returnKeyType={"next"}
                         onSubmitEditing={() => { this.thirdTextInput.focus(); }}
                         blurOnSubmit={false}
                     />
@@ -117,7 +117,7 @@ class ChangePassScreen extends Component {
                         placeholderTextColor="gray"
                         onChangeText={this.confirmPassHandler}
                         ref={(input) => { this.thirdTextInput = input; }}
-                        returnKeyType = { "done" }
+                        returnKeyType={"done"}
                         blurOnSubmit={true}
                     />
                 </View>
@@ -127,7 +127,7 @@ class ChangePassScreen extends Component {
                 >
                     <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>UPDATE PASSWORD</Text>
                 </TouchableOpacity>
-        </View>
+            </View>
         );
     }
 }

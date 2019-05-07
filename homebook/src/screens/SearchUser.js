@@ -10,7 +10,7 @@ class SearchUser extends Component {
         email: '',
         firstname: '',
         lastname: '',
-        phone:'',
+        phone: '',
         latitude: '',
         longitude: '',
         docId: '',
@@ -66,7 +66,7 @@ class SearchUser extends Component {
     SendRequest = val => {
 
         var db = firebase.firestore();
-     
+
         const requesterInfo = {
             firstN: this.props.user.firstN,
             lastN: this.props.user.lastN,
@@ -77,23 +77,16 @@ class SearchUser extends Component {
         };
 
         db.collection("users").doc(val).collection("requests").add(requesterInfo)
-        .then((docRef) => {
-            this.pushToHome();
-        }).catch((error) => {
-          //alert("error here")
-          //alert("Error adding document: " + error);
-        });
+            .then((docRef) => {
+                this.pushToHome();
+            }).catch((error) => {
+                //alert("error here")
+                //alert("Error adding document: " + error);
+            });
 
     };
 
-
-
-
-
-
     render() {
-       
-        
         return (
             <View style={styles.container}>
                 <TouchableOpacity
@@ -102,37 +95,38 @@ class SearchUser extends Component {
                 >
                     <Icon size={35} name='ios-arrow-round-back' color='white' />
                 </TouchableOpacity>
-                <Text style={styles.mainText}>Find User</Text>
-                <Text style={styles.subText}>Email</Text>
-                <TextInput
-                    keyboardType="number-pad"
-                    style={styles.phoneInfo}
-                    placeholder="Email"
-                    placeholderTextColor="gray"
-                    onChangeText={this.searchedEmailHandler}
-                />
+                <View style={styles.alignment}>
+                    <Text style={styles.mainText}>Share Contact</Text>
+                    <Text style={styles.label}>Email</Text>
+                    <TextInput
+                        keyboardType="email-address"
+                        style={styles.userInput}
+                        placeholder="johndoe@example.com"
+                        placeholderTextColor="gray"
+                        returnKeyType="done"
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        onChangeText={this.searchedEmailHandler}
+                    />
+                    <FlatList
+                        style={styles.list}
+                        data={this.state.friendNameArray}
+                        renderItem={({ item, index }) =>
+                            <TouchableOpacity
+                                onPress={() => this.SendRequest(this.state.referenceArray[index])}
+                            >
+                                <Text style={styles.bodyText}>{item}</Text>
+                            </TouchableOpacity>
+                        }
+                        keyExtractor={(index) => index.toString()}
+                    />
+                </View>
                 <TouchableOpacity
-                    style={styles.sendButton}
+                    style={styles.bottomButton}
                     onPress={this.searchBySearchedEmail}
                 >
-                    <Text style={{ color: 'white', fontWeight: '500' }}>SUBMIT</Text>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SEARCH</Text>
                 </TouchableOpacity>
-
-                <FlatList
-                    style={styles.list}
-                    data={
-                        this.state.friendNameArray
-                    }
-                    renderItem={({ item, index }) =>
-                        <TouchableOpacity
-                            onPress={() => this.SendRequest(this.state.referenceArray[index])}
-                        >
-                            <Text style={styles.bodyText}>{item}</Text>
-
-                        </TouchableOpacity>
-                    }
-                    keyExtractor={(index) => index.toString()}
-                />
             </View>
         );
     }
@@ -147,41 +141,42 @@ const styles = StyleSheet.create({
         backgroundColor: '#222222',
     },
     backIcon: {
-        position: 'relative',
-        right: 140,
-        marginTop: 70
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 40,
+        width: '85%'
+    },
+    alignment: {
+        width: '85%'
     },
     mainText: {
-        color: 'white',
-        fontSize: 30,
         fontWeight: 'bold',
-        width: 300,
-        textAlign: 'center',
-        marginTop: 24
-    },
-    subText: {
+        fontSize: 30,
+        marginTop: 25,
         color: 'white',
-        fontSize: 17,
-        marginTop: 50,
-        width: 300
+        textAlign: 'center'
     },
-    phoneInfo: {
-        width: 300,
-        marginTop: 5,
-        padding: 5,
-        borderWidth: 1,
-        borderColor: 'white',
+    label: {
+        color: '#7ABAF2',
+        paddingTop: 30,
+        fontSize: 13
+    },
+    userInput: {
+        borderColor: '#7ABAF2',
+        borderBottomWidth: 1,
+        height: 40,
         fontSize: 17,
-        height: 32,
         color: 'white'
     },
-    sendButton: {
-        width: 300,
-        marginTop: 20,
+    bottomButton: {
+        width: '100%',
+        position: 'absolute',
+        height: 55,
+        bottom: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#4A90E2',
-        height: 32
+        backgroundColor: '#3F7F40'
     },
     list: {
         marginTop: 20
@@ -196,15 +191,11 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         user: state.reference.user,
-
     };
 };
 
-
 const mapDispatchToProps = dispatch => {
     return {
-       
-
     };
 };
 
