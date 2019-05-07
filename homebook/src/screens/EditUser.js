@@ -140,6 +140,7 @@ class EditUser extends Component {
               style={styles.userInput}
               value={this.state.firstName}
               onChangeText={this.firstNameHandler}
+              autoCorrect={false}
               returnKeyType={"next"}
               onSubmitEditing={() => { this.secondTextInput.focus(); }}
               blurOnSubmit={false}
@@ -149,6 +150,7 @@ class EditUser extends Component {
               style={styles.userInput}
               value={this.state.lastName}
               onChangeText={this.lastNameHandler}
+              autoCorrect={false}
               ref={(input) => { this.secondTextInput = input; }}
               returnKeyType={"next"}
               onSubmitEditing={() => { this.thirdTextInput.focus(); }}

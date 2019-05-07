@@ -37,28 +37,16 @@ class UserProfile extends Component {
     }
   });
 
-
-  pushRequestPage = () => Navigation.push(this.props.componentId, {
-    component: {
-      name: 'RequestPage'
-    }
-  });
-
   showDirections = () => {
-
-
     const endPoint = {
       longitude: this.state.focusedLocation.longitude,
       latitude: this.state.focusedLocation.latitude,
     }
-
     const transportPlan = 'd';
-
     OpenMapDirections(null, endPoint, transportPlan).then(res => {
       console.log(res)
     });
   }
-
 
   componentDidMount() {
     this.navigationEventListener = Navigation.events().bindComponent(this);
@@ -94,14 +82,6 @@ class UserProfile extends Component {
         </View>
         <View style={styles.alignment}>
           <Text style={styles.mainText}>{this.props.user.firstN} {this.props.user.lastN}</Text>
-          <TouchableOpacity
-            style={{ marginTop: 10 }}
-            onPress={this.pushRequestPage}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon size={25} name='ios-download' color='white' />
-              <Text style={{ color: 'white', fontSize: 18 }}>  Requests</Text>
-            </View>
-          </TouchableOpacity>
           <Text style={styles.category}>Phone Number</Text>
           <Text style={styles.textInputStyle}>{this.props.user.phone}</Text>
           <Text style={styles.category}>Email</Text>
@@ -120,7 +100,7 @@ class UserProfile extends Component {
           style={styles.bottomButton}
           onPress={this.showDirections}
         >
-          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
+          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>GET DIRECTIONS</Text>
         </TouchableOpacity>
       </View>
     );

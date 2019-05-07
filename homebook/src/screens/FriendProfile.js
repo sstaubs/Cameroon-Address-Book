@@ -123,6 +123,7 @@ class FriendProfile extends Component {
                     region={this.state.focusedLocation}
                     style={styles.map}
                     showsUserLocation={true}
+                    loadingEnabled={true}
                     ref={ref => this.map = ref}
                 >
                     {marker}

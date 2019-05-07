@@ -108,13 +108,13 @@ class RequestPage extends Component {
                             <Icon size={35} name='ios-arrow-round-back' color='white' />
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.mainText}>Requests  <Icon size={35} name='ios-download' color='white' /></Text>
+                    <Text style={styles.mainText}>Requests</Text>
                     <FlatList
                         style={styles.list}
                         data={this.state.friendNameArray}
                         getData={this.state}
                         renderItem={({ item, index }) =>
-                            <View style={{backgroundColor: '#303030', marginBottom: 20, borderRadius: 10}}>
+                            <View style={{ marginBottom: 20, borderRadius: 10}}>
                                 <Text style={styles.bodyText}>{item}</Text>
                                 <View style={styles.buttons}>
                                     <TouchableOpacity
