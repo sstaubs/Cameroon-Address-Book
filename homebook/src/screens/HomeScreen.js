@@ -71,15 +71,20 @@ class HomeScreen extends Component {
     };
 
     renderWhiteLine = val => {
-        <View
-            style={{
-                borderBottomColor: 'white',
-                borderBottomWidth: 2,
-            }}
-        />
+        if (val >= 1) {
+            return (
+                <View
+                    style={{
+                        borderBottomColor: 'white',
+                        borderBottomWidth: 2,
+                    }}
+                />
+            );
+        }
     }
 
     render() {
+
         return (
             <View style={styles.container}>
                 <View style={styles.icons}>
@@ -92,34 +97,34 @@ class HomeScreen extends Component {
                         <Icon size={30} name='ios-send' color='white' />
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={this.pushUserProfile} style={{width: '85%'}}>
+                <TouchableOpacity onPress={this.pushUserProfile} style={{ width: '85%' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                         <Icon size={35} name='ios-contact' color='white' />
                         <Text style={styles.mainText}>   {this.props.user.firstN} {this.props.user.lastN}</Text>
                     </View>
                 </TouchableOpacity>
-                <ScrollView style={{width: '100%'}} indicatorStyle='white'>
+                <ScrollView style={{ width: '100%' }} indicatorStyle='white'>
                     <View style={styles.alignment}>
-                    <FlatList
-                        style={styles.list}
-                        data={this.state.friendNameArray}
-                        extraData={this.state}
+                        <FlatList
+                            style={styles.list}
+                            data={this.state.friendNameArray}
+                            extraData={this.state}
 
-                        renderItem={({ item, index }) =>
-                            <View>
-                                <View>{this.renderWhiteLine(index)}</View>
+                            renderItem={({ item, index }) =>
+                                <View>
+                                    <View>{this.renderWhiteLine(index)}</View>
 
-                                <TouchableOpacity
-                                    onPress={() => this.friendHandler(index)}
-                                >
-                                    <Text style={styles.bodyText}>{item}</Text>
-                                </TouchableOpacity>
-                            </View>
-                        }
+                                    <TouchableOpacity
+                                        onPress={() => this.friendHandler(index)}
+                                    >
+                                        <Text style={styles.bodyText}>{item}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            }
 
-                        keyExtractor={(index) => index.toString()}
-                    />
-                </View>
+                            keyExtractor={(index) => index.toString()}
+                        />
+                    </View>
                 </ScrollView>
                 <View style={{ position: 'absolute', bottom: 20, right: '7.5%' }}>
                     <TouchableOpacity
@@ -163,7 +168,7 @@ const styles = StyleSheet.create({
         color: 'white',
         marginTop: 10,
         fontSize: 18,
-        backgroundColor: '#303030',
+        
         padding: 10
     }
 });
