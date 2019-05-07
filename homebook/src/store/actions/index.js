@@ -1,5 +1,5 @@
 export { getReference, 
-    getUser, setUser, getLogin, editUser, 
-    getFriend, setFriend, editFriend 
+    getUser, setUser, editUser, 
+    getFriend, setFriend, editFriend, deleteFriend
 } from './reference';
 

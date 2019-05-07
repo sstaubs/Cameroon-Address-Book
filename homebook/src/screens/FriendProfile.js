@@ -7,6 +7,7 @@ import { OpenMapDirections } from 'react-native-navigation-directions';
 import * as firebase from 'firebase';
 
 import { connect } from 'react-redux';
+import { deleteFriend } from "../store/actions/index";
 
 class FriendProfile extends Component {
     state = {
@@ -59,14 +60,8 @@ class FriendProfile extends Component {
     };
 
     deleteUser = () => {
-        var db = firebase.firestore();
-
-        db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).delete().then(() => {
-            // Friend deleted.
-            Navigation.pop(this.props.componentId);
-        }).catch(() => {
-            // An error happened.
-        });
+        this.props.onDeleteFriend(this.props.user.docId,this.props.friend.docId)
+        Navigation.pop(this.props.componentId);
 
     }
 
@@ -218,11 +213,16 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        refpoint: state.reference.friendref,
+        user: state.reference.user,
         friend: state.reference.friend,
 
     };
 };
-
-
-export default connect(mapStateToProps)(FriendProfile);
+const mapDispatchToProps = dispatch => {
+    return {
+      onDeleteFriend: (userId, ref) => dispatch(deleteFriend(userId,ref)),
+  
+    };
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(FriendProfile);

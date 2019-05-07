@@ -59,7 +59,8 @@ class Login extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user && this.state.firstLoading && user.emailVerified) {
-        this.props.onGetUser()
+        this.props.onGetUser();
+        this.pushHomeScreen();
 
       } else {
         this.setState({ firstLoading: false });
@@ -75,6 +76,7 @@ class Login extends Component {
       var user = firebase.auth().currentUser;
       if (user.emailVerified) {
         this.props.onGetUser();
+        this.pushHomeScreen();
 
       } else {
         this.setState({ visible: true });
@@ -138,17 +140,6 @@ class Login extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
-    //alert("THat")
-    // alert(prevProps.loginVerify +  " and " + this.props.loginVerify)
-    if (prevProps.loginVerify != this.props.loginVerify) {
-
-      setTimeout(() => {
-        this.pushHomeScreen();
-      }, 400);
-
-    }
-  }
 
   render() {
     return (
