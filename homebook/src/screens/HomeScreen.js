@@ -9,6 +9,7 @@ import { getReference, getUser, getFriend } from "../store/actions/index";
 class HomeScreen extends Component {
     state = {
         refresh: false,
+        friendNameArray: []
     };
 
     ReferenceHandler = placeName => {
@@ -48,16 +49,21 @@ class HomeScreen extends Component {
     });
 
     componentDidMount() {
-
+        this.navigationEventListener = Navigation.events().bindComponent(this);
+        this.setState({
+            friendNameArray: this.props.user.friendNameArray
+        });
 
     }
-
-    /* componentDidAppear() {
-         this.setState({
-             refresh: !this.state.refresh
-         });
-     }
-     */
+    componentDidAppear() {
+        this.setState({
+            refresh: !this.state.refresh,
+            friendNameArray: this.props.user.friendNameArray
+        });
+    }
+    
+    
+     
 
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
@@ -98,7 +104,7 @@ class HomeScreen extends Component {
                     <View style={styles.alignment}>
                     <FlatList
                         style={styles.list}
-                        data={this.props.user.friendNameArray}
+                        data={this.state.friendNameArray}
                         getData={this.state}
 
                         renderItem={({ item, index }) =>

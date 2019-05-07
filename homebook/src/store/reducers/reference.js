@@ -46,11 +46,7 @@ const reducer = (state = initialState, action) => {
                 friend: action.friend,
 
             };
-        case GET_LOGIN:
-            return {
-                ...state,
-                loginVerify: !state.loginVerify
-            };
+        
         default:
             return state;
     }

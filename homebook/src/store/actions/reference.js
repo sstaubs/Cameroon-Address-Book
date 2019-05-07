@@ -1,4 +1,4 @@
-import { GET_REF, SET_USER, GET_LOGIN, SET_FRIEND } from './actionTypes'
+import { GET_REF, SET_USER,  SET_FRIEND } from './actionTypes'
 import * as firebase from 'firebase';
 
 export const editUser = (accountInfo) => {
@@ -24,6 +24,23 @@ export const editUser = (accountInfo) => {
             });
     }
 }
+
+export const deleteFriend  = (userId,ref) => {
+    return dispatch => {
+        var db = firebase.firestore();
+
+        db.collection("users").doc(userId).collection("friends").doc(ref).delete().then(() => {
+            // Friend deleted.
+            
+        }).then(() => {
+            dispatch(getUser());
+        }).catch(() => {
+            // An error happened.
+        });
+    }
+}
+
+
 export const editFriend = (userId, ref, accountInfo) => {
     return dispatch => {
         var db = firebase.firestore();
@@ -32,6 +49,8 @@ export const editFriend = (userId, ref, accountInfo) => {
                 console.log("Document successfully updated!");
             }).then(() => {
                 dispatch(setFriend(accountInfo));
+            }).then(() =>{
+                dispatch(getUser());
             })
             .catch((error) => {
                 // The document probably doesn't exist.
@@ -90,12 +109,6 @@ export const getUser = () => {
                 dispatch(setUser(user));
 
 
-            }).then(() => {
-                dispatch(getLogin());
-
-
-
-
             }).catch((error) => {
                 alert("Error getting documents: " + error);
             });
@@ -151,11 +164,7 @@ export const setFriend = (friend) => {
     };
 };
 
-export const getLogin = () => {
-    return {
-        type: GET_LOGIN,
-    };
-};
+
 
 export const getReference = (refpoint) => {
     return {
