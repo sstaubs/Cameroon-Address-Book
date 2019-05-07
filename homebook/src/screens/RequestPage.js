@@ -4,6 +4,7 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
+import { getUser } from "../store/actions/index";
 
 class RequestPage extends Component {
     state = {
@@ -49,16 +50,20 @@ class RequestPage extends Component {
         }).catch((error) => {
             //console.error("Error removing document: ", error);
         });
-        this.setState({
-            
-            docArray: this.state.docArray.slice(val,1),
-            friendNameArray: this.state.friendNameArray.slice(val,1),
-
+        
+        this.setState({ 
+            friendNameArray: this.state.friendNameArray.slice(0, val).concat(this.state.friendNameArray.slice(val + 1, this.state.friendNameArray.length)),
+            docArray: this.state.docArray.slice(0, val).concat(this.state.docArray.slice(val + 1, this.state.docArray.length))
         });
+
+
+        
+         
+
     }
 
     acceptHandler = val => {
-        
+
         var db = firebase.firestore();
         const info = {
             email: '',
@@ -87,6 +92,7 @@ class RequestPage extends Component {
                     .then((docRef) => {
                         //alert("Document written with ID: " + docRef.id);
                         this.removeRequest(val);
+                        this.props.onGetUser();
                     }).catch((error) => {
                         //alert("error here")
                         //alert("Error adding document: " + error);
@@ -95,8 +101,31 @@ class RequestPage extends Component {
     }
 
     declineHandler = val => {
-        
+
         this.removeRequest(val);
+    }
+    renderList = (item, index) => {
+        return (
+            <View style={{ marginBottom: 20, borderRadius: 10 }}>
+                <Text style={styles.bodyText}>{item}</Text>
+                <View style={styles.buttons}>
+                    <TouchableOpacity
+                        style={styles.acceptButton}
+                        onPress={() => this.acceptHandler(index)}
+                    >
+                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Accept</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.declineButton}
+                        onPress={() => this.declineHandler(index)}
+                    >
+                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Decline</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+        );
+
     }
 
     render() {
@@ -117,25 +146,11 @@ class RequestPage extends Component {
                             data={this.state.friendNameArray}
                             extraData={this.state}
                             renderItem={({ item, index }) =>
-                                <View style={{ marginBottom: 20, borderRadius: 10 }}>
-                                    <Text style={styles.bodyText}>{item}</Text>
-                                    <View style={styles.buttons}>
-                                        <TouchableOpacity
-                                            style={styles.acceptButton}
-                                            onPress={() => this.acceptHandler(index)}
-                                        >
-                                            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Accept</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            style={styles.declineButton}
-                                            onPress={() => this.declineHandler(index)}
-                                        >
-                                            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Decline</Text>
-                                        </TouchableOpacity>
-                                    </View>
+                                <View>
+                                    {this.renderList(item, index)}
                                 </View>
                             }
-                            keyExtractor={(item,index) => index.toString()}
+                            keyExtractor={(item, index) => index.toString()}
                         />
                     </View>
                 </View>
@@ -211,6 +226,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        onGetUser: () => dispatch(getUser()),
     };
 };
 
