@@ -1,4 +1,4 @@
-import { GET_REF, SET_USER, SET_FRIEND } from './actionTypes'
+import { GET_REF, SET_USER, SET_FRIEND, SET_LOADED } from './actionTypes'
 import * as firebase from 'firebase';
 
 export const editUser = (accountInfo) => {
@@ -96,19 +96,7 @@ export const getUser = () => {
         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get()
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get()
-                        .then((querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
 
-                                user.referenceArray.push(doc.id);
-                                user.friendNameArray.push(doc.data().firstN + " " + doc.data().lastN);
-
-
-                            });
-
-                        }).catch(function (error) {
-                            alert("Error getting documents: " + error);
-                        });
 
                     user.firstN = doc.data().firstN;
                     user.lastN = doc.data().lastN;
@@ -117,19 +105,40 @@ export const getUser = () => {
                     user.latitude = doc.data().latitude;
                     user.longitude = doc.data().longitude;
                     user.docId = doc.id;
+                    
+                    
+
 
                 });
             }).then(() => {
+                db.collection("users").doc(user.docId).collection("friends").orderBy("lastN").get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
 
-                dispatch(setUser(user));
+                            user.referenceArray.push(doc.id);
+                            user.friendNameArray.push(doc.data().firstN + " " + doc.data().lastN);
 
+
+                        });
+                        
+                        dispatch(setUser(user));
+                        dispatch(setLoaded());
+
+
+                    }).catch(function (error) {
+                        alert("Error getting documents: " + error);
+                    });
 
             }).catch((error) => {
                 alert("Error getting documents: " + error);
             });
 
 
+
+
+
     };
+
 
 };
 
@@ -161,6 +170,7 @@ export const getFriend = (userId, ref) => {
                 alert("Error getting documents: " + error);
             });
 
+
     }
 }
 
@@ -185,5 +195,13 @@ export const getReference = (refpoint) => {
     return {
         type: GET_REF,
         refpoint: refpoint,
+    };
+};
+
+export const setLoaded = () => {
+    return {
+
+        type: SET_LOADED,
+
     };
 };
