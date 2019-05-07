@@ -5,6 +5,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 
+import { connect } from 'react-redux';
+import { addFriend } from "../store/actions/index";
+
 class AddUser extends Component {
   state = {
     firstName: '',
@@ -29,12 +32,10 @@ class AddUser extends Component {
   }
 
   popHomeScreen() {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'HomeScreen'
-      }
-    });
+    Navigation.pop(this.props.componentId);
   }
+
+     
 
   pushSearchUser = () => {
 
@@ -122,9 +123,9 @@ class AddUser extends Component {
     });
   }
 
-  confirmHandler = val => {
+  confirmHandler = () => {
 
-    var db = firebase.firestore();
+    
 
 
     const friendsInfo = {
@@ -136,15 +137,10 @@ class AddUser extends Component {
       longitude: this.state.focusedLocation.longitude,
 
     };
-    db.collection("users").doc(this.state.docId).collection("friends").add(friendsInfo)
-      .then((docRef) => {
-        //alert("Document written with ID: " + docRef.id);
-      }).catch((error) => {
-        //alert("error here")
-        //alert("Error adding document: " + error);
-      });
+    this.props.onAddFriend(this.props.user.docId,friendsInfo);
+   
 
-    this.popHomeScreen()
+    this.popHomeScreen();
   };
 
   render() {
@@ -312,4 +308,20 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddUser;
+const mapStateToProps = state => {
+  return {
+      user: state.reference.user,
+
+  };
+};
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddFriend: (userId, accountInfo) => dispatch(addFriend(userId, accountInfo)),
+
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddUser);
+
