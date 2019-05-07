@@ -93,26 +93,10 @@ export const getUser = () => {
         };
         var db = firebase.firestore();
 
-         db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get()
-            .then( (querySnapshot) => {
+        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get()
+            .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get()
-                        .then((querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
 
-                                user.referenceArray.push(doc.id);
-                                user.friendNameArray.push(doc.data().firstN + " " + doc.data().lastN);
-
-
-                            });
-                            //this code is poorly formatted because it makes it seem like set loaded comes before setUsers which is not the case
-                            //however it does work but this code needs to be reset up
-                            dispatch(setLoaded());
-                            
-
-                        }).catch(function (error) {
-                            alert("Error getting documents: " + error);
-                        });
 
                     user.firstN = doc.data().firstN;
                     user.lastN = doc.data().lastN;
@@ -121,29 +105,40 @@ export const getUser = () => {
                     user.latitude = doc.data().latitude;
                     user.longitude = doc.data().longitude;
                     user.docId = doc.id;
-                    //alert(user.friendNameArray[0])
-                    dispatch(setUser(user));
                     
+                    
+
 
                 });
             }).then(() => {
-                
-                
+                db.collection("users").doc(user.docId).collection("friends").orderBy("lastN").get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
 
-                
-                
+                            user.referenceArray.push(doc.id);
+                            user.friendNameArray.push(doc.data().firstN + " " + doc.data().lastN);
 
+
+                        });
+                        
+                        dispatch(setUser(user));
+                        dispatch(setLoaded());
+
+
+                    }).catch(function (error) {
+                        alert("Error getting documents: " + error);
+                    });
 
             }).catch((error) => {
                 alert("Error getting documents: " + error);
             });
 
-        
 
 
-            
+
+
     };
-    
+
 
 };
 
@@ -181,7 +176,7 @@ export const getFriend = (userId, ref) => {
 
 
 export const setUser = (user) => {
-     return  {
+    return {
         type: SET_USER,
         user: user,
     };
@@ -205,7 +200,7 @@ export const getReference = (refpoint) => {
 
 export const setLoaded = () => {
     return {
-        
+
         type: SET_LOADED,
 
     };
