@@ -148,31 +148,29 @@ class Login extends Component {
         <View style={styles.alignment}>
           <Text style={styles.mainText}>HomeBook</Text>
           <Text style={styles.supportingText}>Addressing Your Home</Text>
-          <KeyboardAvoidingView behavior='padding'>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              autoCapitalize="none"
-              keyboardType='email-address'
-              style={styles.userInput}
-              placeholder="johndoe@example.com"
-              placeholderTextColor="gray"
-              onChangeText={this.emailHandler}
-              returnKeyType={"next"}
-              onSubmitEditing={() => { this.secondTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              secureTextEntry={true}
-              style={styles.userInput}
-              placeholder="••••••••••"
-              placeholderTextColor="gray"
-              onChangeText={this.passwordHandler}
-              ref={(input) => { this.secondTextInput = input; }}
-              returnKeyType={"done"}
-            />
-            <Text onPress={this.pushRecovery} style={styles.forgotPassword}>Forgot Password?</Text>
-          </KeyboardAvoidingView>
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            autoCapitalize="none"
+            keyboardType='email-address'
+            style={styles.userInput}
+            placeholder="johndoe@example.com"
+            placeholderTextColor="gray"
+            onChangeText={this.emailHandler}
+            returnKeyType={"next"}
+            onSubmitEditing={() => { this.secondTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+          <Text style={styles.label}>Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.userInput}
+            placeholder="••••••••••"
+            placeholderTextColor="gray"
+            onChangeText={this.passwordHandler}
+            ref={(input) => { this.secondTextInput = input; }}
+            returnKeyType={"done"}
+          />
+          <Text onPress={this.pushRecovery} style={styles.forgotPassword}>Forgot Password?</Text>
           <Dialog
             visible={this.state.visible}
             footer={
@@ -227,7 +225,7 @@ const styles = StyleSheet.create({
     color: '#7ABAF2',
     fontSize: 30,
     fontWeight: 'bold',
-    marginTop: '50%',
+    marginTop: 150,
     textAlign: 'center'
   },
   supportingText: {

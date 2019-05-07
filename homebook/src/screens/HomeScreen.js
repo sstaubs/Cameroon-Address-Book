@@ -61,9 +61,9 @@ class HomeScreen extends Component {
             friendNameArray: this.props.user.friendNameArray
         });
     }
-    
-    
-     
+
+
+
 
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
@@ -100,7 +100,7 @@ class HomeScreen extends Component {
                         <Text style={styles.mainText}>   {this.props.user.firstN} {this.props.user.lastN}</Text>
                     </View>
                 </TouchableOpacity>
-                <ScrollView style={{width: '100%'}}>
+                <ScrollView style={{width: '100%'}} indicatorStyle='white'>
                     <View style={styles.alignment}>
                     <FlatList
                         style={styles.list}
