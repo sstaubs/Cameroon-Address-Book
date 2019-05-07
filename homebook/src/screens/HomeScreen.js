@@ -55,12 +55,15 @@ class HomeScreen extends Component {
         });
 
     }
+    
     componentDidAppear() {
         this.setState({
             refresh: !this.state.refresh,
             friendNameArray: this.props.user.friendNameArray
         });
     }
+
+    
     
     
      
@@ -105,7 +108,7 @@ class HomeScreen extends Component {
                     <FlatList
                         style={styles.list}
                         data={this.state.friendNameArray}
-                        getData={this.state}
+                        getData={this.state.friendNameArray}
 
                         renderItem={({ item, index }) =>
                             <View>
