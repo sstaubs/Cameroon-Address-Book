@@ -15,8 +15,8 @@ class UserProfile extends Component {
     email: '',
     docId: '',
     focusedLocation: {
-      longitude: 0,
-      latitude: 0,
+      longitude: this.props.user.longitude,
+      latitude: this.props.user.latitude,
       latitudeDelta: 0.0122,
       longitudeDelta:
         Dimensions.get("window").width /
@@ -69,28 +69,12 @@ class UserProfile extends Component {
   }
 
   componentDidAppear() {
-    var db = firebase.firestore();
-    db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        //alert(doc.data().email);
-        //alert(doc.id, " => ", doc.data());
-        //alert(doc)
-        this.setState({
-          firstname: doc.data().firstN,
-          lastname: doc.data().lastN,
-          phone: doc.data().phoneNum,
-          email: doc.data().email,
-          docId: doc.id,
-          focusedLocation: {
-            ...this.state.focusedLocation,
-            longitude: doc.data().longitude,
-            latitude: doc.data().latitude,
-          },
-        });
-      });
-    }).catch(function (error) {
-      alert("Error getting documents: " + error);
+    this.setState({
+      focusedLocation: {
+        ...this.state.focusedLocation,
+        longitude: this.props.user.longitude,
+        latitude: this.props.user.latitude,
+      },
     });
   }
 

@@ -16,8 +16,8 @@ class FriendProfile extends Component {
         email: '',
         docId: '',
         focusedLocation: {
-            longitude: 0,
-            latitude: 0,
+            longitude: this.props.friend.longitude,
+            latitude: this.props.friend.latitude,
             latitudeDelta: 0.0122,
             longitudeDelta:
                 Dimensions.get("window").width /
@@ -90,50 +90,14 @@ class FriendProfile extends Component {
     }
 
     componentDidAppear() {
-        var db = firebase.firestore();
-
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                //alert(doc.data().email);
-                //alert(doc.id, " => ", doc.data());
-                //alert(doc)
-
-
-                this.setState({
-
-
-                    docId: doc.id,
-                });
-
-
-
-            });
-
-        }).then(() => {
-            db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).get()
-                .then(doc => {
-
-                    this.setState({
-
-
-                        firstname: doc.data().firstN,
-                        lastname: doc.data().lastN,
-                        phone: doc.data().phoneNum,
-                        email: doc.data().email,
-                        focusedLocation: {
-                            ...this.state.focusedLocation,
-                            longitude: doc.data().longitude,
-                            latitude: doc.data().latitude,
-                        },
-                    })
-
-                }).catch(function (error) {
-                    alert("Error getting documents: " + error);
-                });
-        }).catch(function (error) {
-            alert("Error getting documents: " + error);
-        });
+        this.setState({
+            focusedLocation: {
+              ...this.state.focusedLocation,
+              longitude: this.props.friend.longitude,
+              latitude: this.props.friend.latitude,
+            },
+          });
+        
     }
 
     render() {
@@ -153,11 +117,11 @@ class FriendProfile extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.alignment}>
-                    <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+                    <Text style={styles.mainText}>{this.props.friend.firstN} {this.props.friend.lastN}</Text>
                     <Text style={styles.category}>Phone Number</Text>
-                    <Text style={styles.textInputStyle}>{this.state.phone}</Text>
+                    <Text style={styles.textInputStyle}>{this.props.friend.phone}</Text>
                     <Text style={styles.category}>Email</Text>
-                    <Text style={styles.textInputStyle}>{this.state.email}</Text>
+                    <Text style={styles.textInputStyle}>{this.props.friend.email}</Text>
                     <Text style={styles.location}>Location</Text>
                 </View>
                 <MapView
@@ -255,6 +219,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         refpoint: state.reference.friendref,
+        friend: state.reference.friend,
 
     };
 };

@@ -1,4 +1,4 @@
-import { GET_REF, SET_USER, GET_LOGIN } from '../actions/actionTypes';
+import { GET_REF, SET_USER, GET_LOGIN, SET_FRIEND } from '../actions/actionTypes';
 const initialState = {
     friendref: '',
     loginVerify: false,
@@ -14,7 +14,16 @@ const initialState = {
         latitude: 0,
 
     },
-    
+    friend: {
+        firstN: '',
+        lastN: '',
+        docId: '',
+        phone: '',
+        email: '',
+        longitude: 0,
+        latitude: 0,
+    }
+
 
 }
 
@@ -28,7 +37,14 @@ const reducer = (state = initialState, action) => {
         case SET_USER:
             return {
                 ...state,
-                user: action.user
+                user: action.user,
+
+            };
+        case SET_FRIEND:
+            return {
+                ...state,
+                friend: action.friend,
+
             };
         case GET_LOGIN:
             return {

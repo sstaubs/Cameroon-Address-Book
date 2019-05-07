@@ -4,7 +4,7 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
-import { getReference, getUser } from "../store/actions/index";
+import { getReference, getUser, getFriend } from "../store/actions/index";
 
 class HomeScreen extends Component {
     state = {
@@ -48,7 +48,8 @@ class HomeScreen extends Component {
     });
 
     componentDidMount() {
-        this.navigationEventListener = Navigation.events().bindComponent(this);
+
+
     }
 
     /* componentDidAppear() {
@@ -60,7 +61,7 @@ class HomeScreen extends Component {
 
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
-        this.ReferenceHandler(this.props.user.referenceArray[val])
+        this.props.onGetFriend(this.props.user.docId, this.props.user.referenceArray[val])
         //alert(this.props.refpoint);
         this.pushFriendProfile();
     };
@@ -111,6 +112,7 @@ class HomeScreen extends Component {
                                 </TouchableOpacity>
                             </View>
                         }
+
                         keyExtractor={(index) => index.toString()}
                     />
                 </View>
@@ -170,6 +172,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onGetReference: name => dispatch(getReference(name)),
         onGetUser: () => dispatch(getUser()),
+        onGetFriend: (userId, ref) => dispatch(getFriend(userId, ref)),
 
     };
 };
