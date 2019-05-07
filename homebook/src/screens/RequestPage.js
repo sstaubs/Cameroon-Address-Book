@@ -115,7 +115,7 @@ class RequestPage extends Component {
                         <FlatList
                             style={styles.list}
                             data={this.state.friendNameArray}
-                            getData={this.state}
+                            extraData={this.state}
                             renderItem={({ item, index }) =>
                                 <View style={{ marginBottom: 20, borderRadius: 10 }}>
                                     <Text style={styles.bodyText}>{item}</Text>
@@ -135,7 +135,7 @@ class RequestPage extends Component {
                                     </View>
                                 </View>
                             }
-                            keyExtractor={(index) => index.toString()}
+                            keyExtractor={(item,index) => index.toString()}
                         />
                     </View>
                 </View>

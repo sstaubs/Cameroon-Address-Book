@@ -124,7 +124,7 @@ class HomeScreen extends Component {
                                     </View>
                                 }
 
-                                keyExtractor={(index) => index.toString()}
+                                keyExtractor={(item,index) => index.toString()}
                             />
                         </View>
                     </ScrollView>
