@@ -143,7 +143,8 @@ const styles = StyleSheet.create({
         width: '85%'
     },
     alignment: {
-        left: '7.5%'
+        left: '7.5%',
+        width: '85%'
     },
     mainText: {
         fontWeight: 'bold',
@@ -157,7 +158,9 @@ const styles = StyleSheet.create({
     bodyText: {
         color: 'white',
         marginTop: 10,
-        fontSize: 18
+        fontSize: 18,
+        backgroundColor: '#303030',
+        padding: 5
     }
 });
 const mapStateToProps = state => {
