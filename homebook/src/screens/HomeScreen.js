@@ -4,11 +4,12 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
-import { getReference, getUser } from "../store/actions/index";
+import { getReference, getUser, getFriend } from "../store/actions/index";
 
 class HomeScreen extends Component {
     state = {
         refresh: false,
+        friendNameArray: []
     };
 
     ReferenceHandler = placeName => {
@@ -43,36 +44,42 @@ class HomeScreen extends Component {
 
     pushSearchUserPage = () => Navigation.push(this.props.componentId, {
         component: {
-          name: 'SearchUser'
+            name: 'SearchUser'
         }
-      });
+    });
 
     componentDidMount() {
         this.navigationEventListener = Navigation.events().bindComponent(this);
+        this.setState({
+            friendNameArray: this.props.user.friendNameArray
+        });
+
     }
 
-
-    /* componentDidAppear() {
-         this.setState({
-             refresh: !this.state.refresh
-         });
-     }
-     */
-
-
+    componentDidAppear() {
+        this.setState({
+            refresh: !this.state.refresh,
+            friendNameArray: this.props.user.friendNameArray
+        });
+    }
 
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
-        this.ReferenceHandler(this.props.user.referenceArray[val])
+        this.props.onGetFriend(this.props.user.docId, this.props.user.referenceArray[val])
         //alert(this.props.refpoint);
         this.pushFriendProfile();
     };
 
+    renderWhiteLine = val => {
+        <View
+            style={{
+                borderBottomColor: 'white',
+                borderBottomWidth: 2,
+            }}
+        />
+    }
 
     render() {
-
-
-
         return (
             <View style={styles.container}>
                 <View style={styles.icons}>
@@ -85,37 +92,39 @@ class HomeScreen extends Component {
                         <Icon size={30} name='ios-send' color='white' />
                     </TouchableOpacity>
                 </View>
-
-                <ScrollView style={styles.alignment}>
-                    <TouchableOpacity
-                        onPress={this.pushUserProfile}>
-                        <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-                            <Icon size={35} name='ios-contact' color='white' />
-                            <Text style={styles.mainText}>   {this.props.user.firstN} {this.props.user.lastN}</Text>
-
-                        </View>
-                    </TouchableOpacity>
-                    
-
+                <TouchableOpacity onPress={this.pushUserProfile} style={{width: '85%'}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+                        <Icon size={35} name='ios-contact' color='white' />
+                        <Text style={styles.mainText}>   {this.props.user.firstN} {this.props.user.lastN}</Text>
+                    </View>
+                </TouchableOpacity>
+                <ScrollView style={{width: '100%'}} indicatorStyle='white'>
+                    <View style={styles.alignment}>
                     <FlatList
                         style={styles.list}
-                        data={this.props.user.friendNameArray}
-                        getData={this.state}
+                        data={this.state.friendNameArray}
+                        getData={this.state.friendNameArray}
 
                         renderItem={({ item, index }) =>
-                            <TouchableOpacity
-                                onPress={() => this.friendHandler(index)}
-                            >
-                                <Text style={styles.bodyText}>{item}</Text>
-                            </TouchableOpacity>
+                            <View>
+                                <View>{this.renderWhiteLine(index)}</View>
+
+                                <TouchableOpacity
+                                    onPress={() => this.friendHandler(index)}
+                                >
+                                    <Text style={styles.bodyText}>{item}</Text>
+                                </TouchableOpacity>
+                            </View>
                         }
+
                         keyExtractor={(index) => index.toString()}
                     />
+                </View>
                 </ScrollView>
                 <View style={{ position: 'absolute', bottom: 20, right: '7.5%' }}>
                     <TouchableOpacity
                         onPress={this.pushAddUser}>
-                        <Icon size={70} name='ios-add-circle' color='white'/>
+                        <Icon size={65} name='ios-add-circle' color='white' />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -133,12 +142,12 @@ const styles = StyleSheet.create({
     },
     icons: {
         flexDirection: 'row',
-        alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: 40,
         width: '85%'
     },
     alignment: {
+        left: '7.5%',
         width: '85%'
     },
     mainText: {
@@ -153,7 +162,9 @@ const styles = StyleSheet.create({
     bodyText: {
         color: 'white',
         marginTop: 10,
-        fontSize: 18
+        fontSize: 18,
+        backgroundColor: '#303030',
+        padding: 10
     }
 });
 const mapStateToProps = state => {
@@ -168,6 +179,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onGetReference: name => dispatch(getReference(name)),
         onGetUser: () => dispatch(getUser()),
+        onGetFriend: (userId, ref) => dispatch(getFriend(userId, ref)),
 
     };
 };

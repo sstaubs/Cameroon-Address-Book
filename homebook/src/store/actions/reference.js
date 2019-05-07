@@ -1,6 +1,64 @@
-import { GET_REF, SET_USER,GET_LOGIN } from './actionTypes'
+import { GET_REF, SET_USER,  SET_FRIEND } from './actionTypes'
 import * as firebase from 'firebase';
 
+export const editUser = (accountInfo) => {
+    return dispatch => {
+        var db = firebase.firestore();
+        db.collection("users").doc(accountInfo.docId).update({
+            firstN: accountInfo.firstN,
+            lastN: accountInfo.lastN,
+            latiude: accountInfo.latitude,
+            longitude: accountInfo.longitude,
+            phoneNum: accountInfo.phone,
+
+        })
+            .then(() => {
+                console.log("Document successfully updated!");
+            }).then(() => {
+                dispatch(setUser(accountInfo));
+
+            })
+            .catch((error) => {
+                // The document probably doesn't exist.
+                alert("Error updating document: " + error);
+            });
+    }
+}
+
+export const deleteFriend  = (userId,ref) => {
+    return dispatch => {
+        var db = firebase.firestore();
+
+        db.collection("users").doc(userId).collection("friends").doc(ref).delete().then(() => {
+            // Friend deleted.
+            
+        }).then(() => {
+            dispatch(getUser());
+        }).catch(() => {
+            // An error happened.
+        });
+    }
+}
+
+
+export const editFriend = (userId, ref, accountInfo) => {
+    return dispatch => {
+        var db = firebase.firestore();
+        db.collection("users").doc(userId).collection("friends").doc(ref).update(accountInfo)
+            .then(() => {
+                console.log("Document successfully updated!");
+            }).then(() => {
+                dispatch(setFriend(accountInfo));
+            }).then(() =>{
+                dispatch(getUser());
+            })
+            .catch((error) => {
+                // The document probably doesn't exist.
+                alert("Error updating document: " + error);
+            });
+
+    }
+}
 
 
 
@@ -47,27 +105,50 @@ export const getUser = () => {
 
                 });
             }).then(() => {
-                
+
                 dispatch(setUser(user));
-                
-                
 
-            }).then(() => {
-                    dispatch(getLogin());
-                  
 
-                
-
-            }).catch( (error) => {
+            }).catch((error) => {
                 alert("Error getting documents: " + error);
             });
 
 
-           
-
     };
-    
+
 };
+
+export const getFriend = (userId, ref) => {
+    return dispatch => {
+        const friend = {
+            firstN: '',
+            lastN: '',
+            docId: ref,
+            phone: '',
+            email: '',
+            longitude: 0,
+            latitude: 0,
+        }
+        var db = firebase.firestore();
+
+        db.collection("users").doc(userId).collection("friends").doc(ref).get()
+            .then(doc => {
+
+                friend.firstN = doc.data().firstN;
+                friend.lastN = doc.data().lastN;
+                friend.phone = doc.data().phoneNum;
+                friend.email = doc.data().email;
+                friend.latitude = doc.data().latitude;
+                friend.longitude = doc.data().longitude;
+            }).then(() => {
+                dispatch(setFriend(friend));
+            }).catch(function (error) {
+                alert("Error getting documents: " + error);
+            });
+
+    }
+}
+
 
 export const setUser = (user) => {
     return {
@@ -75,11 +156,15 @@ export const setUser = (user) => {
         user: user,
     };
 };
-export const getLogin = () => {
+
+export const setFriend = (friend) => {
     return {
-        type: GET_LOGIN,
+        type: SET_FRIEND,
+        friend: friend,
     };
 };
+
+
 
 export const getReference = (refpoint) => {
     return {

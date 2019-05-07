@@ -4,17 +4,19 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
+import { connect } from 'react-redux';
+import {  editUser } from "../store/actions/index";
 
 class EditUser extends Component {
   state = {
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
+    firstName: this.props.user.firstN,
+    lastName: this.props.user.lastN,
+    phone: this.props.user.phone,
+    email: this.props.user.lastN,
     docId: '',
     focusedLocation: {
-      longitude: 0,
-      latitude: 0,
+      longitude: this.props.user.longitude,
+      latitude: this.props.user.latitude,
       latitudeDelta: 0.0122,
       longitudeDelta:
         Dimensions.get("window").width /
@@ -60,29 +62,7 @@ class EditUser extends Component {
   };
 
   componentDidMount() {
-    var db = firebase.firestore();
-    db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        //alert(doc.data().email);
-        //alert(doc.id, " => ", doc.data());
-        //alert(doc)
-        this.setState({
-          firstName: doc.data().firstN,
-          lastName: doc.data().lastN,
-          phone: doc.data().phoneNum,
-          email: doc.data().email,
-          docId: doc.id,
-          focusedLocation: {
-            ...this.state.focusedLocation,
-            longitude: doc.data().longitude,
-            latitude: doc.data().latitude,
-          },
-        });
-      });
-    }).catch(function (error) {
-      alert("Error getting documents: " + error);
-    });
+
   }
 
   pickLocationHandler = event => {
@@ -123,26 +103,22 @@ class EditUser extends Component {
   }
 
   confirmHandler = val => {
-    //alert(this.state.phone);
+
     const accountInfo = {
       firstN: this.state.firstName,
       lastN: this.state.lastName,
-      phoneNum: this.state.phone,
-      email: this.state.email,
+      phone: this.state.phone,
+      docId: this.props.user.docId,
+      email: this.props.user.email,
+      friendNameArray: this.props.user.friendNameArray,
+      referenceArray: this.props.user.referenceArray,
       latitude: this.state.focusedLocation.latitude,
       longitude: this.state.focusedLocation.longitude,
     };
-    var db = firebase.firestore();
-    db.collection("users").doc(this.state.docId).update(accountInfo)
-      .then(() => {
-        console.log("Document successfully updated!");
-      }).then(() => {
-        this.pushUserProfile()
-      })
-      .catch((error) => {
-        // The document probably doesn't exist.
-        alert("Error updating document: " + error);
-      });
+
+    this.props.onEditUser(accountInfo);
+    this.pushUserProfile()
+
   };
 
   render() {
@@ -157,14 +133,14 @@ class EditUser extends Component {
           </TouchableOpacity>
         </View>
         <Text style={styles.mainText}>Edit Contact</Text>
-        <ScrollView style={{ width: '100%' }}>
+        <ScrollView style={{ width: '100%' }} indicatorStyle='white' keyboardDismissMode='on-drag'>
           <View style={styles.alignment}>
             <Text style={styles.label}>First Name</Text>
             <TextInput
               style={styles.userInput}
               value={this.state.firstName}
               onChangeText={this.firstNameHandler}
-              returnKeyType = { "next" }
+              returnKeyType={"next"}
               onSubmitEditing={() => { this.secondTextInput.focus(); }}
               blurOnSubmit={false}
             />
@@ -174,7 +150,7 @@ class EditUser extends Component {
               value={this.state.lastName}
               onChangeText={this.lastNameHandler}
               ref={(input) => { this.secondTextInput = input; }}
-              returnKeyType = { "next" }
+              returnKeyType={"next"}
               onSubmitEditing={() => { this.thirdTextInput.focus(); }}
               blurOnSubmit={false}
             />
@@ -185,7 +161,7 @@ class EditUser extends Component {
               value={this.state.phone}
               onChangeText={this.phoneNumberHandler}
               ref={(input) => { this.thirdTextInput = input; }}
-              returnKeyType = { "done" }
+              returnKeyType={"done"}
             />
             <Text style={styles.editLocation}>Change Location</Text>
             <TouchableOpacity
@@ -198,22 +174,22 @@ class EditUser extends Component {
               </View>
             </TouchableOpacity>
           </View>
-            <MapView
-              region={this.state.focusedLocation}
-              style={styles.map}
-              showsUserLocation={true}
-              onPress={this.pickLocationHandler}
-              ref={ref => this.map = ref}
-            >
-              {marker}
-            </MapView>
-          </ScrollView>
-          <TouchableOpacity
-            style={styles.bottomButton}
-            onPress={this.confirmHandler}
+          <MapView
+            region={this.state.focusedLocation}
+            style={styles.map}
+            showsUserLocation={true}
+            onPress={this.pickLocationHandler}
+            ref={ref => this.map = ref}
           >
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SUBMIT</Text>
-          </TouchableOpacity>
+            {marker}
+          </MapView>
+        </ScrollView>
+        <TouchableOpacity
+          style={styles.bottomButton}
+          onPress={this.confirmHandler}
+        >
+          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>UPDATE</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -287,4 +263,19 @@ const styles = StyleSheet.create({
   }
 });
 
-export default EditUser;
+const mapStateToProps = state => {
+  return {
+      user: state.reference.user,
+
+  };
+};
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onEditUser: (user) => dispatch(editUser(user)),
+
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditUser);

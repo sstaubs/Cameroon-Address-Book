@@ -83,83 +83,83 @@ class CreateAccount extends Component {
 
     alert("An account has been created using this email that has not been verified. Please go to 'Forgot Password' on the login screen to send an email that will enable you to change your password.");
 
-   /* if (user.emailVerified) {
-      alert("This email is already in use. Please select a different email.")
-      //pop
-    } else {
-      var db = firebase.firestore();
+    /* if (user.emailVerified) {
+       alert("This email is already in use. Please select a different email.")
+       //pop
+     } else {
+       var db = firebase.firestore();
 
-      db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          db.collection("users").doc(doc.id).delete();
-        })
-      }).then(() => {
-        user.delete().then(() => {
-          // User deleted.
-          alert("made it here");
+       db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
+         querySnapshot.forEach((doc) => {
+           db.collection("users").doc(doc.id).delete();
+         })
+       }).then(() => {
+         user.delete().then(() => {
+           // User deleted.
+           alert("made it here");
 
-        }).catch(() => {
-          // An error happened.
-        });
-      }).catch(function (error) {
-        alert("Error getting documents: " + error);
-      });
-    }*/
+         }).catch(() => {
+           // An error happened.
+         });
+       }).catch(function (error) {
+         alert("Error getting documents: " + error);
+       });
+     }*/
   }
 
   confirmHandler = val => {
     var that = this;
     if (this.passwordConfirm()) {
       //if (this.isEmailUsed()) {
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-          .then(() => {
-            var user = firebase.auth().currentUser;
+      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then(() => {
+          var user = firebase.auth().currentUser;
 
-            user.sendEmailVerification().then(function () {
-              // Email sent.
-            }).catch(function (error) {
-              // An error happened.
-            });
-
-            if (user) {
-              const accountInfo = {
-                firstN: this.state.firstName,
-                lastN: this.state.lastName,
-                email: this.state.email,
-                phoneNum: this.state.phone,
-                uid: user.uid
-              };
-              this.GetHandler(user)
-              var db = firebase.firestore();
-              db.collection("users").add(accountInfo)
-                .then(function (docRef) {
-                  //alert("Document written with ID: " + docRef.id);
-                })
-                .catch(function (error) {
-                  console.error("Error adding document: ", error);
-                });
-              this.pushSetLocation()
-            }
-          })
-          .catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            if (errorCode == 'auth/weak-password') {
-              alert('The password is too weak.');
-            } else if (errorCode == 'auth/email-already-in-use'){
-              //alert(this);
-              that.isEmailVerified();
-            } else {
-              alert(errorMessage);
-            }
-            console.log(error);
+          user.sendEmailVerification().then(function () {
+            // Email sent.
+          }).catch(function (error) {
+            // An error happened.
           });
-     // }
+
+          if (user) {
+            const accountInfo = {
+              firstN: this.state.firstName,
+              lastN: this.state.lastName,
+              email: this.state.email,
+              phoneNum: this.state.phone,
+              uid: user.uid
+            };
+            this.GetHandler(user)
+            var db = firebase.firestore();
+            db.collection("users").add(accountInfo)
+              .then(function (docRef) {
+                //alert("Document written with ID: " + docRef.id);
+              })
+              .catch(function (error) {
+                console.error("Error adding document: ", error);
+              });
+            this.pushSetLocation()
+          }
+        })
+        .catch(function (error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          if (errorCode == 'auth/weak-password') {
+            alert('The password is too weak.');
+          } else if (errorCode == 'auth/email-already-in-use') {
+            //alert(this);
+            that.isEmailVerified();
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+        });
+      // }
     }
   };
 
-  
+
 
 
 
@@ -175,77 +175,79 @@ class CreateAccount extends Component {
           </TouchableOpacity>
         </View>
         <Text style={styles.mainText}>Create Account</Text>
-        <KeyboardAvoidingView style={styles.alignment} behavior='position' enabled>
-          <Text style={styles.label}>First Name</Text>
-          <TextInput
-            style={styles.userInput}
-            placeholder='John'
-            placeholderTextColor='gray'
-            onChangeText={this.firstNameHandler}
-            returnKeyType={"next"}
-            onSubmitEditing={() => { this.secondTextInput.focus(); }}
-            blurOnSubmit={false}
-          />
-          <Text style={styles.label}>Last Name</Text>
-          <TextInput
-            style={styles.userInput}
-            placeholder='Doe'
-            placeholderTextColor='gray'
-            onChangeText={this.lastNameHandler}
-            ref={(input) => { this.secondTextInput = input; }}
-            returnKeyType={"next"}
-            onSubmitEditing={() => { this.thirdTextInput.focus(); }}
-            blurOnSubmit={false}
-          />
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            secureTextEntry={true}
-            style={styles.userInput}
-            placeholder='••••••••••'
-            placeholderTextColor='gray'
-            onChangeText={this.passwordHandler}
-            ref={(input) => { this.thirdTextInput = input; }}
-            returnKeyType={"next"}
-            onSubmitEditing={() => { this.fourthTextInput.focus(); }}
-            blurOnSubmit={false}
-          />
-          <Text style={styles.label}>Confirm Password</Text>
-          <TextInput
-            secureTextEntry={true}
-            style={styles.userInput}
-            placeholder='••••••••••'
-            placeholderTextColor='gray'
-            onChangeText={this.confirmPassHandler}
-            ref={(input) => { this.fourthTextInput = input; }}
-            returnKeyType={"next"}
-            onSubmitEditing={() => { this.fifthTextInput.focus(); }}
-            blurOnSubmit={false}
-          />
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            autoCapitalize='none'
-            autoCorrect={false}
-            keyboardType='email-address'
-            style={styles.userInput}
-            placeholder='johndoe@example.com'
-            placeholderTextColor='gray'
-            onChangeText={this.emailHandler}
-            ref={(input) => { this.fifthTextInput = input; }}
-            returnKeyType={"next"}
-            onSubmitEditing={() => { this.sixthTextInput.focus(); }}
-            blurOnSubmit={false}
-          />
-          <Text style={styles.label}>Phone Number</Text>
-          <TextInput
-            keyboardType='number-pad'
-            style={styles.userInput}
-            placeholder='(123) 456-7890'
-            placeholderTextColor='gray'
-            onChangeText={this.phoneHandler}
-            ref={(input) => { this.sixthTextInput = input; }}
-            returnKeyType={"done"}
-            blurOnSubmit={true}
-          />
+        <KeyboardAvoidingView behavior='padding' style={styles.alignment}>
+          <ScrollView style={{ width: '100%' }} indicatorStyle='white' keyboardDismissMode='on-drag'>
+            <Text style={styles.label}>First Name</Text>
+            <TextInput
+              style={styles.userInput}
+              placeholder='John'
+              placeholderTextColor='gray'
+              onChangeText={this.firstNameHandler}
+              returnKeyType={"next"}
+              onSubmitEditing={() => { this.secondTextInput.focus(); }}
+              blurOnSubmit={false}
+            />
+            <Text style={styles.label}>Last Name</Text>
+            <TextInput
+              style={styles.userInput}
+              placeholder='Doe'
+              placeholderTextColor='gray'
+              onChangeText={this.lastNameHandler}
+              ref={(input) => { this.secondTextInput = input; }}
+              returnKeyType={"next"}
+              onSubmitEditing={() => { this.thirdTextInput.focus(); }}
+              blurOnSubmit={false}
+            />
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              secureTextEntry={true}
+              style={styles.userInput}
+              placeholder='••••••••••'
+              placeholderTextColor='gray'
+              onChangeText={this.passwordHandler}
+              ref={(input) => { this.thirdTextInput = input; }}
+              returnKeyType={"next"}
+              onSubmitEditing={() => { this.fourthTextInput.focus(); }}
+              blurOnSubmit={false}
+            />
+            <Text style={styles.label}>Confirm Password</Text>
+            <TextInput
+              secureTextEntry={true}
+              style={styles.userInput}
+              placeholder='••••••••••'
+              placeholderTextColor='gray'
+              onChangeText={this.confirmPassHandler}
+              ref={(input) => { this.fourthTextInput = input; }}
+              returnKeyType={"next"}
+              onSubmitEditing={() => { this.fifthTextInput.focus(); }}
+              blurOnSubmit={false}
+            />
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              autoCapitalize='none'
+              autoCorrect={false}
+              keyboardType='email-address'
+              style={styles.userInput}
+              placeholder='johndoe@example.com'
+              placeholderTextColor='gray'
+              onChangeText={this.emailHandler}
+              ref={(input) => { this.fifthTextInput = input; }}
+              returnKeyType={"next"}
+              onSubmitEditing={() => { this.sixthTextInput.focus(); }}
+              blurOnSubmit={false}
+            />
+            <Text style={styles.label}>Phone Number</Text>
+            <TextInput
+              keyboardType='number-pad'
+              style={styles.userInput}
+              placeholder='(123) 456-7890'
+              placeholderTextColor='gray'
+              onChangeText={this.phoneHandler}
+              ref={(input) => { this.sixthTextInput = input; }}
+              returnKeyType={"done"}
+              blurOnSubmit={true}
+            />
+          </ScrollView>
         </KeyboardAvoidingView>
         <TouchableOpacity
           style={styles.bottomButton}

@@ -13,7 +13,7 @@ import UserProfile from './UserProfile';
 import FriendProfile from './FriendProfile';
 import EditUser from './EditUser';
 import SideMenu from './SideMenu';
-import SearchUser from  './SearchUser';
+import SearchUser from './SearchUser';
 import ChangePassScreen from './ChangePassScreen';
 import ChangeEmailScreen from './ChangeEmailScreen';
 import RequestPage from './RequestPage';
@@ -80,7 +80,7 @@ function registerScreens() {
       <SideMenu {...props} />
     </Provider>
   ), () => SideMenu);
-  
+
   Navigation.registerComponent('SearchUser', () => (props) => (
     <Provider store={reduxStore}>
       <SearchUser {...props} />

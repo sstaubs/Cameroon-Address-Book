@@ -1,2 +1,5 @@
-export { getReference, getUser,setUser, getLogin } from './reference';
+export { getReference, 
+    getUser, setUser, editUser, 
+    getFriend, setFriend, editFriend, deleteFriend
+} from './reference';
 

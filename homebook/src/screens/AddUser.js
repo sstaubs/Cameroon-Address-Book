@@ -162,75 +162,75 @@ class AddUser extends Component {
           <Icon size={35} name='ios-close' color='white' />
         </TouchableOpacity>
         <Text style={styles.mainText}>Add Contact</Text>
-          <ScrollView style={{ width: '100%' }}>
-            <View style={{ width: '85%', left: '7.5%' }}>
-              <Text style={styles.label}>First Name</Text>
-              <TextInput
-                style={styles.userInput}
-                placeholder="First Name"
-                placeholderTextColor="gray"
-                onChangeText={this.firstNameHandler}
-                returnKeyType = { "next" }
-                onSubmitEditing={() => { this.secondTextInput.focus(); }}
-                blurOnSubmit={false}
-              />
-              <Text style={styles.label}>Last Name</Text>
-              <TextInput
-                style={styles.userInput}
-                placeholder="Last Name"
-                placeholderTextColor="gray"
-                onChangeText={this.lastNameHandler}
-                ref={(input) => { this.secondTextInput = input; }}
-                returnKeyType = { "next" }
-                onSubmitEditing={() => { this.thirdTextInput.focus(); }}
-                blurOnSubmit={false}
-              />
-              <Text style={styles.label}>Email</Text>
-              <TextInput
-                style={styles.userInput}
-                autoCapitalize='none'
-                autoCorrect={false}
-                placeholder='Email'
-                keyboardType='email-address'
-                placeholderTextColor="gray"
-                onChangeText={this.emailHandler}
-                ref={(input) => { this.thirdTextInput = input; }}
-                returnKeyType = { "next" }
-                onSubmitEditing={() => { this.fourthTextInput.focus(); }}
-                blurOnSubmit={false}
-              />
-              <Text style={styles.label}>Phone Number</Text>
-              <TextInput
-                style={styles.userInput}
-                keyboardType='number-pad'
-                placeholder="Phone Number"
-                placeholderTextColor="gray"
-                onChangeText={this.phoneNumberHandler}
-                ref={(input) => { this.fourthTextInput = input; }}
-                returnKeyType = { "done" }
-                blurOnSubmit={true}
-              />
-              <Text style={styles.locationText}>Set Location</Text>
-              <TouchableOpacity
-                onPress={this.getLocationHandler}
-                style={styles.touchableLocation}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Icon size={25} name='ios-navigate' color='#7ABAF2' />
-                    <Text style={styles.currentLocation}>  Current Location</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-            <MapView
-              initialRegion={this.state.focusedLocation}
-              region={this.state.focusedLocation}
-              style={styles.map}
-              showsUserLocation={true}
-              onPress={this.pickLocationHandler}
-              ref={ref => this.map = ref}
+        <ScrollView style={{ width: '100%' }}>
+          <View style={{ width: '85%', left: '7.5%' }}>
+            <Text style={styles.label}>First Name</Text>
+            <TextInput
+              style={styles.userInput}
+              placeholder="First Name"
+              placeholderTextColor="gray"
+              onChangeText={this.firstNameHandler}
+              returnKeyType={"next"}
+              onSubmitEditing={() => { this.secondTextInput.focus(); }}
+              blurOnSubmit={false}
+            />
+            <Text style={styles.label}>Last Name</Text>
+            <TextInput
+              style={styles.userInput}
+              placeholder="Last Name"
+              placeholderTextColor="gray"
+              onChangeText={this.lastNameHandler}
+              ref={(input) => { this.secondTextInput = input; }}
+              returnKeyType={"next"}
+              onSubmitEditing={() => { this.thirdTextInput.focus(); }}
+              blurOnSubmit={false}
+            />
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              style={styles.userInput}
+              autoCapitalize='none'
+              autoCorrect={false}
+              placeholder='Email'
+              keyboardType='email-address'
+              placeholderTextColor="gray"
+              onChangeText={this.emailHandler}
+              ref={(input) => { this.thirdTextInput = input; }}
+              returnKeyType={"next"}
+              onSubmitEditing={() => { this.fourthTextInput.focus(); }}
+              blurOnSubmit={false}
+            />
+            <Text style={styles.label}>Phone Number</Text>
+            <TextInput
+              style={styles.userInput}
+              keyboardType='number-pad'
+              placeholder="Phone Number"
+              placeholderTextColor="gray"
+              onChangeText={this.phoneNumberHandler}
+              ref={(input) => { this.fourthTextInput = input; }}
+              returnKeyType={"done"}
+              blurOnSubmit={true}
+            />
+            <Text style={styles.locationText}>Set Location</Text>
+            <TouchableOpacity
+              onPress={this.getLocationHandler}
+              style={styles.touchableLocation}
             >
-              {marker}
-            </MapView>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon size={25} name='ios-navigate' color='#7ABAF2' />
+                <Text style={styles.currentLocation}>  Current Location</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <MapView
+            initialRegion={this.state.focusedLocation}
+            region={this.state.focusedLocation}
+            style={styles.map}
+            showsUserLocation={true}
+            onPress={this.pickLocationHandler}
+            ref={ref => this.map = ref}
+          >
+            {marker}
+          </MapView>
         </ScrollView>
         <TouchableOpacity
           style={styles.bottomButton}
@@ -291,8 +291,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   currentLocation: {
-      fontSize: 17,
-      color: '#7ABAF2'
+    fontSize: 17,
+    color: '#7ABAF2'
   },
   map: {
     width: '100%',

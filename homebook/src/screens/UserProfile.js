@@ -15,8 +15,8 @@ class UserProfile extends Component {
     email: '',
     docId: '',
     focusedLocation: {
-      longitude: 0,
-      latitude: 0,
+      longitude: this.props.user.longitude,
+      latitude: this.props.user.latitude,
       latitudeDelta: 0.0122,
       longitudeDelta:
         Dimensions.get("window").width /
@@ -52,9 +52,9 @@ class UserProfile extends Component {
       latitude: this.state.focusedLocation.latitude,
     }
 
-		const transportPlan = 'd';
+    const transportPlan = 'd';
 
-    OpenMapDirections(null,endPoint, transportPlan).then(res => {
+    OpenMapDirections(null, endPoint, transportPlan).then(res => {
       console.log(res)
     });
   }
@@ -69,28 +69,12 @@ class UserProfile extends Component {
   }
 
   componentDidAppear() {
-    var db = firebase.firestore();
-    db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        //alert(doc.data().email);
-        //alert(doc.id, " => ", doc.data());
-        //alert(doc)
-        this.setState({
-          firstname: doc.data().firstN,
-          lastname: doc.data().lastN,
-          phone: doc.data().phoneNum,
-          email: doc.data().email,
-          docId: doc.id,
-          focusedLocation: {
-            ...this.state.focusedLocation,
-            longitude: doc.data().longitude,
-            latitude: doc.data().latitude,
-          },
-        });
-      });
-    }).catch(function (error) {
-      alert("Error getting documents: " + error);
+    this.setState({
+      focusedLocation: {
+        ...this.state.focusedLocation,
+        longitude: this.props.user.longitude,
+        latitude: this.props.user.latitude,
+      },
     });
   }
 
@@ -111,9 +95,12 @@ class UserProfile extends Component {
         <View style={styles.alignment}>
           <Text style={styles.mainText}>{this.props.user.firstN} {this.props.user.lastN}</Text>
           <TouchableOpacity
-            style={styles.closeIcon}
+            style={{ marginTop: 10 }}
             onPress={this.pushRequestPage}>
-            <Icon size={35} name='ios-alert' color='white' />
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon size={25} name='ios-download' color='white' />
+              <Text style={{ color: 'white', fontSize: 18 }}>  Requests</Text>
+            </View>
           </TouchableOpacity>
           <Text style={styles.category}>Phone Number</Text>
           <Text style={styles.textInputStyle}>{this.props.user.phone}</Text>
@@ -121,19 +108,20 @@ class UserProfile extends Component {
           <Text style={styles.textInputStyle}>{this.props.user.email}</Text>
           <Text style={styles.location}>Location</Text>
         </View>
-          <MapView
-            region={this.state.focusedLocation}
-            style={styles.map}
-            ref={ref => this.map = ref}
-          >
-            {marker}
-          </MapView>
-          <TouchableOpacity
-            style={styles.bottomButton}
-            onPress={this.showDirections}
-          >
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
-          </TouchableOpacity>
+        <MapView
+          region={this.state.focusedLocation}
+          style={styles.map}
+          showsUserLocation={true}
+          ref={ref => this.map = ref}
+        >
+          {marker}
+        </MapView>
+        <TouchableOpacity
+          style={styles.bottomButton}
+          onPress={this.showDirections}
+        >
+          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -199,7 +187,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-      user: state.reference.user,
+    user: state.reference.user,
 
   };
 };
@@ -207,9 +195,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      
+
 
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile); 
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

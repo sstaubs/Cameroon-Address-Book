@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
+import { OpenMapDirections } from 'react-native-navigation-directions';
 import * as firebase from 'firebase';
 
 import { connect } from 'react-redux';
+import { deleteFriend } from "../store/actions/index";
 
 class FriendProfile extends Component {
     state = {
@@ -15,8 +17,8 @@ class FriendProfile extends Component {
         email: '',
         docId: '',
         focusedLocation: {
-            longitude: 0,
-            latitude: 0,
+            longitude: this.props.friend.longitude,
+            latitude: this.props.friend.latitude,
             latitudeDelta: 0.0122,
             longitudeDelta:
                 Dimensions.get("window").width /
@@ -58,14 +60,8 @@ class FriendProfile extends Component {
     };
 
     deleteUser = () => {
-        var db = firebase.firestore();
-
-        db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).delete().then(() => {
-            // Friend deleted.
-            Navigation.pop(this.props.componentId);
-        }).catch(() => {
-            // An error happened.
-        });
+        this.props.onDeleteFriend(this.props.user.docId,this.props.friend.docId)
+        Navigation.pop(this.props.componentId);
 
     }
 
@@ -77,51 +73,26 @@ class FriendProfile extends Component {
         //no current function
     }
 
-    componentDidAppear() {
-        var db = firebase.firestore();
-
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                //alert(doc.data().email);
-                //alert(doc.id, " => ", doc.data());
-                //alert(doc)
-
-
-                this.setState({
-
-
-                    docId: doc.id,
-                });
-
-
-
-            });
-
-        }).then(() => {
-            db.collection("users").doc(this.state.docId).collection("friends").doc(this.props.refpoint).get()
-                .then(doc => {
-
-                    this.setState({
-
-
-                        firstname: doc.data().firstN,
-                        lastname: doc.data().lastN,
-                        phone: doc.data().phoneNum,
-                        email: doc.data().email,
-                        focusedLocation: {
-                            ...this.state.focusedLocation,
-                            longitude: doc.data().longitude,
-                            latitude: doc.data().latitude,
-                        },
-                    })
-
-                }).catch(function (error) {
-                    alert("Error getting documents: " + error);
-                });
-        }).catch(function (error) {
-            alert("Error getting documents: " + error);
+    showDirections = () => {
+        const endPoint = {
+            longitude: this.state.focusedLocation.longitude,
+            latitude: this.state.focusedLocation.latitude,
+        }
+        const transportPlan = 'd';
+        OpenMapDirections(null, endPoint, transportPlan).then(res => {
+            console.log(res)
         });
+    }
+
+    componentDidAppear() {
+        this.setState({
+            focusedLocation: {
+              ...this.state.focusedLocation,
+              longitude: this.props.friend.longitude,
+              latitude: this.props.friend.latitude,
+            },
+          });
+
     }
 
     render() {
@@ -141,26 +112,33 @@ class FriendProfile extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.alignment}>
-                    <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
+                    <Text style={styles.mainText}>{this.props.friend.firstN} {this.props.friend.lastN}</Text>
                     <Text style={styles.category}>Phone Number</Text>
-                    <Text style={styles.textInputStyle}>{this.state.phone}</Text>
+                    <Text style={styles.textInputStyle}>{this.props.friend.phone}</Text>
                     <Text style={styles.category}>Email</Text>
-                    <Text style={styles.textInputStyle}>{this.state.email}</Text>
+                    <Text style={styles.textInputStyle}>{this.props.friend.email}</Text>
                     <Text style={styles.location}>Location</Text>
                 </View>
                 <MapView
                     region={this.state.focusedLocation}
                     style={styles.map}
+                    showsUserLocation={true}
                     ref={ref => this.map = ref}
                 >
                     {marker}
                 </MapView>
+                <TouchableOpacity
+                    style={styles.bottomButton}
+                    onPress={this.showDirections}
+                >
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
+                </TouchableOpacity>
                 <View style={styles.alignment}>
                     <TouchableOpacity
                         style={styles.pressRedText}
                         onPress={this.deleteUser}
                     >
-                        <Text style={styles.redText}>DELETE USER</Text>
+                        <Text style={styles.redText}>Delete User</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -221,16 +199,31 @@ const styles = StyleSheet.create({
     redText: {
         color: '#E24A4A',
         fontSize: 20,
-        fontWeight: '500'
+        fontWeight: 'bold'
+    },
+    bottomButton: {
+        width: '100%',
+        position: 'absolute',
+        height: 55,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#3F7F40'
     }
 });
 
 const mapStateToProps = state => {
     return {
-        refpoint: state.reference.friendref,
+        user: state.reference.user,
+        friend: state.reference.friend,
 
     };
 };
+const mapDispatchToProps = dispatch => {
+    return {
+      onDeleteFriend: (userId, ref) => dispatch(deleteFriend(userId,ref)),
 
+    };
+  };
 
-export default connect(mapStateToProps)(FriendProfile);
+  export default connect(mapStateToProps, mapDispatchToProps)(FriendProfile);
