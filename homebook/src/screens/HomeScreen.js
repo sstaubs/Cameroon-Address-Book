@@ -1,70 +1,40 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
+import { connect } from 'react-redux';
+import { getReference, getUser, getFriend } from "../store/actions/index";
 
 class HomeScreen extends Component {
     state = {
-        firstname: '',
-        lastname: '',
-        docId: '',
-        friendNameArray: [],
-        referenceArray: [],
+        refresh: false,
+        friendNameArray: []
     };
 
-    componentDidMount() {
-        var db = firebase.firestore();
+    ReferenceHandler = placeName => {
+        this.props.onGetReference(placeName);
+    };
 
-        db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                //alert(doc.data().email);
-                //alert(doc.id, " => ", doc.data());
-                //alert(doc)
-
-                db.collection("users").doc(doc.id).collection("friends").orderBy("lastN").get().then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        this.setState({
-                            friendNameArray: this.state.friendNameArray.concat([doc.data().firstN + " " + doc.data().lastN]),
-                            referenceArray: this.state.friendNameArray.concat([doc.data().refpoint.id]),
-                        });
-                    });
-                }).catch(function (error) {
-                    alert("Error getting documents: " + error);
-                });
-
-                this.setState({
-
-                    firstname: doc.data().firstN,
-                    lastname: doc.data().lastN,
-                    docId: doc.id,
-                });
-            });
-
-        }).catch(function (error) {
-            alert("Error getting documents: " + error);
-        });
-    }
-
-    popLoginScreen() {
-        Navigation.pop(this.props.componentId, {
-            component: {
-                name: 'LoginScreen'
-            }
-        });
-    }
-    pushUserProfile = () => Navigation.push(this.props.componentId, {
-        component: {
-            name: 'UserProfile'
+    openSideMenu = () => Navigation.mergeOptions(this.props.componentId, {
+        sideMenu: {
+            left: { visible: true }
         }
     });
 
-
-    popSignout = () => {
-        firebase.auth().signOut();
-        this.popLoginScreen();
+    pushUserProfile = () => {
+        Navigation.push(this.props.componentId, {
+            component: {
+                name: 'UserProfile'
+            }
+        });
     }
+
+    pushFriendProfile = () => Navigation.push(this.props.componentId, {
+        component: {
+            name: 'FriendProfile'
+        }
+    });
 
     pushAddUser = () => Navigation.push(this.props.componentId, {
         component: {
@@ -72,61 +42,107 @@ class HomeScreen extends Component {
         }
     });
 
+    pushSearchUserPage = () => Navigation.push(this.props.componentId, {
+        component: {
+            name: 'SearchUser'
+        }
+    });
 
+    componentDidMount() {
+        this.navigationEventListener = Navigation.events().bindComponent(this);
+        this.setState({
+            friendNameArray: this.props.user.friendNameArray
+        });
+
+    }
+    
+    componentDidAppear() {
+        this.setState({
+            refresh: !this.state.refresh,
+            friendNameArray: this.props.user.friendNameArray
+        });
+    }
+
+<<<<<<< HEAD
+    
+    
+    
+     
+=======
+
+
+>>>>>>> 94908899327587f8a1a5f24cac5943f889519c7e
+
+    friendHandler = val => {
+        //alert(this.state.referenceArray[val])
+        this.props.onGetFriend(this.props.user.docId, this.props.user.referenceArray[val])
+        //alert(this.props.refpoint);
+        this.pushFriendProfile();
+    };
+
+    renderWhiteLine = val => {
+        <View
+            style={{
+                borderBottomColor: 'white',
+                borderBottomWidth: 2,
+            }}
+        />
+    }
 
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.icons}>
                     <TouchableOpacity
-                        style={styles.shareIcon}
-                        onPress={this.popSignout}>
-                        <Icon size={25} name='ios-log-out' color='white' />
+                        onPress={this.openSideMenu}>
+                        <Icon size={30} name='ios-menu' color='white' />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={styles.addIcon}
-                        onPress={this.pushAddUser}>
-                        <Icon size={35} name='ios-add' color='white' />
+                        onPress={this.pushSearchUserPage}>
+                        <Icon size={30} name='ios-send' color='white' />
                     </TouchableOpacity>
                 </View>
+                <TouchableOpacity onPress={this.pushUserProfile} style={{width: '85%'}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+                        <Icon size={35} name='ios-contact' color='white' />
+                        <Text style={styles.mainText}>   {this.props.user.firstN} {this.props.user.lastN}</Text>
+                    </View>
+                </TouchableOpacity>
+                <ScrollView style={{width: '100%'}} indicatorStyle='white'>
+                    <View style={styles.alignment}>
+                    <FlatList
+                        style={styles.list}
+                        data={this.state.friendNameArray}
+                        getData={this.state.friendNameArray}
 
-                <TouchableOpacity
-                    onPress={this.pushUserProfile}>
-                    <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.bodyText}>{this.state.friendNameArray[0]}</Text>
-                </TouchableOpacity>
-                <View
-                    style={{
-                        borderBottomColor: 'white',
-                        borderBottomWidth: 1,
-                        width: '75%'
-                    }}
-                />
-                <TouchableOpacity>
-                    <Text style={styles.bodyText}>{this.state.friendNameArray[1]}</Text>
-                </TouchableOpacity>
-                <View
-                    style={{
-                        borderBottomColor: 'white',
-                        borderBottomWidth: 1,
-                        width: '75%'
-                    }}
-                />
-                <TouchableOpacity>
-                    <Text style={styles.bodyText}></Text>
-                </TouchableOpacity>
+                        renderItem={({ item, index }) =>
+                            <View>
+                                <View>{this.renderWhiteLine(index)}</View>
+
+                                <TouchableOpacity
+                                    onPress={() => this.friendHandler(index)}
+                                >
+                                    <Text style={styles.bodyText}>{item}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        }
+
+                        keyExtractor={(index) => index.toString()}
+                    />
+                </View>
+                </ScrollView>
+                <View style={{ position: 'absolute', bottom: 20, right: '7.5%' }}>
+                    <TouchableOpacity
+                        onPress={this.pushAddUser}>
+                        <Icon size={65} name='ios-add-circle' color='white' />
+                    </TouchableOpacity>
+                </View>
             </View>
-
         );
     }
 };
 
 const styles = StyleSheet.create({
-    outerContainer: {
-        flex: 1
-    },
     container: {
         flex: 1,
         flexDirection: 'column',
@@ -136,16 +152,13 @@ const styles = StyleSheet.create({
     },
     icons: {
         flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 55
+        justifyContent: 'space-between',
+        marginTop: 40,
+        width: '85%'
     },
-    shareIcon: {
-        position: 'relative',
-        right: 120
-    },
-    addIcon: {
-        position: 'relative',
-        left: 120
+    alignment: {
+        left: '7.5%',
+        width: '85%'
     },
     mainText: {
         fontWeight: 'bold',
@@ -153,13 +166,32 @@ const styles = StyleSheet.create({
         marginTop: 25,
         color: 'white'
     },
+    list: {
+        marginTop: 20
+    },
     bodyText: {
-        fontSize: 20,
         color: 'white',
-        marginTop: 14.5,
-        marginBottom: 13.5,
-        right: 100
+        marginTop: 10,
+        fontSize: 18,
+        backgroundColor: '#303030',
+        padding: 10
     }
 });
+const mapStateToProps = state => {
+    return {
+        user: state.reference.user,
 
-export default HomeScreen;
+    };
+};
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onGetReference: name => dispatch(getReference(name)),
+        onGetUser: () => dispatch(getUser()),
+        onGetFriend: (userId, ref) => dispatch(getFriend(userId, ref)),
+
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

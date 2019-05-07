@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
+import { OpenMapDirections } from 'react-native-navigation-directions';
+import { connect } from 'react-redux';
 
 class UserProfile extends Component {
   state = {
@@ -12,6 +14,15 @@ class UserProfile extends Component {
     phone: '',
     email: '',
     docId: '',
+    focusedLocation: {
+      longitude: this.props.user.longitude,
+      latitude: this.props.user.latitude,
+      latitudeDelta: 0.0122,
+      longitudeDelta:
+        Dimensions.get("window").width /
+        Dimensions.get("window").height *
+        0.0122
+    }
   };
 
   pushCloseButton = () => Navigation.pop(this.props.componentId, {
@@ -26,90 +37,91 @@ class UserProfile extends Component {
     }
   });
 
-  firstNameHandler = val => {
-    this.setState({
-      firstName: val,
+
+  pushRequestPage = () => Navigation.push(this.props.componentId, {
+    component: {
+      name: 'RequestPage'
+    }
+  });
+
+  showDirections = () => {
+
+
+    const endPoint = {
+      longitude: this.state.focusedLocation.longitude,
+      latitude: this.state.focusedLocation.latitude,
+    }
+
+    const transportPlan = 'd';
+
+    OpenMapDirections(null, endPoint, transportPlan).then(res => {
+      console.log(res)
     });
-  };
-
-  lastNameHandler = val => {
-    this.setState({
-      lastName: val,
-    });
-  };
-
-  phoneNumberHandler = val => {
-    this.setState({
-      phone: val,
-    });
-  };
-
-  emailHandler = val => {
-    this.setState({
-      email: val,
-    });
-  };
-
-  componentDidMount() {
-    var db = firebase.firestore();
-
-    db.collection("users").where("uid", "==", firebase.auth().currentUser.uid).get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        //alert(doc.data().email);
-        //alert(doc.id, " => ", doc.data());
-        //alert(doc)
-
-        this.setState({
-
-          firstname: doc.data().firstN,
-          lastname: doc.data().lastN,
-          phone: doc.data().phoneNum,
-          email: doc.data().email,
-          docId: doc.id,
-        });
-
-
-      });
-
-
-    }).catch(function (error) {
-      alert("Error getting documents: " + error);
-    });
-
-
   }
 
 
+  componentDidMount() {
+    this.navigationEventListener = Navigation.events().bindComponent(this);
+  }
+
+  componentDidDisappear() {
+    //no current function
+  }
+
+  componentDidAppear() {
+    this.setState({
+      focusedLocation: {
+        ...this.state.focusedLocation,
+        longitude: this.props.user.longitude,
+        latitude: this.props.user.latitude,
+      },
+    });
+  }
 
   render() {
+    marker = <MapView.Marker coordinate={this.state.focusedLocation} />
     return (
       <View style={styles.container}>
         <View style={styles.icons}>
           <TouchableOpacity
-            style={styles.shareIcon}
             onPress={this.pushCloseButton}>
-            <Icon size={35} name='ios-close' color='white' />
+            <Icon size={35} name='ios-arrow-round-back' color='white' />
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.addIcon}
             onPress={this.pushEditButton}>
-            <Text style={{color: "white"}}>Edit</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.mainText}>{this.state.firstname} {this.state.lastname}</Text>
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder={this.state.phone}
-          placeholderTextColor="gray"
-          onChangeText={this.phoneNumberHandler}
-        />
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder={this.state.email}
-          placeholderTextColor="gray"
-          onChangeText={this.emailHandler}
-        />
+        <View style={styles.alignment}>
+          <Text style={styles.mainText}>{this.props.user.firstN} {this.props.user.lastN}</Text>
+          <TouchableOpacity
+            style={{ marginTop: 10 }}
+            onPress={this.pushRequestPage}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon size={25} name='ios-download' color='white' />
+              <Text style={{ color: 'white', fontSize: 18 }}>  Requests</Text>
+            </View>
+          </TouchableOpacity>
+          <Text style={styles.category}>Phone Number</Text>
+          <Text style={styles.textInputStyle}>{this.props.user.phone}</Text>
+          <Text style={styles.category}>Email</Text>
+          <Text style={styles.textInputStyle}>{this.props.user.email}</Text>
+          <Text style={styles.location}>Location</Text>
+        </View>
+        <MapView
+          region={this.state.focusedLocation}
+          style={styles.map}
+          showsUserLocation={true}
+          ref={ref => this.map = ref}
+        >
+          {marker}
+        </MapView>
+        <TouchableOpacity
+          style={styles.bottomButton}
+          onPress={this.showDirections}
+        >
+          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -126,40 +138,66 @@ const styles = StyleSheet.create({
   icons: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 55
+    justifyContent: 'space-between',
+    marginTop: 40,
+    width: '85%'
   },
-  shareIcon: {
-    position: 'relative',
-    right: 120
-  },
-  addIcon: {
-    position: 'relative',
-    left: 120
+  alignment: {
+    width: '85%'
   },
   mainText: {
-    color: 'white',
-    fontSize: 30,
     fontWeight: 'bold',
-    width: 300,
+    fontSize: 30,
+    marginTop: 25,
+    color: 'white'
+  },
+  category: {
+    marginTop: 17,
+    fontWeight: 'bold',
+    fontSize: 17,
+    color: '#7ABAF2'
+  },
+  location: {
+    marginTop: 17,
+    fontWeight: 'bold',
+    fontSize: 17,
+    color: '#7ABAF2',
     textAlign: 'center'
   },
   textInputStyle: {
-    width: 300,
-    marginTop: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: 'white',
+    marginTop: 5,
     fontSize: 17,
-    height: 32,
-    color: 'white'
+    color: 'white',
   },
-  confirmButton: {
-    width: 300,
-    marginTop: 30,
+  map: {
+    width: '100%',
+    height: 350,
+    marginTop: 10
+  },
+  bottomButton: {
+    width: '100%',
+    position: 'absolute',
+    height: 55,
+    bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4A90E2',
-    height: 32
+    backgroundColor: '#3F7F40'
   }
 });
 
-export default UserProfile;
+const mapStateToProps = state => {
+  return {
+    user: state.reference.user,
+
+  };
+};
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
