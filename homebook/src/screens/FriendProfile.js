@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
@@ -60,7 +60,7 @@ class FriendProfile extends Component {
     };
 
     deleteUser = () => {
-        this.props.onDeleteFriend(this.props.user.docId,this.props.friend.docId)
+        this.props.onDeleteFriend(this.props.user.docId, this.props.friend.docId)
         Navigation.pop(this.props.componentId);
 
     }
@@ -87,62 +87,64 @@ class FriendProfile extends Component {
     componentDidAppear() {
         this.setState({
             focusedLocation: {
-              ...this.state.focusedLocation,
-              longitude: this.props.friend.longitude,
-              latitude: this.props.friend.latitude,
+                ...this.state.focusedLocation,
+                longitude: this.props.friend.longitude,
+                latitude: this.props.friend.latitude,
             },
-          });
+        });
 
     }
 
     render() {
         marker = <MapView.Marker coordinate={this.state.focusedLocation} />
         return (
-            <View style={styles.container} >
-                <View style={styles.icons}>
-                    <TouchableOpacity
-                        style={styles.shareIcon}
-                        onPress={this.pushCloseButton}>
-                        <Icon size={35} name='ios-close' color='white' />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.edit}
-                        onPress={this.pushEditButton}>
-                        <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.alignment}>
-                    <Text style={styles.mainText}>{this.props.friend.firstN} {this.props.friend.lastN}</Text>
-                    <Text style={styles.category}>Phone Number</Text>
-                    <Text style={styles.textInputStyle}>{this.props.friend.phone}</Text>
-                    <Text style={styles.category}>Email</Text>
-                    <Text style={styles.textInputStyle}>{this.props.friend.email}</Text>
-                    <Text style={styles.location}>Location</Text>
-                </View>
-                <MapView
-                    region={this.state.focusedLocation}
-                    style={styles.map}
-                    showsUserLocation={true}
-                    loadingEnabled={true}
-                    ref={ref => this.map = ref}
-                >
-                    {marker}
-                </MapView>
-                <TouchableOpacity
-                    style={styles.bottomButton}
-                    onPress={this.showDirections}
-                >
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
-                </TouchableOpacity>
-                <View style={styles.alignment}>
-                    <TouchableOpacity
-                        style={styles.pressRedText}
-                        onPress={this.deleteUser}
+            <ImageBackground source={require('../screens/Background.png')} style={{ width: '100%', height: '100%' }}>
+                <View style={styles.container} >
+                    <View style={styles.icons}>
+                        <TouchableOpacity
+                            style={styles.shareIcon}
+                            onPress={this.pushCloseButton}>
+                            <Icon size={35} name='ios-close' color='white' />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.edit}
+                            onPress={this.pushEditButton}>
+                            <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.alignment}>
+                        <Text style={styles.mainText}>{this.props.friend.firstN} {this.props.friend.lastN}</Text>
+                        <Text style={styles.category}>Phone Number</Text>
+                        <Text style={styles.textInputStyle}>{this.props.friend.phone}</Text>
+                        <Text style={styles.category}>Email</Text>
+                        <Text style={styles.textInputStyle}>{this.props.friend.email}</Text>
+                        <Text style={styles.location}>Location</Text>
+                    </View>
+                    <MapView
+                        region={this.state.focusedLocation}
+                        style={styles.map}
+                        showsUserLocation={true}
+                        loadingEnabled={true}
+                        ref={ref => this.map = ref}
                     >
-                        <Text style={styles.redText}>Delete User</Text>
+                        {marker}
+                    </MapView>
+                    <TouchableOpacity
+                        style={styles.bottomButton}
+                        onPress={this.showDirections}
+                    >
+                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
                     </TouchableOpacity>
+                    <View style={styles.alignment}>
+                        <TouchableOpacity
+                            style={styles.pressRedText}
+                            onPress={this.deleteUser}
+                        >
+                            <Text style={styles.redText}>Delete User</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
+            </ImageBackground>
         );
     }
 }
@@ -152,8 +154,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#222222',
+        alignItems: 'center'
     },
     icons: {
         flexDirection: 'row',
@@ -222,9 +223,9 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-      onDeleteFriend: (userId, ref) => dispatch(deleteFriend(userId,ref)),
+        onDeleteFriend: (userId, ref) => dispatch(deleteFriend(userId, ref)),
 
     };
-  };
+};
 
-  export default connect(mapStateToProps, mapDispatchToProps)(FriendProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(FriendProfile);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Dialog, { DialogContent, DialogFooter, DialogButton } from 'react-native-popup-dialog';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, StatusBar, KeyboardAvoidingView } from 'react-native';
+import { ImageBackground, StyleSheet, Text, TextInput, View, TouchableOpacity, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
@@ -155,70 +155,72 @@ class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <StatusBar barStyle='light-content' />
-        <View style={styles.alignment}>
-          <Text style={styles.mainText}>HomeBook</Text>
-          <Text style={styles.supportingText}>Addressing Your Home</Text>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            autoCapitalize="none"
-            keyboardType='email-address'
-            style={styles.userInput}
-            placeholder="johndoe@example.com"
-            placeholderTextColor="gray"
-            onChangeText={this.emailHandler}
-            returnKeyType={"next"}
-            onSubmitEditing={() => { this.secondTextInput.focus(); }}
-            blurOnSubmit={false}
-          />
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            secureTextEntry={true}
-            style={styles.userInput}
-            placeholder="••••••••••"
-            placeholderTextColor="gray"
-            onChangeText={this.passwordHandler}
-            ref={(input) => { this.secondTextInput = input; }}
-            returnKeyType={"done"}
-          />
-          <Text onPress={this.pushRecovery} style={styles.forgotPassword}>Forgot Password?</Text>
-          <Dialog
-            visible={this.state.visible}
-            footer={
-              <DialogFooter>
-                <DialogButton
-                  text="Resend Verification"
-                  onPress={() => this.ReverifyEmail()}
-                />
-                <DialogButton
-                  text="Recreate Account"
-                  onPress={() => this.RecreateAccount()}
-                />
-              </DialogFooter>
-            }
-            onTouchOutside={() => {
-              this.setState({ visible: false });
-            }}
-          >
-            <DialogContent>
-              <Text>This email is already in use but is not verified. Please click Resend Verification to send another verification email. If you have not created an account with this email, please click Recreate Account to make a new account.</Text>
-            </DialogContent>
-          </Dialog>
+      <ImageBackground source={require('../screens/Background.png')} style={{ width: '100%', height: '100%' }}>
+        <View style={styles.container}>
+          <StatusBar barStyle='light-content' />
+          <View style={styles.alignment}>
+            <Text style={styles.mainText}>HomeBook</Text>
+            <Text style={styles.supportingText}>Addressing Your Home</Text>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              autoCapitalize="none"
+              keyboardType='email-address'
+              style={styles.userInput}
+              placeholder="johndoe@example.com"
+              placeholderTextColor="gray"
+              onChangeText={this.emailHandler}
+              returnKeyType={"next"}
+              onSubmitEditing={() => { this.secondTextInput.focus(); }}
+              blurOnSubmit={false}
+            />
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              secureTextEntry={true}
+              style={styles.userInput}
+              placeholder="••••••••••"
+              placeholderTextColor="gray"
+              onChangeText={this.passwordHandler}
+              ref={(input) => { this.secondTextInput = input; }}
+              returnKeyType={"done"}
+            />
+            <Text onPress={this.pushRecovery} style={styles.forgotPassword}>Forgot Password?</Text>
+            <Dialog
+              visible={this.state.visible}
+              footer={
+                <DialogFooter>
+                  <DialogButton
+                    text="Resend Verification"
+                    onPress={() => this.ReverifyEmail()}
+                  />
+                  <DialogButton
+                    text="Recreate Account"
+                    onPress={() => this.RecreateAccount()}
+                  />
+                </DialogFooter>
+              }
+              onTouchOutside={() => {
+                this.setState({ visible: false });
+              }}
+            >
+              <DialogContent>
+                <Text>This email is already in use but is not verified. Please click Resend Verification to send another verification email. If you have not created an account with this email, please click Recreate Account to make a new account.</Text>
+              </DialogContent>
+            </Dialog>
 
+          </View>
+          <View style={styles.bottom}>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={this.EnterLogin}
+            >
+              <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>LOGIN</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.signupLine}>
+              <Text onPress={this.pushCreateAccount} style={styles.clickSignup}>Create Account</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.bottom}>
-          <TouchableOpacity
-            style={styles.loginButton}
-            onPress={this.EnterLogin}
-          >
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>LOGIN</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.signupLine}>
-            <Text onPress={this.pushCreateAccount} style={styles.clickSignup}>Create Account</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -227,8 +229,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#222222',
+    alignItems: 'center'
   },
   alignment: {
     width: '85%'

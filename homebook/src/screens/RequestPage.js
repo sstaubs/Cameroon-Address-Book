@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { ImageBackground, Alert, View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -101,43 +101,45 @@ class RequestPage extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.alignment}>
-                    <View style={styles.icons}>
-                        <TouchableOpacity
-                            onPress={this.backArrow}
-                        >
-                            <Icon size={35} name='ios-arrow-round-back' color='white' />
-                        </TouchableOpacity>
-                    </View>
-                    <Text style={styles.mainText}>Requests</Text>
-                    <FlatList
-                        style={styles.list}
-                        data={this.state.friendNameArray}
-                        extraData={this.state}
-                        renderItem={({ item, index }) =>
-                            <View style={{ marginBottom: 20, borderRadius: 10}}>
-                                <Text style={styles.bodyText}>{item}</Text>
-                                <View style={styles.buttons}>
-                                    <TouchableOpacity
-                                        style={styles.acceptButton}
-                                        onPress={() => this.acceptHandler(index)}
-                                    >
-                                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Accept</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        style={styles.declineButton}
-                                        onPress={() => this.declineHandler(index)}
-                                    >
-                                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Decline</Text>
-                                    </TouchableOpacity>
+            <ImageBackground source={require('../screens/Background.png')} style={{ width: '100%', height: '100%' }}>
+                <View style={styles.container}>
+                    <View style={styles.alignment}>
+                        <View style={styles.icons}>
+                            <TouchableOpacity
+                                onPress={this.backArrow}
+                            >
+                                <Icon size={35} name='ios-arrow-round-back' color='white' />
+                            </TouchableOpacity>
+                        </View>
+                        <Text style={styles.mainText}>Requests</Text>
+                        <FlatList
+                            style={styles.list}
+                            data={this.state.friendNameArray}
+                            getData={this.state}
+                            renderItem={({ item, index }) =>
+                                <View style={{ marginBottom: 20, borderRadius: 10 }}>
+                                    <Text style={styles.bodyText}>{item}</Text>
+                                    <View style={styles.buttons}>
+                                        <TouchableOpacity
+                                            style={styles.acceptButton}
+                                            onPress={() => this.acceptHandler(index)}
+                                        >
+                                            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Accept</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            style={styles.declineButton}
+                                            onPress={() => this.declineHandler(index)}
+                                        >
+                                            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Decline</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
-                            </View>
-                        }
-                        keyExtractor={(item, index) => index.toString()}
-                    />
+                            }
+                            keyExtractor={(index) => index.toString()}
+                        />
+                    </View>
                 </View>
-            </View>
+            </ImageBackground>
         );
     }
 };
@@ -150,8 +152,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#222222'
+        alignItems: 'center'
     },
     alignment: {
         width: '85%'

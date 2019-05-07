@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { ImageBackground, Alert, View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -81,49 +81,51 @@ class SearchUser extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <TouchableOpacity
-                    style={styles.backIcon}
-                    onPress={this.backArrow}
-                >
-                    <Icon size={35} name='ios-arrow-round-back' color='white' />
-                </TouchableOpacity>
-                <View style={styles.alignment}>
-                    <Text style={styles.mainText}>Share Contact</Text>
-                    <Text style={styles.label}>Email</Text>
-                    <TextInput
-                        keyboardType="email-address"
-                        style={styles.userInput}
-                        placeholder="johndoe@example.com"
-                        placeholderTextColor="gray"
-                        returnKeyType="done"
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        onChangeText={this.searchedEmailHandler}
-                    />
-                    <FlatList
-                        style={styles.list}
-                        data={this.state.friendNameArray}
-                        renderItem={({ item, index }) =>
-                            <TouchableOpacity
-                                onPress={() => this.SendRequest(this.state.referenceArray[index])}
-                                style={{ backgroundColor: '#3F7F40', borderRadius: 50, marginTop: 20 }}
-                            >
-                                <Text style={styles.bodyText}>
-                                    <Icon size={20} name='ios-send' color='white' />  {item}
-                                </Text>
-                            </TouchableOpacity>
-                        }
-                        keyExtractor={(index) => index.toString()}
-                    />
+            <ImageBackground source={require('../screens/Background.png')} style={{ width: '100%', height: '100%' }}>
+                <View style={styles.container}>
+                    <TouchableOpacity
+                        style={styles.backIcon}
+                        onPress={this.backArrow}
+                    >
+                        <Icon size={35} name='ios-arrow-round-back' color='white' />
+                    </TouchableOpacity>
+                    <View style={styles.alignment}>
+                        <Text style={styles.mainText}>Share Contact</Text>
+                        <Text style={styles.label}>Email</Text>
+                        <TextInput
+                            keyboardType="email-address"
+                            style={styles.userInput}
+                            placeholder="johndoe@example.com"
+                            placeholderTextColor="gray"
+                            returnKeyType="done"
+                            autoCapitalize='none'
+                            autoCorrect={false}
+                            onChangeText={this.searchedEmailHandler}
+                        />
+                        <FlatList
+                            style={styles.list}
+                            data={this.state.friendNameArray}
+                            renderItem={({ item, index }) =>
+                                <TouchableOpacity
+                                    onPress={() => this.SendRequest(this.state.referenceArray[index])}
+                                    style={{ backgroundColor: '#3F7F40', borderRadius: 50, marginTop: 20 }}
+                                >
+                                    <Text style={styles.bodyText}>
+                                        <Icon size={20} name='ios-send' color='white' />  {item}
+                                    </Text>
+                                </TouchableOpacity>
+                            }
+                            keyExtractor={(index) => index.toString()}
+                        />
+                    </View>
+                    <TouchableOpacity
+                        style={styles.bottomButton}
+                        onPress={this.searchBySearchedEmail}
+                    >
+                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SEARCH</Text>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                    style={styles.bottomButton}
-                    onPress={this.searchBySearchedEmail}
-                >
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SEARCH</Text>
-                </TouchableOpacity>
-            </View>
+            </ImageBackground>
         );
     }
 }
@@ -133,8 +135,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#222222',
+        alignItems: 'center'
     },
     backIcon: {
         flexDirection: 'row',
