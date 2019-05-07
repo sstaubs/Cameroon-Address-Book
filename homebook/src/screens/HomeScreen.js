@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { ImageBackground, ScrollView, View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -86,53 +86,55 @@ class HomeScreen extends Component {
     render() {
 
         return (
-            <View style={styles.container}>
-                <View style={styles.icons}>
-                    <TouchableOpacity
-                        onPress={this.openSideMenu}>
-                        <Icon size={30} name='ios-menu' color='white' />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={this.pushSearchUserPage}>
-                        <Icon size={30} name='ios-send' color='white' />
-                    </TouchableOpacity>
-                </View>
-                <TouchableOpacity onPress={this.pushUserProfile} style={{ width: '85%' }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-                        <Icon size={35} name='ios-contact' color='white' />
-                        <Text style={styles.mainText}>   {this.props.user.firstN} {this.props.user.lastN}</Text>
+            <ImageBackground source={require('../screens/Background.png')} style={{ width: '100%', height: '100%' }}>
+                <View style={styles.container}>
+                    <View style={styles.icons}>
+                        <TouchableOpacity
+                            onPress={this.openSideMenu}>
+                            <Icon size={30} name='ios-menu' color='white' />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={this.pushSearchUserPage}>
+                            <Icon size={30} name='ios-send' color='white' />
+                        </TouchableOpacity>
                     </View>
-                </TouchableOpacity>
-                <ScrollView style={{ width: '100%' }} indicatorStyle='white'>
-                    <View style={styles.alignment}>
-                        <FlatList
-                            style={styles.list}
-                            data={this.state.friendNameArray}
-                            extraData={this.state}
-
-                            renderItem={({ item, index }) =>
-                                <View>
-                                    <View>{this.renderWhiteLine(index)}</View>
-
-                                    <TouchableOpacity
-                                        onPress={() => this.friendHandler(index)}
-                                    >
-                                        <Text style={styles.bodyText}>{item}</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            }
-
-                            keyExtractor={(index) => index.toString()}
-                        />
-                    </View>
-                </ScrollView>
-                <View style={{ position: 'absolute', bottom: 20, right: '7.5%' }}>
-                    <TouchableOpacity
-                        onPress={this.pushAddUser}>
-                        <Icon size={65} name='ios-add-circle' color='white' />
+                    <TouchableOpacity onPress={this.pushUserProfile} style={{ width: '85%' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+                            <Icon size={35} name='ios-contact' color='white' />
+                            <Text style={styles.mainText}>   {this.props.user.firstN} {this.props.user.lastN}</Text>
+                        </View>
                     </TouchableOpacity>
+                    <ScrollView style={{ width: '100%' }} indicatorStyle='white'>
+                        <View style={styles.alignment}>
+                            <FlatList
+                                style={styles.list}
+                                data={this.state.friendNameArray}
+                                extraData={this.state}
+
+                                renderItem={({ item, index }) =>
+                                    <View>
+                                        <View>{this.renderWhiteLine(index)}</View>
+
+                                        <TouchableOpacity
+                                            onPress={() => this.friendHandler(index)}
+                                        >
+                                            <Text style={styles.bodyText}>{item}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                }
+
+                                keyExtractor={(index) => index.toString()}
+                            />
+                        </View>
+                    </ScrollView>
+                    <View style={{ position: 'absolute', bottom: 20, right: '7.5%' }}>
+                        <TouchableOpacity
+                            onPress={this.pushAddUser}>
+                            <Icon size={65} name='ios-add-circle' color='white' />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
+            </ImageBackground>
         );
     }
 };
@@ -142,8 +144,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#222222'
+        alignItems: 'center'
     },
     icons: {
         flexDirection: 'row',
@@ -166,10 +167,9 @@ const styles = StyleSheet.create({
     },
     bodyText: {
         color: 'white',
-        marginTop: 10,
-        fontSize: 18,
-        
-        padding: 10
+        marginTop: 15,
+        marginBottom: 15,
+        fontSize: 20
     }
 });
 const mapStateToProps = state => {

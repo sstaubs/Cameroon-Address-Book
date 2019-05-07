@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -14,13 +14,13 @@ class SideMenu extends Component {
 
     pushRequestPage = () => Navigation.push(this.props.componentId, {
         component: {
-          name: 'RequestPage'
+            name: 'RequestPage'
         }
-      });
+    });
 
     signout = () => {
         firebase.auth().signOut();
-        Navigation.push(this.props.componentId, {
+        Navigation.popToRoot(this.props.componentId, {
             component: {
                 name: 'LoginScreen'
             }
@@ -98,69 +98,71 @@ class SideMenu extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.alignment}>
-                    <View style={styles.icons}>
-                        <TouchableOpacity
-                            style={styles.closeIcon}
-                            onPress={this.closeSideMenu}>
-                            <Icon size={38} name='ios-close' color='white' />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.textPadding}>
-                        <TouchableOpacity
-                            onPress={this.pushRequestPage}>
-                            <Text style={styles.innerText}><Icon size={20} name='ios-download' color='white' />  Contact Requests</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.textPadding}>
-                        <TouchableOpacity
-                            onPress={this.changePassword}>
-                            <Text style={styles.innerText}><Icon size={20} name='ios-key' color='white' />  Reset Password</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.textPadding}>
-                        <TouchableOpacity
-                            onPress={this.changeEmail}>
-                            <Text style={styles.innerText}><Icon size={20} name='ios-mail' color='white' />  Change Email</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.textPadding}>
-                        <TouchableOpacity
-                            onPress={this.signout}>
-                            <Text style={styles.innerText}><Icon size={20} name='ios-log-out' color='white' />  Logout</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.textPadding}>
-                        <TouchableOpacity
-                            onPress={this._toggleModal}>
-                            <Text style={styles.innerRedText}><Icon size={20} name='ios-trash' color='#E24A4A' />  Delete Account</Text>
-                        </TouchableOpacity>
-                        <Modal isVisible={this.state.isModalVisible}>
-                            <Text style={styles.mainText}>Enter Password To Delete Account</Text>
-                            <Text style={styles.label}>Current Password</Text>
-                            <TextInput
-                                style={styles.userInput}
-                                secureTextEntry={true}
-                                placeholder='••••••••••'
-                                placeholderTextColor="gray"
-                                onChangeText={this.passHandler}
-                                returnKeyType={"done"}
-                            />
-                            <View style={styles.modalText}>
-                                <TouchableOpacity
-                                    onPress={this._toggleModal}>
-                                    <Text style={styles.cancelText}>Cancel</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={this.deleteAccount}>
-                                    <Text style={styles.deleteText}>Delete</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </Modal>
+            <ImageBackground source={require('../screens/Background.png')} style={{ width: '100%', height: '100%' }}>
+                <View style={styles.container}>
+                    <View style={styles.alignment}>
+                        <View style={styles.icons}>
+                            <TouchableOpacity
+                                style={styles.closeIcon}
+                                onPress={this.closeSideMenu}>
+                                <Icon size={38} name='ios-close' color='white' />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.textPadding}>
+                            <TouchableOpacity
+                                onPress={this.pushRequestPage}>
+                                <Text style={styles.innerText}><Icon size={20} name='ios-download' color='white' />  Contact Requests</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.textPadding}>
+                            <TouchableOpacity
+                                onPress={this.changePassword}>
+                                <Text style={styles.innerText}><Icon size={20} name='ios-key' color='white' />  Reset Password</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.textPadding}>
+                            <TouchableOpacity
+                                onPress={this.changeEmail}>
+                                <Text style={styles.innerText}><Icon size={20} name='ios-mail' color='white' />  Change Email</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.textPadding}>
+                            <TouchableOpacity
+                                onPress={this.signout}>
+                                <Text style={styles.innerText}><Icon size={20} name='ios-log-out' color='white' />  Logout</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.textPadding}>
+                            <TouchableOpacity
+                                onPress={this._toggleModal}>
+                                <Text style={styles.innerRedText}><Icon size={20} name='ios-trash' color='#E24A4A' />  Delete Account</Text>
+                            </TouchableOpacity>
+                            <Modal isVisible={this.state.isModalVisible}>
+                                <Text style={styles.mainText}>Enter Password To Delete Account</Text>
+                                <Text style={styles.label}>Current Password</Text>
+                                <TextInput
+                                    style={styles.userInput}
+                                    secureTextEntry={true}
+                                    placeholder='••••••••••'
+                                    placeholderTextColor="gray"
+                                    onChangeText={this.passHandler}
+                                    returnKeyType={"done"}
+                                />
+                                <View style={styles.modalText}>
+                                    <TouchableOpacity
+                                        onPress={this._toggleModal}>
+                                        <Text style={styles.cancelText}>Cancel</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={this.deleteAccount}>
+                                        <Text style={styles.deleteText}>Delete</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </Modal>
+                        </View>
                     </View>
                 </View>
-            </View>
+            </ImageBackground>
         );
     }
 };
@@ -168,7 +170,7 @@ class SideMenu extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#282828',
+        backgroundColor: '#051E3E',
         flexDirection: 'row',
         justifyContent: 'flex-start'
     },

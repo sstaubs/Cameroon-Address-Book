@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -100,60 +100,62 @@ class ChangeEmailScreen extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.alignment}>
+            <ImageBackground source={require('../screens/Background.png')} style={{ width: '100%', height: '100%' }}>
+                <View style={styles.container}>
+                    <View style={styles.alignment}>
+                        <TouchableOpacity
+                            style={styles.backIcon}
+                            onPress={this.backArrow}
+                        >
+                            <Icon size={35} name='ios-arrow-round-back' color='white' />
+                        </TouchableOpacity>
+                        <Text style={styles.mainText}>Change Email</Text>
+                        <Text style={styles.label}>Current Email</Text>
+                        <TextInput
+                            keyboardType='email-address'
+                            style={styles.userInput}
+                            placeholder="johndoe@example.com"
+                            autoCapitalize='none'
+                            placeholderTextColor="gray"
+                            onChangeText={this.emailHandler}
+                            returnKeyType={"next"}
+                            onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                            blurOnSubmit={false}
+                        />
+                        <Text style={styles.label}>Current Password</Text>
+                        <TextInput
+                            secureTextEntry={true}
+                            style={styles.userInput}
+                            placeholder="••••••••••"
+                            placeholderTextColor="gray"
+                            onChangeText={this.passHandler}
+                            returnKeyType={"next"}
+                            ref={(input) => { this.secondTextInput = input; }}
+                            onSubmitEditing={() => { this.thirdTextInput.focus(); }}
+                            blurOnSubmit={false}
+                        />
+                        <Text style={styles.label}>New Email</Text>
+                        <TextInput
+                            keyboardType='email-address'
+                            style={styles.userInput}
+                            placeholder="johndoe@example.com"
+                            autoCapitalize='none'
+                            autoCorrect={false}
+                            placeholderTextColor="gray"
+                            onChangeText={this.newEmailHandler}
+                            ref={(input) => { this.thirdTextInput = input; }}
+                            returnKeyType={"done"}
+                            blurOnSubmit={true}
+                        />
+                    </View>
                     <TouchableOpacity
-                        style={styles.backIcon}
-                        onPress={this.backArrow}
+                        style={styles.bottomButton}
+                        onPress={this.changeEmail}
                     >
-                        <Icon size={35} name='ios-arrow-round-back' color='white' />
+                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>UPDATE EMAIL</Text>
                     </TouchableOpacity>
-                    <Text style={styles.mainText}>Change Email</Text>
-                    <Text style={styles.label}>Current Email</Text>
-                    <TextInput
-                        keyboardType='email-address'
-                        style={styles.userInput}
-                        placeholder="johndoe@example.com"
-                        autoCapitalize='none'
-                        placeholderTextColor="gray"
-                        onChangeText={this.emailHandler}
-                        returnKeyType={"next"}
-                        onSubmitEditing={() => { this.secondTextInput.focus(); }}
-                        blurOnSubmit={false}
-                    />
-                    <Text style={styles.label}>Current Password</Text>
-                    <TextInput
-                        secureTextEntry={true}
-                        style={styles.userInput}
-                        placeholder="••••••••••"
-                        placeholderTextColor="gray"
-                        onChangeText={this.passHandler}
-                        returnKeyType={"next"}
-                        ref={(input) => { this.secondTextInput = input; }}
-                        onSubmitEditing={() => { this.thirdTextInput.focus(); }}
-                        blurOnSubmit={false}
-                    />
-                    <Text style={styles.label}>New Email</Text>
-                    <TextInput
-                        keyboardType='email-address'
-                        style={styles.userInput}
-                        placeholder="johndoe@example.com"
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        placeholderTextColor="gray"
-                        onChangeText={this.newEmailHandler}
-                        ref={(input) => { this.thirdTextInput = input; }}
-                        returnKeyType={"done"}
-                        blurOnSubmit={true}
-                    />
                 </View>
-                <TouchableOpacity
-                    style={styles.bottomButton}
-                    onPress={this.changeEmail}
-                >
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>UPDATE EMAIL</Text>
-                </TouchableOpacity>
-            </View>
+            </ImageBackground>
         );
     }
 }
@@ -163,8 +165,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#222222',
+        alignItems: 'center'
     },
     alignment: {
         width: '85%'
