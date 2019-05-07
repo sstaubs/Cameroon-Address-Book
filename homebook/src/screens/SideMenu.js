@@ -12,6 +12,12 @@ class SideMenu extends Component {
         isModalVisible: false
     };
 
+    pushRequestPage = () => Navigation.push(this.props.componentId, {
+        component: {
+          name: 'RequestPage'
+        }
+      });
+
     signout = () => {
         firebase.auth().signOut();
         Navigation.push(this.props.componentId, {
@@ -103,26 +109,32 @@ class SideMenu extends Component {
                     </View>
                     <View style={styles.textPadding}>
                         <TouchableOpacity
+                            onPress={this.pushRequestPage}>
+                            <Text style={styles.innerText}><Icon size={20} name='ios-download' color='white' />  Contact Requests</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.textPadding}>
+                        <TouchableOpacity
                             onPress={this.changePassword}>
-                            <Text style={styles.innerText}>Reset Password</Text>
+                            <Text style={styles.innerText}><Icon size={20} name='ios-key' color='white' />  Reset Password</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.textPadding}>
                         <TouchableOpacity
                             onPress={this.changeEmail}>
-                            <Text style={styles.innerText}>Change Email</Text>
+                            <Text style={styles.innerText}><Icon size={20} name='ios-mail' color='white' />  Change Email</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.textPadding}>
                         <TouchableOpacity
                             onPress={this.signout}>
-                            <Text style={styles.innerText}>Logout</Text>
+                            <Text style={styles.innerText}><Icon size={20} name='ios-log-out' color='white' />  Logout</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.textPadding}>
                         <TouchableOpacity
                             onPress={this._toggleModal}>
-                            <Text style={styles.innerRedText}>Delete Account</Text>
+                            <Text style={styles.innerRedText}><Icon size={20} name='ios-trash' color='#E24A4A' />  Delete Account</Text>
                         </TouchableOpacity>
                         <Modal isVisible={this.state.isModalVisible}>
                             <Text style={styles.mainText}>Enter Password To Delete Account</Text>

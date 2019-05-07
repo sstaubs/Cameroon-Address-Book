@@ -63,7 +63,7 @@ class SetLocation extends Component {
       })
   }
 
-  pushLoginScreen = () => Navigation.push(this.props.componentId, {
+  pushLoginScreen = () => Navigation.popToRoot(this.props.componentId, {
     component: {
       name: 'LoginScreen'
     }

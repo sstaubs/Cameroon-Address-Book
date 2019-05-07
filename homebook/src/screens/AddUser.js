@@ -16,15 +16,15 @@ class AddUser extends Component {
     email: '',
     docId: '',
     focusedLocation: {
-      longitude: 37.7900352,
-      latitude: -122.4013726,
+      latitude: 37.7900352,
+      longitude: -122.4013726,
       latitudeDelta: 0.0122,
       longitudeDelta:
         Dimensions.get("window").width /
         Dimensions.get("window").height *
         0.0122
-    }
-
+    },
+    locationChosen: false
   };
 
   pushCloseButton = () => {
@@ -158,13 +158,14 @@ class AddUser extends Component {
           <Icon size={35} name='ios-close' color='white' />
         </TouchableOpacity>
         <Text style={styles.mainText}>Add Contact</Text>
-        <ScrollView style={{ width: '100%' }}>
+        <ScrollView style={{ width: '100%' }} indicatorStyle='white' keyboardDismissMode='on-drag'>
           <View style={{ width: '85%', left: '7.5%' }}>
             <Text style={styles.label}>First Name</Text>
             <TextInput
               style={styles.userInput}
-              placeholder="First Name"
+              placeholder="John"
               placeholderTextColor="gray"
+              autoCorrect={false}
               onChangeText={this.firstNameHandler}
               returnKeyType={"next"}
               onSubmitEditing={() => { this.secondTextInput.focus(); }}
@@ -173,8 +174,9 @@ class AddUser extends Component {
             <Text style={styles.label}>Last Name</Text>
             <TextInput
               style={styles.userInput}
-              placeholder="Last Name"
+              placeholder="Doe"
               placeholderTextColor="gray"
+              autoCorrect={false}
               onChangeText={this.lastNameHandler}
               ref={(input) => { this.secondTextInput = input; }}
               returnKeyType={"next"}
@@ -186,7 +188,7 @@ class AddUser extends Component {
               style={styles.userInput}
               autoCapitalize='none'
               autoCorrect={false}
-              placeholder='Email'
+              placeholder='johndoe@example.com'
               keyboardType='email-address'
               placeholderTextColor="gray"
               onChangeText={this.emailHandler}
@@ -199,7 +201,7 @@ class AddUser extends Component {
             <TextInput
               style={styles.userInput}
               keyboardType='number-pad'
-              placeholder="Phone Number"
+              placeholder="1234567890"
               placeholderTextColor="gray"
               onChangeText={this.phoneNumberHandler}
               ref={(input) => { this.fourthTextInput = input; }}
@@ -219,14 +221,13 @@ class AddUser extends Component {
           </View>
           <MapView
             initialRegion={this.state.focusedLocation}
-            region={this.state.focusedLocation}
             style={styles.map}
             showsUserLocation={true}
             onPress={this.pickLocationHandler}
             ref={ref => this.map = ref}
           >
             {marker}
-          </MapView>
+        </MapView>
         </ScrollView>
         <TouchableOpacity
           style={styles.bottomButton}

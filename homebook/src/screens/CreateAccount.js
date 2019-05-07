@@ -256,6 +256,7 @@ class CreateAccount extends Component {
               placeholder='John'
               placeholderTextColor='gray'
               onChangeText={this.firstNameHandler}
+              autoCorrect={false}
               returnKeyType={"next"}
               onSubmitEditing={() => { this.secondTextInput.focus(); }}
               blurOnSubmit={false}
@@ -266,6 +267,7 @@ class CreateAccount extends Component {
               placeholder='Doe'
               placeholderTextColor='gray'
               onChangeText={this.lastNameHandler}
+              autoCorrect={false}
               ref={(input) => { this.secondTextInput = input; }}
               returnKeyType={"next"}
               onSubmitEditing={() => { this.thirdTextInput.focus(); }}
@@ -291,7 +293,7 @@ class CreateAccount extends Component {
             <TextInput
               keyboardType='number-pad'
               style={styles.userInput}
-              placeholder='(123) 456-7890'
+              placeholder='1234567890'
               placeholderTextColor='gray'
               onChangeText={this.phoneHandler}
               ref={(input) => { this.sixthTextInput = input; }}
