@@ -1,4 +1,4 @@
-import { GET_REF, SET_USER,  SET_FRIEND } from './actionTypes'
+import { GET_REF, SET_USER, SET_FRIEND } from './actionTypes'
 import * as firebase from 'firebase';
 
 export const editUser = (accountInfo) => {
@@ -25,19 +25,34 @@ export const editUser = (accountInfo) => {
     }
 }
 
-export const deleteFriend  = (userId,ref) => {
+export const deleteFriend = (userId, ref) => {
     return dispatch => {
         var db = firebase.firestore();
 
         db.collection("users").doc(userId).collection("friends").doc(ref).delete().then(() => {
             // Friend deleted.
-            
+
         }).then(() => {
             dispatch(getUser());
         }).catch(() => {
             // An error happened.
         });
     }
+}
+
+export const addFriend = (userId, accountInfo) => {
+    return dispatch => {
+        var db = firebase.firestore();
+
+        db.collection("users").doc(userId).collection("friends").add(accountInfo)
+            .then((docRef) => {
+                dispatch(getUser());
+            }).catch((error) => {
+                //alert("error here")
+                //alert("Error adding document: " + error);
+            });
+    }
+
 }
 
 
@@ -49,7 +64,7 @@ export const editFriend = (userId, ref, accountInfo) => {
                 console.log("Document successfully updated!");
             }).then(() => {
                 dispatch(setFriend(accountInfo));
-            }).then(() =>{
+            }).then(() => {
                 dispatch(getUser());
             })
             .catch((error) => {

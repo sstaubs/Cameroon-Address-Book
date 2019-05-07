@@ -63,15 +63,10 @@ class HomeScreen extends Component {
         });
     }
 
-<<<<<<< HEAD
     
     
     
      
-=======
-
-
->>>>>>> 94908899327587f8a1a5f24cac5943f889519c7e
 
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
@@ -113,7 +108,7 @@ class HomeScreen extends Component {
                     <FlatList
                         style={styles.list}
                         data={this.state.friendNameArray}
-                        getData={this.state.friendNameArray}
+                        extraData={this.state}
 
                         renderItem={({ item, index }) =>
                             <View>
