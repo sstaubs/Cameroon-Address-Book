@@ -176,7 +176,7 @@ class CreateAccount extends Component {
         </View>
         <Text style={styles.mainText}>Create Account</Text>
         <KeyboardAvoidingView behavior='padding' style={styles.alignment}>
-          <ScrollView style={{ width: '100%' }} keyboardDismissMode='on-drag'>
+          <ScrollView style={{ width: '100%' }} indicatorStyle='white' keyboardDismissMode='on-drag'>
             <Text style={styles.label}>First Name</Text>
             <TextInput
               style={styles.userInput}

@@ -62,7 +62,7 @@ class EditUser extends Component {
   };
 
   componentDidMount() {
-  
+
   }
 
   pickLocationHandler = event => {
@@ -133,7 +133,7 @@ class EditUser extends Component {
           </TouchableOpacity>
         </View>
         <Text style={styles.mainText}>Edit Contact</Text>
-        <ScrollView style={{ width: '100%' }}>
+        <ScrollView style={{ width: '100%' }} indicatorStyle='white' keyboardDismissMode='on-drag'>
           <View style={styles.alignment}>
             <Text style={styles.label}>First Name</Text>
             <TextInput
@@ -278,4 +278,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditUser); 
+export default connect(mapStateToProps, mapDispatchToProps)(EditUser);

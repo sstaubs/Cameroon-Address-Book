@@ -63,10 +63,15 @@ class HomeScreen extends Component {
         });
     }
 
+<<<<<<< HEAD
     
     
     
      
+=======
+
+
+>>>>>>> 94908899327587f8a1a5f24cac5943f889519c7e
 
     friendHandler = val => {
         //alert(this.state.referenceArray[val])
@@ -103,7 +108,7 @@ class HomeScreen extends Component {
                         <Text style={styles.mainText}>   {this.props.user.firstN} {this.props.user.lastN}</Text>
                     </View>
                 </TouchableOpacity>
-                <ScrollView style={{width: '100%'}}>
+                <ScrollView style={{width: '100%'}} indicatorStyle='white'>
                     <View style={styles.alignment}>
                     <FlatList
                         style={styles.list}
@@ -152,7 +157,8 @@ const styles = StyleSheet.create({
         width: '85%'
     },
     alignment: {
-        left: '7.5%'
+        left: '7.5%',
+        width: '85%'
     },
     mainText: {
         fontWeight: 'bold',
@@ -166,7 +172,9 @@ const styles = StyleSheet.create({
     bodyText: {
         color: 'white',
         marginTop: 10,
-        fontSize: 18
+        fontSize: 18,
+        backgroundColor: '#303030',
+        padding: 5
     }
 });
 const mapStateToProps = state => {

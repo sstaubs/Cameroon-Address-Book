@@ -92,7 +92,7 @@ class FriendProfile extends Component {
               latitude: this.props.friend.latitude,
             },
           });
-        
+
     }
 
     render() {
@@ -122,6 +122,7 @@ class FriendProfile extends Component {
                 <MapView
                     region={this.state.focusedLocation}
                     style={styles.map}
+                    showsUserLocation={true}
                     ref={ref => this.map = ref}
                 >
                     {marker}
@@ -221,8 +222,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
       onDeleteFriend: (userId, ref) => dispatch(deleteFriend(userId,ref)),
-  
+
     };
   };
-  
+
   export default connect(mapStateToProps, mapDispatchToProps)(FriendProfile);

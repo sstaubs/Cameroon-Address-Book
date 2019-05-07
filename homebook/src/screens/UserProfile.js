@@ -111,6 +111,7 @@ class UserProfile extends Component {
         <MapView
           region={this.state.focusedLocation}
           style={styles.map}
+          showsUserLocation={true}
           ref={ref => this.map = ref}
         >
           {marker}

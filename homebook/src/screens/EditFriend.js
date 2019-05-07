@@ -6,7 +6,7 @@ import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 
 import { connect } from 'react-redux';
-import {  editFriend } from "../store/actions/index";
+import { editFriend } from "../store/actions/index";
 
 
 class EditFriend extends Component {
@@ -117,10 +117,8 @@ class EditFriend extends Component {
             longitude: this.state.focusedLocation.longitude,
             latitude: this.state.focusedLocation.latitude,
         };
-        this.props.onEditFriend(this.props.user.docId, accountInfo.docId,accountInfo);
+        this.props.onEditFriend(this.props.user.docId, accountInfo.docId, accountInfo);
         this.pushFriendProfile();
-
-
     };
 
     render() {
@@ -136,7 +134,7 @@ class EditFriend extends Component {
                 </View>
                 <Text style={styles.mainText}>Edit Contact</Text>
 
-                <ScrollView style={{ width: '100%' }}>
+                <ScrollView style={{ width: '100%' }} indicatorStyle='white' keyboardDismissMode='on-drag'>
                     <View style={styles.alignment}>
                         <Text style={styles.label}>First Name</Text>
                         <TextInput

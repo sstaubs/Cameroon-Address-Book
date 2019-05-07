@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { Alert, View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -17,12 +17,11 @@ class SearchUser extends Component {
         friendNameArray: [],
         referenceArray: [],
         searchedEmail: '',
-
     };
 
     backArrow = () => Navigation.pop(this.props.componentId);
 
-    pushToHome = () =>  Navigation.pop(this.props.componentId);
+    pushToHome = () => Navigation.pop(this.props.componentId);
 
     searchedEmailHandler = val => {
         this.setState({
@@ -58,6 +57,9 @@ class SearchUser extends Component {
     };
 
     SendRequest = val => {
+        Alert.alert(
+            'Contact Shared'
+        )
 
         var db = firebase.firestore();
 
@@ -77,7 +79,6 @@ class SearchUser extends Component {
                 //alert("error here")
                 //alert("Error adding document: " + error);
             });
-
     };
 
     render() {
@@ -108,8 +109,11 @@ class SearchUser extends Component {
                         renderItem={({ item, index }) =>
                             <TouchableOpacity
                                 onPress={() => this.SendRequest(this.state.referenceArray[index])}
+                                style={{ backgroundColor: '#3F7F40', borderRadius: 50, marginTop: 20 }}
                             >
-                                <Text style={styles.bodyText}>{item}</Text>
+                                <Text style={styles.bodyText}>
+                                    <Icon size={20} name='ios-send' color='white' />  {item}
+                                </Text>
                             </TouchableOpacity>
                         }
                         keyExtractor={(index) => index.toString()}
@@ -173,12 +177,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#3F7F40'
     },
     list: {
-        marginTop: 20
+        marginTop: 25
     },
     bodyText: {
         color: 'white',
         marginTop: 10,
-        fontSize: 18
+        marginBottom: 10,
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        justifyContent: 'center'
     }
 });
 
