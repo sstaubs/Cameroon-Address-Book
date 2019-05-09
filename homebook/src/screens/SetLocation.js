@@ -70,6 +70,7 @@ class SetLocation extends Component {
   });
 
   SetLocationAndPush = () => {
+    
     var db = firebase.firestore();
     db.collection("users").doc(this.state.docId).set({
       latitude: this.state.focusedLocation.latitude,
@@ -79,6 +80,7 @@ class SetLocation extends Component {
         console.log("Document successfully updated!");
       }).then(() => {
         this.pushLoginScreen()
+        alert("Please check your email to verify your email.")
       })
       .catch((error) => {
         // The document probably doesn't exist.
