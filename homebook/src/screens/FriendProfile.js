@@ -133,7 +133,7 @@ class FriendProfile extends Component {
                         style={styles.bottomButton}
                         onPress={this.showDirections}
                     >
-                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
+                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>GET DIRECTIONS</Text>
                     </TouchableOpacity>
                     <View style={styles.alignment}>
                         <TouchableOpacity
@@ -197,10 +197,16 @@ const styles = StyleSheet.create({
     },
     pressRedText: {
         marginTop: 40,
+        borderWidth: 1,
+        borderColor: '#E24A4A',
+        width: '40%'
     },
     redText: {
         color: '#E24A4A',
-        fontSize: 20,
+        fontSize: 16,
+        padding: 10,
+        justifyContent: 'center',
+        textAlign: 'center',
         fontWeight: 'bold'
     },
     bottomButton: {

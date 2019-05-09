@@ -63,10 +63,10 @@ class Login extends Component {
 
         this.props.onGetUser();
         this.pushHomeScreen();
-          
-     
-        
-        
+
+
+
+
 
 
 
@@ -203,7 +203,7 @@ class Login extends Component {
               }}
             >
               <DialogContent>
-                <Text>This email is already in use but is not verified. Please click Resend Verification to send another verification email. If you have not created an account with this email, please click Recreate Account to make a new account.</Text>
+                <Text>This email is already in use but is not verified. Please click "Resend Verification" to send another verification email. If you have not created an account with this email, please click "Recreate Account" to make a new account.</Text>
               </DialogContent>
             </Dialog>
 
