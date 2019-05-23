@@ -27,7 +27,6 @@ class Login extends Component {
 
   });
 
-
   pushHomeScreen = () => Navigation.push(this.props.componentId, {
     sideMenu: {
       left: {
