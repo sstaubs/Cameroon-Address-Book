@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, KeyboardAvoidingView } from 'react-native';
+import { ImageBackground, ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
+
+import { connect } from 'react-redux';
+import { addFriend } from "../store/actions/index";
 
 class AddUser extends Component {
   state = {
@@ -13,15 +16,15 @@ class AddUser extends Component {
     email: '',
     docId: '',
     focusedLocation: {
-      longitude: 37.7900352,
-      latitude: -122.4013726,
+      latitude: 37.7900352,
+      longitude: -122.4013726,
       latitudeDelta: 0.0122,
       longitudeDelta:
         Dimensions.get("window").width /
         Dimensions.get("window").height *
         0.0122
-    }
-
+    },
+    locationChosen: false
   };
 
   pushCloseButton = () => {
@@ -29,12 +32,10 @@ class AddUser extends Component {
   }
 
   popHomeScreen() {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'HomeScreen'
-      }
-    });
+    Navigation.pop(this.props.componentId);
   }
+
+
 
   pushSearchUser = () => {
 
@@ -122,9 +123,9 @@ class AddUser extends Component {
     });
   }
 
-  confirmHandler = val => {
+  confirmHandler = () => {
 
-    var db = firebase.firestore();
+
 
 
     const friendsInfo = {
@@ -136,15 +137,10 @@ class AddUser extends Component {
       longitude: this.state.focusedLocation.longitude,
 
     };
-    db.collection("users").doc(this.state.docId).collection("friends").add(friendsInfo)
-      .then((docRef) => {
-        //alert("Document written with ID: " + docRef.id);
-      }).catch((error) => {
-        //alert("error here")
-        //alert("Error adding document: " + error);
-      });
+    this.props.onAddFriend(this.props.user.docId, friendsInfo);
 
-    this.popHomeScreen()
+
+    this.popHomeScreen();
   };
 
   render() {
@@ -155,90 +151,93 @@ class AddUser extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.closeIcon}
-          onPress={this.pushCloseButton}>
-          <Icon size={35} name='ios-close' color='white' />
-        </TouchableOpacity>
-        <Text style={styles.mainText}>Add Contact</Text>
-        <ScrollView style={{ width: '100%' }}>
-          <View style={{ width: '85%', left: '7.5%' }}>
-            <Text style={styles.label}>First Name</Text>
-            <TextInput
-              style={styles.userInput}
-              placeholder="First Name"
-              placeholderTextColor="gray"
-              onChangeText={this.firstNameHandler}
-              returnKeyType={"next"}
-              onSubmitEditing={() => { this.secondTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Last Name</Text>
-            <TextInput
-              style={styles.userInput}
-              placeholder="Last Name"
-              placeholderTextColor="gray"
-              onChangeText={this.lastNameHandler}
-              ref={(input) => { this.secondTextInput = input; }}
-              returnKeyType={"next"}
-              onSubmitEditing={() => { this.thirdTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.userInput}
-              autoCapitalize='none'
-              autoCorrect={false}
-              placeholder='Email'
-              keyboardType='email-address'
-              placeholderTextColor="gray"
-              onChangeText={this.emailHandler}
-              ref={(input) => { this.thirdTextInput = input; }}
-              returnKeyType={"next"}
-              onSubmitEditing={() => { this.fourthTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Phone Number</Text>
-            <TextInput
-              style={styles.userInput}
-              keyboardType='number-pad'
-              placeholder="Phone Number"
-              placeholderTextColor="gray"
-              onChangeText={this.phoneNumberHandler}
-              ref={(input) => { this.fourthTextInput = input; }}
-              returnKeyType={"done"}
-              blurOnSubmit={true}
-            />
-            <Text style={styles.locationText}>Set Location</Text>
-            <TouchableOpacity
-              onPress={this.getLocationHandler}
-              style={styles.touchableLocation}
+      <ImageBackground source={require('../screens/Background.png')} style={{ width: '100%', height: '100%' }}>
+        <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.closeIcon}
+            onPress={this.pushCloseButton}>
+            <Icon size={35} name='ios-close' color='white' />
+          </TouchableOpacity>
+          <Text style={styles.mainText}>Add Contact</Text>
+          <ScrollView style={{ width: '100%' }} indicatorStyle='white' keyboardDismissMode='on-drag'>
+            <View style={{ width: '85%', left: '7.5%' }}>
+              <Text style={styles.label}>First Name</Text>
+              <TextInput
+                style={styles.userInput}
+                placeholder="John"
+                placeholderTextColor="gray"
+                autoCorrect={false}
+                onChangeText={this.firstNameHandler}
+                returnKeyType={"next"}
+                onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                blurOnSubmit={false}
+              />
+              <Text style={styles.label}>Last Name</Text>
+              <TextInput
+                style={styles.userInput}
+                placeholder="Doe"
+                placeholderTextColor="gray"
+                autoCorrect={false}
+                onChangeText={this.lastNameHandler}
+                ref={(input) => { this.secondTextInput = input; }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => { this.thirdTextInput.focus(); }}
+                blurOnSubmit={false}
+              />
+              <Text style={styles.label}>Email</Text>
+              <TextInput
+                style={styles.userInput}
+                autoCapitalize='none'
+                autoCorrect={false}
+                placeholder='johndoe@example.com'
+                keyboardType='email-address'
+                placeholderTextColor="gray"
+                onChangeText={this.emailHandler}
+                ref={(input) => { this.thirdTextInput = input; }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => { this.fourthTextInput.focus(); }}
+                blurOnSubmit={false}
+              />
+              <Text style={styles.label}>Phone Number</Text>
+              <TextInput
+                style={styles.userInput}
+                keyboardType='number-pad'
+                placeholder="1234567890"
+                placeholderTextColor="gray"
+                onChangeText={this.phoneNumberHandler}
+                ref={(input) => { this.fourthTextInput = input; }}
+                returnKeyType={"done"}
+                blurOnSubmit={true}
+              />
+              <Text style={styles.locationText}>Set Location</Text>
+              <TouchableOpacity
+                onPress={this.getLocationHandler}
+                style={styles.touchableLocation}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Icon size={25} name='ios-navigate' color='#7ABAF2' />
+                  <Text style={styles.currentLocation}>  Current Location</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <MapView
+              initialRegion={this.state.focusedLocation}
+              style={styles.map}
+              showsUserLocation={true}
+              onPress={this.pickLocationHandler}
+              ref={ref => this.map = ref}
             >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Icon size={25} name='ios-navigate' color='#7ABAF2' />
-                <Text style={styles.currentLocation}>  Current Location</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <MapView
-            initialRegion={this.state.focusedLocation}
-            region={this.state.focusedLocation}
-            style={styles.map}
-            showsUserLocation={true}
-            onPress={this.pickLocationHandler}
-            ref={ref => this.map = ref}
+              {marker}
+            </MapView>
+          </ScrollView>
+          <TouchableOpacity
+            style={styles.bottomButton}
+            onPress={this.confirmHandler}
           >
-            {marker}
-          </MapView>
-        </ScrollView>
-        <TouchableOpacity
-          style={styles.bottomButton}
-          onPress={this.confirmHandler}
-        >
-          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>ADD CONTACT</Text>
-        </TouchableOpacity>
-      </View>
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>ADD CONTACT</Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
     );
   }
 }
@@ -248,8 +247,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#222222',
+    alignItems: 'center'
   },
   closeIcon: {
     marginTop: 40,
@@ -311,4 +309,20 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddUser;
+const mapStateToProps = state => {
+  return {
+    user: state.reference.user,
+
+  };
+};
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddFriend: (userId, accountInfo) => dispatch(addFriend(userId, accountInfo)),
+
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddUser);
+

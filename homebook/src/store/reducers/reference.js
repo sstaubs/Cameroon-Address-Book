@@ -1,7 +1,7 @@
-import { GET_REF, SET_USER, GET_LOGIN, SET_FRIEND } from '../actions/actionTypes';
+import { GET_REF, SET_USER, SET_LOADED, SET_FRIEND } from '../actions/actionTypes';
 const initialState = {
     friendref: '',
-    loginVerify: false,
+    loaded: false,
     user: {
         firstN: '',
         lastN: '',
@@ -44,6 +44,13 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 friend: action.friend,
+
+            };
+            case SET_LOADED:
+            
+            return {
+                ...state,
+                loaded: !state.loaded
 
             };
         

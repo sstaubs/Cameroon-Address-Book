@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { ImageBackground, ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -15,14 +15,22 @@ class CreateAccount extends Component {
     confirmpassword: '',
     phone: '',
     docId: '',
-    visible: false
+    visible: false,
+    pwInncorrect: false
   };
 
   passwordConfirm = () => {
     if (this.state.password != this.state.confirmpassword) {
-      alert("Password does not match");
+      this.setState({
+        pwInncorrect: true,
+      });
+
+
       return false;
     }
+    this.setState({
+      pwInncorrect: false,
+    });
     return true;
   };
 
@@ -78,6 +86,7 @@ class CreateAccount extends Component {
     this.props.onGetUser(user);
   };
 
+
   isEmailVerified = () => {
     //var user = firebase.auth().currentUser;
 
@@ -105,6 +114,70 @@ class CreateAccount extends Component {
          alert("Error getting documents: " + error);
        });
      }*/
+  }
+
+  renderPassword = () => {
+    if (this.state.pwInncorrect) {
+      return (
+        <View>
+          <Text style={styles.labelIncorrect}>Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.incorrectPassword}
+            placeholder='••••••••••'
+            placeholderTextColor='gray'
+            onChangeText={this.passwordHandler}
+            ref={(input) => { this.thirdTextInput = input; }}
+            returnKeyType={"next"}
+            onSubmitEditing={() => { this.fourthTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+          <Text style={styles.labelIncorrect}>Confirm Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.incorrectPassword}
+            placeholder='••••••••••'
+            placeholderTextColor='gray'
+            onChangeText={this.confirmPassHandler}
+            ref={(input) => { this.fourthTextInput = input; }}
+            returnKeyType={"next"}
+            onSubmitEditing={() => { this.fifthTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+        </View>
+      );
+    }
+    else {
+      return (
+        <View>
+          <Text style={styles.label}>Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.userInput}
+            placeholder='••••••••••'
+            placeholderTextColor='gray'
+            onChangeText={this.passwordHandler}
+            ref={(input) => { this.thirdTextInput = input; }}
+            returnKeyType={"next"}
+            onSubmitEditing={() => { this.fourthTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+          <Text style={styles.label}>Confirm Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.userInput}
+            placeholder='••••••••••'
+            placeholderTextColor='gray'
+            onChangeText={this.confirmPassHandler}
+            ref={(input) => { this.fourthTextInput = input; }}
+            returnKeyType={"next"}
+            onSubmitEditing={() => { this.fifthTextInput.focus(); }}
+            blurOnSubmit={false}
+          />
+        </View>
+      );
+    }
+
   }
 
   confirmHandler = val => {
@@ -165,97 +238,79 @@ class CreateAccount extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.iconAlignment}>
+      <ImageBackground source={require('../screens/Background.png')} style={{ width: '100%', height: '100%' }}>
+        <View style={styles.container}>
+          <View style={styles.iconAlignment}>
+            <TouchableOpacity
+              style={styles.backIcon}
+              onPress={this.backArrow}
+            >
+              <Icon size={35} name='ios-arrow-round-back' color='white' />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.mainText}>Create Account</Text>
+          <KeyboardAvoidingView behavior='padding' style={styles.alignment}>
+            <ScrollView style={{ width: '100%' }} indicatorStyle='white' keyboardDismissMode='on-drag'>
+              <Text style={styles.label}>First Name</Text>
+              <TextInput
+                style={styles.userInput}
+                placeholder='John'
+                placeholderTextColor='gray'
+                onChangeText={this.firstNameHandler}
+                autoCorrect={false}
+                returnKeyType={"next"}
+                onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                blurOnSubmit={false}
+              />
+              <Text style={styles.label}>Last Name</Text>
+              <TextInput
+                style={styles.userInput}
+                placeholder='Doe'
+                placeholderTextColor='gray'
+                onChangeText={this.lastNameHandler}
+                autoCorrect={false}
+                ref={(input) => { this.secondTextInput = input; }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => { this.thirdTextInput.focus(); }}
+                blurOnSubmit={false}
+              />
+              {this.renderPassword()}
+
+              <Text style={styles.label}>Email</Text>
+              <TextInput
+                autoCapitalize='none'
+                autoCorrect={false}
+                keyboardType='email-address'
+                style={styles.userInput}
+                placeholder='johndoe@example.com'
+                placeholderTextColor='gray'
+                onChangeText={this.emailHandler}
+                ref={(input) => { this.fifthTextInput = input; }}
+                returnKeyType={"next"}
+                onSubmitEditing={() => { this.sixthTextInput.focus(); }}
+                blurOnSubmit={false}
+              />
+              <Text style={styles.label}>Phone Number</Text>
+              <TextInput
+                keyboardType='number-pad'
+                style={styles.userInput}
+                placeholder='1234567890'
+                placeholderTextColor='gray'
+                onChangeText={this.phoneHandler}
+                ref={(input) => { this.sixthTextInput = input; }}
+                returnKeyType={"done"}
+                blurOnSubmit={true}
+              />
+            </ScrollView>
+          </KeyboardAvoidingView>
           <TouchableOpacity
-            style={styles.backIcon}
-            onPress={this.backArrow}
+            style={styles.bottomButton}
+            onPress={this.confirmHandler}
           >
-            <Icon size={35} name='ios-arrow-round-back' color='white' />
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONTINUE</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.mainText}>Create Account</Text>
-        <KeyboardAvoidingView behavior='padding' style={styles.alignment}>
-          <ScrollView style={{ width: '100%' }} indicatorStyle='white' keyboardDismissMode='on-drag'>
-            <Text style={styles.label}>First Name</Text>
-            <TextInput
-              style={styles.userInput}
-              placeholder='John'
-              placeholderTextColor='gray'
-              onChangeText={this.firstNameHandler}
-              returnKeyType={"next"}
-              onSubmitEditing={() => { this.secondTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Last Name</Text>
-            <TextInput
-              style={styles.userInput}
-              placeholder='Doe'
-              placeholderTextColor='gray'
-              onChangeText={this.lastNameHandler}
-              ref={(input) => { this.secondTextInput = input; }}
-              returnKeyType={"next"}
-              onSubmitEditing={() => { this.thirdTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              secureTextEntry={true}
-              style={styles.userInput}
-              placeholder='••••••••••'
-              placeholderTextColor='gray'
-              onChangeText={this.passwordHandler}
-              ref={(input) => { this.thirdTextInput = input; }}
-              returnKeyType={"next"}
-              onSubmitEditing={() => { this.fourthTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Confirm Password</Text>
-            <TextInput
-              secureTextEntry={true}
-              style={styles.userInput}
-              placeholder='••••••••••'
-              placeholderTextColor='gray'
-              onChangeText={this.confirmPassHandler}
-              ref={(input) => { this.fourthTextInput = input; }}
-              returnKeyType={"next"}
-              onSubmitEditing={() => { this.fifthTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              autoCapitalize='none'
-              autoCorrect={false}
-              keyboardType='email-address'
-              style={styles.userInput}
-              placeholder='johndoe@example.com'
-              placeholderTextColor='gray'
-              onChangeText={this.emailHandler}
-              ref={(input) => { this.fifthTextInput = input; }}
-              returnKeyType={"next"}
-              onSubmitEditing={() => { this.sixthTextInput.focus(); }}
-              blurOnSubmit={false}
-            />
-            <Text style={styles.label}>Phone Number</Text>
-            <TextInput
-              keyboardType='number-pad'
-              style={styles.userInput}
-              placeholder='(123) 456-7890'
-              placeholderTextColor='gray'
-              onChangeText={this.phoneHandler}
-              ref={(input) => { this.sixthTextInput = input; }}
-              returnKeyType={"done"}
-              blurOnSubmit={true}
-            />
-          </ScrollView>
-        </KeyboardAvoidingView>
-        <TouchableOpacity
-          style={styles.bottomButton}
-          onPress={this.confirmHandler}
-        >
-          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>CONTINUE</Text>
-        </TouchableOpacity>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -265,8 +320,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#222222'
+    alignItems: 'center'
   },
   alignment: {
     width: '85%'
@@ -294,6 +348,18 @@ const styles = StyleSheet.create({
   },
   userInput: {
     borderColor: '#7ABAF2',
+    borderBottomWidth: 1,
+    height: 40,
+    fontSize: 17,
+    color: 'white'
+  },
+  labelIncorrect: {
+    color: 'red',
+    marginTop: 25,
+    fontSize: 13
+  },
+  incorrectPassword: {
+    borderColor: 'red',
     borderBottomWidth: 1,
     height: 40,
     fontSize: 17,

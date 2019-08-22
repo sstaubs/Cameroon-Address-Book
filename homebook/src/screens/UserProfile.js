@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView from 'react-native-maps';
@@ -37,28 +37,16 @@ class UserProfile extends Component {
     }
   });
 
-
-  pushRequestPage = () => Navigation.push(this.props.componentId, {
-    component: {
-      name: 'RequestPage'
-    }
-  });
-
   showDirections = () => {
-
-
     const endPoint = {
       longitude: this.state.focusedLocation.longitude,
       latitude: this.state.focusedLocation.latitude,
     }
-
     const transportPlan = 'd';
-
     OpenMapDirections(null, endPoint, transportPlan).then(res => {
       console.log(res)
     });
   }
-
 
   componentDidMount() {
     this.navigationEventListener = Navigation.events().bindComponent(this);
@@ -81,48 +69,42 @@ class UserProfile extends Component {
   render() {
     marker = <MapView.Marker coordinate={this.state.focusedLocation} />
     return (
-      <View style={styles.container}>
-        <View style={styles.icons}>
+      <ImageBackground source={require('../screens/Background.png')} style={{ width: '100%', height: '100%' }}>
+        <View style={styles.container}>
+          <View style={styles.icons}>
+            <TouchableOpacity
+              onPress={this.pushCloseButton}>
+              <Icon size={35} name='ios-arrow-round-back' color='white' />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.pushEditButton}>
+              <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.alignment}>
+            <Text style={styles.mainText}>{this.props.user.firstN} {this.props.user.lastN}</Text>
+            <Text style={styles.category}>Phone Number</Text>
+            <Text style={styles.textInputStyle}>{this.props.user.phone}</Text>
+            <Text style={styles.category}>Email</Text>
+            <Text style={styles.textInputStyle}>{this.props.user.email}</Text>
+            <Text style={styles.location}>Location</Text>
+          </View>
+          <MapView
+            region={this.state.focusedLocation}
+            style={styles.map}
+            showsUserLocation={true}
+            ref={ref => this.map = ref}
+          >
+            {marker}
+          </MapView>
           <TouchableOpacity
-            onPress={this.pushCloseButton}>
-            <Icon size={35} name='ios-arrow-round-back' color='white' />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.pushEditButton}>
-            <Text style={{ color: 'white', fontSize: 16 }}>Edit</Text>
+            style={styles.bottomButton}
+            onPress={this.showDirections}
+          >
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>GET DIRECTIONS</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.alignment}>
-          <Text style={styles.mainText}>{this.props.user.firstN} {this.props.user.lastN}</Text>
-          <TouchableOpacity
-            style={{ marginTop: 10 }}
-            onPress={this.pushRequestPage}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon size={25} name='ios-download' color='white' />
-              <Text style={{ color: 'white', fontSize: 18 }}>  Requests</Text>
-            </View>
-          </TouchableOpacity>
-          <Text style={styles.category}>Phone Number</Text>
-          <Text style={styles.textInputStyle}>{this.props.user.phone}</Text>
-          <Text style={styles.category}>Email</Text>
-          <Text style={styles.textInputStyle}>{this.props.user.email}</Text>
-          <Text style={styles.location}>Location</Text>
-        </View>
-        <MapView
-          region={this.state.focusedLocation}
-          style={styles.map}
-          showsUserLocation={true}
-          ref={ref => this.map = ref}
-        >
-          {marker}
-        </MapView>
-        <TouchableOpacity
-          style={styles.bottomButton}
-          onPress={this.showDirections}
-        >
-          <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Get Directions</Text>
-        </TouchableOpacity>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -132,8 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#222222',
+    alignItems: 'center'
   },
   icons: {
     flexDirection: 'row',

@@ -13,6 +13,7 @@
     "react": "16.6.3",
     "react-native": "0.58.6",
     "react-native-keyboard-manager": "^4.0.13-12",
+    "react-native-linear-gradient": "^2.5.4",
     "react-native-maps": "^0.23.0",
     "react-native-modal": "^9.0.0",
     "react-native-navigation": "^2.13.1",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "24.1.0",
+    "babel-polyfill": "^6.26.0",
     "jest": "24.1.0",
     "metro-react-native-babel-preset": "0.52.0",
     "react-autocomplete-cli": "0.0.3",

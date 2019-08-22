@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
@@ -48,33 +48,35 @@ class Recover extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.alignment}>
+            <ImageBackground source={require('../screens/Background.png')} style={{ width: '100%', height: '100%' }}>
+                <View style={styles.container}>
+                    <View style={styles.alignment}>
+                        <TouchableOpacity
+                            style={styles.backIcon}
+                            onPress={this.backArrow}
+                        >
+                            <Icon size={35} name='ios-arrow-round-back' color='white' />
+                        </TouchableOpacity>
+                        <Text style={styles.mainText}>Change Password</Text>
+                        <Text style={styles.label}>Email</Text>
+                        <TextInput
+                            keyboardType='email-address'
+                            style={styles.userInput}
+                            placeholder="johndoe@example.com"
+                            autoCapitalize='none'
+                            placeholderTextColor="gray"
+                            onChangeText={this.emailHandler}
+                            returnKeyType={"done"}
+                        />
+                    </View>
                     <TouchableOpacity
-                        style={styles.backIcon}
-                        onPress={this.backArrow}
+                        style={styles.bottomButton}
+                        onPress={this.sendEmailRecover}
                     >
-                        <Icon size={35} name='ios-arrow-round-back' color='white' />
+                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SEND</Text>
                     </TouchableOpacity>
-                    <Text style={styles.mainText}>Change Password</Text>
-                    <Text style={styles.label}>Email</Text>
-                    <TextInput
-                        keyboardType='email-address'
-                        style={styles.userInput}
-                        placeholder="johndoe@example.com"
-                        autoCapitalize='none'
-                        placeholderTextColor="gray"
-                        onChangeText={this.emailHandler}
-                        returnKeyType={"done"}
-                    />
                 </View>
-                <TouchableOpacity
-                    style={styles.bottomButton}
-                    onPress={this.sendEmailRecover}
-                >
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>SEND</Text>
-                </TouchableOpacity>
-            </View>
+            </ImageBackground>
         );
     }
 }
@@ -84,8 +86,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#222222',
+        alignItems: 'center'
     },
     alignment: {
         width: '85%'
