@@ -11,7 +11,7 @@
   "dependencies": {
     "firebase": "^5.9.2",
     "react": "16.6.3",
-    "react-native": "0.58.6",
+    "react-native": "0.70.4",
     "react-native-keyboard-manager": "^4.0.13-12",
     "react-native-linear-gradient": "^2.5.4",
     "react-native-maps": "^0.23.0",
